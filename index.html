@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
+    <meta name="description" content="The sophia project is the coding-based tutorial for machine intelligence and artificial intelligence." />
     <meta name="author" content="JianKai Wang, 王建凱" />
     <title>Sophia | JianKai Wang</title>
     <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
         body {
-            font-family: monospace;
+            font-family: monospace, 'Noto Sans TC', sans-serif;
             padding-top: 54px;
         }
 
@@ -25,11 +26,15 @@
         .list-item {
             font-size: 1rem;
         }
+
+        .margin-section {
+            margin: 10px 0 10px 0;
+        }
         
         .fa-kaggle {
             background: url('https://icons.simplesvg.com/simple-icons:kaggle.svg?color=%23007bff') no-repeat center center / contain;
-            content: url('https://icons.simplesvg.com/simple-icons:kaggle.svg?color=%23007bff&height=24');
-            vertical-align: -0.125em;
+            content: url('https://icons.simplesvg.com/simple-icons:kaggle.svg?color=%23007bff&height=28');
+            vertical-align: -0.125rem;
         }
         
         @media (min-width: 992px) {
@@ -81,7 +86,7 @@
                     <a href="https://github.com/jiankaiwang"><i class="fab fa-github fa-2x"></i></a>&nbsp;
                     <a href="https://www.gitbook.com/@jiankaiwang"><i class="fab fa-github-alt fa-2x"></i></a>&nbsp;
                     <a href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-2x"></i></a>&nbsp;
-                    <a href="https://www.kaggle.com/jiankaiwang"><span class="simple-svg" data-icon="simple-icons:kaggle" data-width="24" data-inline="false"></span></a>&nbsp;
+                    <a href="https://www.kaggle.com/jiankaiwang"><span class="simple-svg" data-icon="simple-icons:kaggle" data-width="28" data-inline="false"></span></a>&nbsp;
                     <a href="https://www.facebook.com/jkw0620"><i class="fab fa-facebook-square fa-2x"></i></a>&nbsp;                 
                 </div>
             </div>
@@ -98,26 +103,26 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3">
-                <h3 class="my-4"><i class="fas fa-bars fa-1x"></i> Menu</h3>
+            <div class="col-md-3 col-lg-3 margin-section">
+                <!--<h3 class="my-4"><i class="fas fa-bars fa-1x"></i> Menu</h3>-->
                 <div class="list-group">
-                    <a data-toggle="tab" href="#ml" class="list-group-item list-item">Machine Learning</a>
-                    <a data-toggle="tab" href="#dl" class="list-group-item list-item">Deep Learning</a>
-                    <a data-toggle="tab" href="#dm" class="list-group-item list-item">Data Mining</a>
+                    <a data-toggle="tab" href="#model" class="list-group-item list-item active">Introduction to Model</a>
+                    <a data-toggle="tab" href="#statistics" class="list-group-item list-item">Statistics</a>
+                    <a data-toggle="tab" href="#flow" class="list-group-item list-item">Analyzing Flow</a>
                 </div>
             </div>
 
-            <div class="col-lg-9">
-                <h3 class="my-4"><i class="fas fa-file fa-1x"></i> Content</h3>
+            <div class="col-md-9 col-lg-9 margin-section">
+                <!--<h3 class="my-4"><i class="fas fa-file fa-1x"></i> Content</h3>-->
                 <div class="tab-content">
-                    <div id="ml" class="tab-pane fade in active">
-                        <p>Machine Learning</p>
+                    <div id="model" class="tab-pane fade show active">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i> 
                     </div>
-                    <div id="dl" class="tab-pane fade">
-                        <p>Deep Learning</p>
+                    <div id="statistics" class="tab-pane fade">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
                     </div>
-                    <div id="dm" class="tab-pane fade">
-                        <p>Data Mining</p>
+                    <div id="flow" class="tab-pane fade">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
                     </div>
                 </div>
             </div>
@@ -136,9 +141,67 @@
     <script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="resources/fontawesome/svg-with-js/js/fontawesome-all.min.js"></script>
     <script src="//code.simplesvg.com/1/1.0.0-beta5/simple-svg.min.js"></script>
+    <script src="resources/async/async.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.5/showdown.min.js"></script>
+
+    <script>
+    $(function() {
+        async.parallel([
+            function(callback) {
+            $.ajax({
+                url: '/data/introduction.md',
+                type: 'get',
+                data: {},
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#model').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
+                    callback(xhr.status + " " + thrownError);
+                }
+                , success: function (response) {
+                    var converter = new showdown.Converter(),
+                        html      = converter.makeHtml(response);
+                    $('#model').html(html);
+                    callback(null, "");
+                }
+            })},
+            function(callback) {
+            $.ajax({
+                url: '/data/statistics.md',
+                type: 'get',
+                data: {},
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#statistics').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
+                    callback(xhr.status + " " + thrownError);
+                }
+                , success: function (response) {
+                    var converter = new showdown.Converter(),
+                        html      = converter.makeHtml(response);
+                    $('#statistics').html(html);
+                    callback(null, "");
+                }
+            })},
+            function(callback) {
+            $.ajax({
+                url: '/data/flow.md',
+                type: 'get',
+                data: {},
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#flow').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
+                    callback(xhr.status + " " + thrownError);
+                }
+                , success: function (response) {
+                    var converter = new showdown.Converter(),
+                        html      = converter.makeHtml(response);
+                    $('#flow').html(html);
+                    callback(null, "");
+                }
+            })}
+        ], function (err, message) {
+	    if(err) { 
+	       console.log(err); 
+	    }
+	});
+    });
+    </script>
 
   </body>
-  <!--
-    https://simplesvg.com/
-  -->
 </html>
