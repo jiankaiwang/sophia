@@ -36,6 +36,10 @@
             content: url('https://icons.simplesvg.com/simple-icons:kaggle.svg?color=%23007bff&height=28');
             vertical-align: -0.125rem;
         }
+
+        p {
+            margin-bottom: 0px;
+        }
         
         @media (min-width: 992px) {
             body {
@@ -107,8 +111,10 @@
                 <!--<h3 class="my-4"><i class="fas fa-bars fa-1x"></i> Menu</h3>-->
                 <div class="list-group">
                     <a data-toggle="tab" href="#model" class="list-group-item list-item active">Introduction to Model</a>
-                    <a data-toggle="tab" href="#statistics" class="list-group-item list-item">Statistics</a>
                     <a data-toggle="tab" href="#flow" class="list-group-item list-item">Analyzing Flow</a>
+                    <a data-toggle="tab" href="#uitools" class="list-group-item list-item">UI Tools</a>
+                    <a data-toggle="tab" href="#maker" class="list-group-item list-item">Maker</a>
+                    <a data-toggle="tab" href="#statistics" class="list-group-item list-item">Statistics</a>
                 </div>
             </div>
 
@@ -118,10 +124,16 @@
                     <div id="model" class="tab-pane fade show active">
                         <i class="fas fa-spinner fa-spin fa-2x"></i> 
                     </div>
-                    <div id="statistics" class="tab-pane fade">
+                    <div id="flow" class="tab-pane fade">
                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                     </div>
-                    <div id="flow" class="tab-pane fade">
+                    <div id="uitools" class="tab-pane fade">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    </div>
+                    <div id="maker" class="tab-pane fade">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    </div>
+                    <div id="statistics" class="tab-pane fade">
                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                     </div>
                 </div>
@@ -172,8 +184,8 @@
                     $('#model').html(html);
                     callback(null, "");
                 }
-            })},
-            function(callback) {
+            })}
+            , function(callback) {
             $.ajax({
                 url: '/data/statistics.md',
                 type: 'get',
@@ -188,8 +200,40 @@
                     $('#statistics').html(html);
                     callback(null, "");
                 }
-            })},
-            function(callback) {
+            })}
+            , function(callback) {
+            $.ajax({
+                url: '/data/uitools.md',
+                type: 'get',
+                data: {},
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#uitools').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
+                    callback(xhr.status + " " + thrownError);
+                }
+                , success: function (response) {
+                    var converter = new showdown.Converter(),
+                        html      = converter.makeHtml(response);
+                    $('#uitools').html(html);
+                    callback(null, "");
+                }
+            })}
+            , function(callback) {
+            $.ajax({
+                url: '/data/maker.md',
+                type: 'get',
+                data: {},
+                error: function (xhr, ajaxOptions, thrownError) {
+                    $('#maker').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
+                    callback(xhr.status + " " + thrownError);
+                }
+                , success: function (response) {
+                    var converter = new showdown.Converter(),
+                        html      = converter.makeHtml(response);
+                    $('#maker').html(html);
+                    callback(null, "");
+                }
+            })}
+            , function(callback) {
             $.ajax({
                 url: '/data/flow.md',
                 type: 'get',

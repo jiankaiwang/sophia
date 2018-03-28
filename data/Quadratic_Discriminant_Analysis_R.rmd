@@ -1,0 +1,74 @@
+---
+title: "二次判別分析 (Quadratic Discriminant Analysis)"
+author: "JianKai Wang"
+date: "2018年3月13日"
+output: html_document
+---
+
+運用廣義平方距離法，計算距離時根據先驗機率和各個總體的協方差(Covariance)結構進行調整。
+協方差用於衡量兩個變數的總體誤差。而(等)方差是協方差的一種特殊情況，即當兩個變數是相同的情況。
+需要注意的是，若滿足等方差的假設時，建議使用 LDA，因 LDA 中需要估計的參數比較少。
+
+## 安裝套件
+
+於 R 中套件 MASS 提供 LDA 函式。
+
+```{r}
+if(!("MASS" %in% rownames(installed.packages()))) {
+  install.packages("MASS")
+}
+library("MASS")
+```
+
+## 準備資料
+
+使用 R 內建的 iris 資料當例子，其中 iris 由 5 個變數組成，iris 資料維度為 [50,4,3] (50 行 x 4 列 x 3 類別) ，分別為 Sepal.L, Sepal.W, Petal.L, Petal.W 與 Sp。其中 Sp 由 3 類組成，即 Setosa (s), Versicolor (c) 及 Virginica (v)。此 5 項資料中，前 4 項為特徵變數，最後 1 項為分組變數。
+
+```{r}
+# 隨機取得資料清單
+train_list = sample(1:50, 25)
+
+# 建立訓練資料
+train = data.frame(rbind(
+  iris3[train_list,,1],
+  iris3[train_list,,2],
+  iris3[train_list,,3]
+))
+
+# 建立測試資料
+test = data.frame(rbind(
+  iris3[-train_list,,1],
+  iris3[-train_list,,2],
+  iris3[-train_list,,3]
+))
+
+# 建立類別資料
+cls <- factor(c(
+  rep("s", 25),
+  rep("c", 25),
+  rep("v", 25)
+))
+```
+
+## QDA 分析
+
+QDA 函式使用方式類似 LDA，底下使用更簡易參數帶入使用
+
+```{r}
+# 建立 qda 模型
+z = qda(train, cls)
+z
+```
+
+## 預測資料
+
+```{r}
+# 預測資料
+pred = predict(z, test)
+pred
+
+# 取得類別
+pred$class
+```
+
+

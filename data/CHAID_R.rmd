@@ -1,0 +1,156 @@
+---
+title: "卡方自動交叉檢驗 (CHAID)"
+author: "JianKai Wang"
+date: "2018年3月21日"
+output: html_document
+---
+
+決策樹為資料分類的一種方法，其中 CHAID (Chi-square Automatic Interaction Detector, 卡方自動交叉檢驗)是一種常用決策樹分類方式。該演算法源自 AID 與 thaid ，依靠卡方檢驗來尋找最佳的劃分屬性。目前該演算法支援分類變數的資料。而若要在連續資料上進行 CHAID 決策樹的分類則需要先將連續資料進行離散化處理，將離散資料進行類別化。
+
+## 說明
+
+CHAID 演算法主要分成底下 3 步驟，合併、分裂與停止。
+
+### 合併
+
+合併透過將各特徵($X$)對要預測的變數(結果,$Y$)進行卡方檢驗，並透過計算 P 值的顯著性來確認是否要合併特徵。
+
+* 若只有一個特徵 X 變數，則運算停止，並設置調整 P 值為 1。
+* 若只有二個特徵 X 變數，則可以透過如 Bonferroni 方法得到調整後 P 值。
+* 若有大於三個特徵 X 變數 (>=3):
+    * 對於每個特徵 $X_i$ 對預測變數 $Y$ 建立列聯表
+    * 對於擁有最大 P 值的 $X$ 配對，校對它是否大於特徵水準值合併的顯著標準 (可參考底下 chaid 原型中 alpha2 參數)。若 P 值大於合併標準，則將兩個特徵值合併成新的值。
+    * 若合併的新值含有大於三個的原始特徵，尋找 P 值最小的項目進行分裂(最優拆分點)。
+    * 若合併後的新值擁有的原始特徵太少，可以尋找最大的 P 值，並與之和最相似的特徵進行合併。
+    * 持續上述步驟。
+    * 結束合併後，可以透過如 Bonferroni 方法得到調整後 P 值。
+
+### 分裂
+
+分裂點可能在合併過程中出現，在合併過程中會比較每一個調整後的 P 值來選擇分裂點。
+
+* 選擇具有最小的調整後 P 值。
+* 如果這個調整後 P 值小於或等於最主要的變數進行分支使用的顯著性水準 (可參考底下 chaid 原型中 alpha4 參數)，則使用此參數作為分裂的節點；若否，則不作為分裂點。
+
+### 停止
+
+停止表示合併或分裂的條件。
+
+* 目前樹木深度達到使用者指定最大深度的限制，則停止。
+* 若一個節點的規模大小小於使用者指定的最小節點的值，則停止。
+* 若分裂導致子節點的大小小於使用者指定最小節點的值，且合併的特徵點太少，可以將觀測最大 P 值進行合併。
+* 子節點數目為 1，則停止。
+
+## 安裝套件
+
+```{r}
+install_Package <- function(pkgName) {
+  if(!(pkgName %in% rownames(installed.packages()))) {
+    if(pkgName != "CHAID") {
+      install.packages(pkgName)
+    } else {
+      install.packages("http://download.r-forge.r-project.org/src/contrib/CHAID_0.1-2.tar.gz", repos = NULL)
+    }
+  }
+}
+
+packageName <- c("partykit", "grid", "libcoin", "mvtnorm", "rpart", "CHAID")
+for(i in packageName) {
+  install_Package(i)
+}
+library("CHAID")
+```
+
+## 資料準備
+
+使用程式本身的資料集 "USvote"，這是關於美國總統選舉的樣本資料，其中變數 vote3 表示為候選人，即 Gore 與 Bush，其他變數包含選民的性別(gender)、年齡(ager)、受雇(empstat)與否、學歷(educr)與結婚(marstat)與否等。其中以 vote3 為預設變數，其他變數為特徵時，建立 CHAID 樹。
+
+```{r}
+# 確認結果一致
+set.seed(290875)
+data("USvote")
+
+# 取得資料
+training <- sample(1:nrow(USvote), 3000)
+testing <- USvote[-training,]
+USvoteSample <- USvote[training,]
+print(USvoteSample[1:10,])
+```
+
+## 模型建立
+
+```r
+# prototype of chaid_control
+# |- alpha2: 特徵水準值合併中的顯著水準
+# |- alpha3: 特徵在合併後要拆分時使用的顯著水準
+# |- alpha4: 樹生長中，對主要特徵進行分支時使用的顯著水準
+# |- minsplit: 節點中的最小分裂樣本數
+# |- minbucket: 葉節點的最小樣本數
+# |- minprob: 葉節點的最小樣本比例，即所含樣本佔總樣本的比例
+# |- stump: 只對根節點進行分裂
+ctl <- chaid_control(alpha2 = 0.05, alpha3 = -1, alpha4 = 0.05, minsplit = 20, minbucket = 7, minprob = 0.01, stump = FALSE)
+
+# prototype of chaid
+# |- formula: 生成模型的運算式
+# |- data: 指定的資料集
+# |- subset: 指定用資料中那些子集進行分析
+# |- weights: 權重
+# |- na.action: 出現缺失值的處理方式
+# |- control: 控制樹生成的參數，可透過 chaid_control 函式進行設定
+chaid(formula, data, subset = NULL, weights = NULL, na.action = na.omit, control = chaid_control())
+```
+
+```{r}
+# 建立模型演算法所需參數
+ctl <- chaid_control(minsplit = 500, minbucket = 100, minprob = 0)
+
+# 透過 CHAID 演算法建立分類樹
+chaidRes <- chaid(vote3~., data = USvoteSample, control = ctl)
+print(chaidRes)
+```
+
+## 繪出決策樹
+
+```{r}
+# 先匯出結果圖
+png(filename="images/chaid.png", width = 1024, height = 512)
+plot(chaidRes)
+dev.off()
+```
+
+![](images/chaid.png)
+
+## 驗證決策樹模型
+
+底下可以看出決策樹分類的結果，若重新將訓練樣本進行分類，發現在 CHAID 演算方式下，仍與原本的結果有差異，可以透過比較原本樣本來調整 CHAID 的訓練參數。
+
+```{r}
+summary(predict(chaidRes, USvoteSample))
+summary(USvoteSample$vote3)
+```
+
+可以由上方看出，決策樹建立後來比較訓練資料與已知結果，可將兩者結果當作是調整參數的依據。而調整參數的方法可以先視節點為大群體(相對參數 minsplit)，葉子為細節小群體(相對參數 minbucket)，而大群體值應較細節小群體之值數倍 (*N) 為佳。
+
+## 預測結果
+
+```{r}
+predRes <- predict(chaidRes, testing)
+oriRes <- testing$vote3
+compare <- cbind(oriRes, predRes)
+print(paste(seq(1:2),levels(predRes), sep=":"))
+print(compare[1:10,])
+print(
+  paste("Number of Same Results", length(which(compare[,1] == compare[,2])), sep=": ")
+)
+print(
+  paste("Number of Different Results",length(which(compare[,1] != compare[,2])), sep=": ")
+)
+```
+
+由上結果可以看出預測投票結果與原投票結果大約有 40% 是錯誤值。原因是決策樹為機率基礎的分類方式，會直接將輸入值透過決策樹找出最大的機率分類結果。
+
+其次，於 **chaid_control** 定義中 minsplit, minbucket, minprob 等數個參數都是相當重要要去調整，因此數個參數將影響整棵樹的生成。
+
+最後是資料本身，大多數的機器學習狀況為由少部分的特徵中，找出能解釋全貌的模型，但在選擇特徵或甚至是在起初決定要用那些特徵時就會大大影響機器學習的訓練結果，以此為例可以清楚了解到，選舉不能單看這單純的數個因素，否則學習結果會相當差。
+
+

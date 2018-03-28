@@ -1,0 +1,98 @@
+---
+title: "羅吉斯迴歸 (Logistic Regression)"
+author: "JianKai Wang"
+date: "2018年3月14日"
+output: html_document
+---
+
+羅吉斯迴歸為一種線性迴歸，不同於簡單線性迴歸，羅吉斯迴歸採用多變數進行評估，若自變數只有一個，則稱為簡單羅吉斯迴歸分析。
+使用二元羅吉斯迴歸時，應變數(Y)是二元分類的變項，事件發生(Y=1)的機率可用符號 $p$ 表示，且 $0 \leq p \leq 1$，若以線性迴歸方程式表示，如下：
+
+$$p=E(Y=1|X) = \beta_0 + \beta_1x_1 + ... \beta_nx_n$$
+，上方方程式說明在特定自變數(X)的情況下，預測或估計依變項 $Y=1$ 的平均值，然而在特定 X 數值下，平均值的範圍可能大於或 1 或小於 0，為了避免上述狀況，將條件機率 $P(Y=1|X)$ 做羅吉斯轉換 (logistic or logit transformation)，也就是事件發生 (Y=1) 的勝算 (odds of event) 取自然對數。在此狀況下，在特定 X 下，應變項 (Y) 的分布為二項式分布 (binomail distribution)，其平均值為「特定 X 數值下,事件發生的條件機率，$p=E(Y=1|X)$」。
+
+舉例，一個二元分類的事件 Y，若其事件發生為 Y=1，不發生為 Y=0，則在變數 X 數值下，事件發生的條件機率為 p(Y=1|X)，此值介於 0 ~ 1，則經羅吉斯迴歸 $g(x)$，將勝率 (odds) 取自然對數為： 
+
+$$g(x)=ln(\frac{p(Y=1|X)}{1-p(Y=1|X)})=\beta_0 + \beta_1x_1 + ... \beta_nx_n$$
+
+上市經過整理後，得到事件發生的條件機率 $p=P(Y=1|X)$，方程式如下，
+
+$$
+p=\frac{e^(\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n)}{1+e^(\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n)} \\
+=\frac{1}{1+e^{-(\beta_0+\beta_1x_1+\beta_2x_2+...\beta_nx_n)}}
+$$
+
+故自變項 $X_1$ 的羅吉斯迴歸係數為 $\beta_1$，對羅吉斯迴歸係數 $\beta_1$ 取指數後為 $e^{\beta_1}$。
+
+## 資料準備
+
+使用 r 內建的 iris3 資料中 Setosa 與 Versicolor 兩類作為範例。
+
+```{r}
+# 定義樣本數
+sample_size = 100
+
+# 產生資料
+data <- data.frame(
+  cbind(
+    rbind(iris3[,,1], iris3[,,2]),
+    y = rep(c("s","c"), rep(50,2))
+  )
+)
+colnames(data) <- c("x1","x2","x3","x4","y")
+
+# 資料型態轉換成小數
+data$x1 <- as.numeric(data$x1)
+data$x2 <- as.numeric(data$x2)
+data$x3 <- as.numeric(data$x3)
+data$x4 <- as.numeric(data$x4)
+
+# 訓練與測試資料
+train = sample(1:sample_size, sample_size/2)
+training_data = data[train,]
+testing_data = data[-train,]
+```
+
+
+## 建立 Logistic Regression 模型
+
+```r
+# glm prototype
+# |- formula: 方程式
+# |- family: 描述殘差(樣本觀察值與預測值之間的差)的分布
+# |- data: 資料內容
+glm(formula, family, data)
+```
+
+```{r}
+# 建立 model
+model <- glm(y~., family = binomial(logit), training_data)
+summary(model)
+```
+
+其中 **Deviance Residuals** 為殘差，**Coefficients** 包含描述性統計與假說性檢定值，**AIC** (Akaike's Information Criterion) 考慮模型的適應 (fit) 結果與使用的參數數目兩類，可評估統計模型的複雜度和衡量統計模型「擬合」資料之優良性，優先考慮 AIC 值最小的那一個 model。
+
+AIC 一般式如下，其中 K 為參數數目，L 為機率函式
+$$
+AIC=2k-2ln(L)
+$$
+
+若模型誤差符合常態分布，則 AIC 為
+$$
+AIC = 2k + nln(\frac{RSS}{n})
+$$
+
+## 預測資料
+
+```{r}
+# type: 預測的樣式
+# |- response: 預測的機率
+# |- terms: matrix giving the fitted values of each term
+predict(model, newdata=data[-train,], type="response")
+```
+
+
+
+
+
+

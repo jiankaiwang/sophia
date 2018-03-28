@@ -1,0 +1,157 @@
+---
+title: "主成分分析 (Principal Components Analysis)"
+author: "JianKai Wang"
+date: "2018年3月13日"
+output: html_document
+---
+
+主成分分析是一種通過降維技術把多個變數化成少數幾個主成分的方法。這些主成分能夠反映原始變數的絕大部分資訊，它們通常表示為原始變數的線性組合。
+
+## 原始資料
+
+底下資料模擬某類消費品銷售的原始資料,對某地區的某類消費量 y 進行調查，與 x1, x2, x3, x4 四項變數有關
+* x1: 居民可支配收入
+* x2: 該類消費品平均價格指數
+* x3: 社會對該消費品的保有量
+* x4: 其他消費品平均價格指數
+每筆(row)資料為模擬各年資料
+
+```{r}
+cons <- data.frame(
+  x1 = c(82.9, 88, 99.9, 105.3, 117.7, 131.0, 148.2, 161.8, 174.2, 184.7),
+  x2 = c(92, 93, 96, 94, 100, 101, 105, 112, 112, 112),
+  x3 = c(17.1, 21.3, 25.1, 29.0, 34.0, 40.0, 44.0, 49.0, 51.0, 53.0),
+  x4 = c(94, 96, 97, 97, 100, 101, 104, 109, 111, 111),
+  y = c(8.4, 9.6, 10.4, 11.4, 12.2, 14.2, 15.8, 17.9, 19.6, 20.8)
+)
+print(cons)
+```
+
+## 主成分分析
+
+* 利用主成分迴歸方法建立銷售量 y 與 4 個變數的迴歸方程。可以透過 **princomp** 函式進行分析，
+
+```r
+# the princomp prototype
+# x: data as data.frame
+# cor:
+# |- True: 使用樣本的相關矩陣(Correlation Matrix)做主成分分析
+# |- False: 使用樣本的共變異數矩陣(Covariance Matrix)做主成分分析
+# covmat: 協方差陣
+princomp(x, cor=False, scores=True, covmat=NuLL, ...)
+```
+
+```{r}
+cons.pr <- princomp(~x1+x2+x3+x4,data=cons[1:10,1:4], cor=TRUE)
+
+# it is also simplified as the following script
+#cons.pr <- princomp(cons[1:10,1:4], cor=TRUE)
+
+# 列出主成分對應於原始變數 x1, x2, x3, x4 的係數
+summary(cons.pr)
+```
+
+* 顯示主成分分析或因數分析中 loadings 的內容，在主成分分析中，該內容便是主成分對應的各變數的組成，及正交矩陣。
+
+```{r}
+loadings(cons.pr)
+```
+
+由於第一主成分的方差貢獻已達到 98.6%，因此其餘主成分可以除去，已達到降維目的，故公式為
+
+$$z_1^{*}=-0.502*x1^{*}-0.5*x2^{*}-0.498*x3^{*}-0.501*x4^{*}$$
+
+由各項主成分看出 x1 為主要因數，即收入因素。
+
+* 預測主成分的值。
+
+```{r}
+pred = predict(cons.pr)
+pred
+```
+
+* 畫出碎石圖
+
+```r
+# the screeplot prototype
+# x: data calculated by princomp
+# npcs: 主成分個數
+# type: 繪圖樣式
+screeplot(x, npcs=min(10,length(x$dev)), type=c("barplot","lines"), main=deparse(substitute(x)), ...)
+```
+
+```{r}
+screeplot(cons.pr, type="lines")
+```
+
+* 畫出第 1 及第 2 主成分樣本的散布圖
+
+畫出關於主成分的散點圖和原座標在主成分下的方向
+
+```{r}
+biplot(cons.pr, choices = 1:2)
+```
+
+* 做主成分迴歸
+
+```{r}
+cons$z1 = pred[,1]
+
+# the lm prototype
+# lm(formula = y~z1, data = data)
+lm.sol = lm(y~z1, data=cons)
+
+summary(lm.sol)
+```
+
+由上可看出，迴歸係數與迴歸方程均通過檢驗，且效果顯著，可以得到回應變數與主成分的關係，即
+
+$$y = 14.03 - 2.06*z_1^{*}$$
+
+* 轉換成原變數的迴歸方程
+
+因得到回應變數與主成分的迴歸方程並不容易使用，故須轉換成原變數的迴歸方程，而基本公式推導如下:
+
+$$
+y=\beta_0^* + \beta_1^*Z_1^* \\
+Z_1^*=a_{11}X_1^*+a_{12}X_2^*+a_{13}X_3^*+a_{14}X_4^* \\
+=\frac{a_11(x_1-\bar{x_1})}{\sqrt{s_{11}}} + \frac{a_12(x_2-\bar{x_2})}{\sqrt{s_{12}}} + ... \\
+\\
+\therefore \\
+\\
+\beta_0 = \beta_0^* - \beta_1^*(\frac{a_{11}\bar{x_1}}{\sqrt{s_{11}}} + \frac{a_{12}\bar{x_2}}{\sqrt{s_{12}}} + ...)\\
+\beta_i = \frac{\beta_1^*a_{1i}}{\sqrt{S_{ii}}}
+$$
+
+```{r}
+# 取得迴歸係數
+beta = coef(lm.sol)
+
+# 取得主成分對應的特徵向量
+feat = loadings(cons.pr)
+
+# 取得資料中心的均值
+x.bar = cons.pr$center
+
+# 取得資料的標準差
+x.sd = cons.pr$scale
+
+# 求係數, beta1 ~ beta4, 可參考上述公式
+coeff = (beta[2] * feat[,1]) / x.sd
+
+# 求 beta0 係數 (即斜率), 可參考上述公式
+beta0 <- beta[1] - sum(x.bar*coeff)
+
+# 合併結果
+c(beta0, coeff)
+```
+
+由上結果建立的迴歸方程為
+
+$$y=-23.78+0.03*x1+0.13*x2+0.08*x3+0.17*x4$$
+
+
+
+
+
+

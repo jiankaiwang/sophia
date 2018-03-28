@@ -1,0 +1,240 @@
+---
+title: "隨機森林 (Random Forest)"
+author: "JianKai Wang"
+date: "2018年3月26日"
+output: html_document
+---
+
+隨機森林是基於決策樹分類器的組合學習演算法，由 L Breiman 於 2001 年提出。原始隨機森林演算法中分類器為 CART (Classification and Regression Tree) 樹，透過 Bagging 演算法進行組合學習，並在 CART 樹生長時隨機選取變數進行分裂。
+
+CART 為 Breiman 於 1984 年提出的演算法，此方法基本概念為使用二元分割規則來歸納與分析大量複雜變數的資料集。CART 演算法在過程中將資料進行分類，分類過程與樹狀結構類似，含有根 (root), 點 (node) 與樹葉 (leaf)。當分枝點進行分裂時，就是一次的伯努力實驗 (Bernoulli experiment)，表示由重複出現獨立但是相同分布的伯努力試驗組成，如拋硬幣數次，結果呈現二項式分布等。
+
+## CART 介紹
+
+### 演算法步驟如下
+
+1. 將樣本分成兩組，訓練組資料與測試組資料
+2. 使用訓練組資料建立決策數
+3. 使用測試組資料進行修剪
+4. 持續上述第 2~3 步驟，直到所有新內部節點都是樹葉節點為止。
+
+### 演算法流程介紹
+
+#### **建立最大樹狀結構**
+CART 使用遞迴方式將資料進行二元切割，在每個節點中，CART 會將資料劃分為兩個子資料集，當每一筆資料都以歸類在同一類別或已經無法找到新的分類進行節點分割時停止。流程如下：
+
+1. 產生分割條件
+2. 選擇一個分割條件
+3. 計算不純度(Impurity)，最常用的評估依據為 Gini 分類法。
+4. 檢測是否為最小不純度
+    * 若是，到第5
+    * 若否，到第2
+5. 產生分類
+
+* Gini 分類法
+
+$$i(Node) = \sum_{j \neq i}p(i|node)*p(j|node)$$
+
+其中 $p(i|node)$ 就是節點 (node) 中 i 分類的純度，$p(j|node)$ 就是節點 (node) 中 j 分類的純度。
+
+![](images/cart.png)
+
+假設有三種類別 A, B 與 C，佔全部樣本比例為 20%, 30% 與 50%，各節點 Gini 值如下：
+
+$$i(node) = 1-(0.2^2+0.3^2+0.5^2) = 0.62$$
+$$i(N_L) = 1-(0.4^2 + 0.6^2) = 0.52$$
+$$i(N_R)=1-(1^2)=0$$
+而分割後不純度減少為 $0.62-(0.5*0.52)-(0.5*0)=0.36$。
+
+#### **修剪樹狀結構**
+
+CART 會透過測試樣本修剪樹狀結構以避免過度分配 (over-fitting)，使之找出適當大小的決策樹。
+
+#### **挑選最佳樹狀結構**
+
+可以透過 cross-validation，將測試樣本代入所有可能的樹狀結構，並計算誤判率，最後挑選最小的誤判率的樹狀結構為最佳樹。
+
+---
+
+## Random Forest
+
+### 隨機森林演算法
+
+隨機森林是一種組合學習演算法，概念如下圖
+
+![](images/random_forest.png)
+
+1. 使用 Bagging (又稱 Bootstrap aggregating) 演算法將資料生成訓練資料：假設有 $N$ 的樣本，每個樣本有 $M$ 個變數(特徵)，以隨機抽取但會放回的方式取得數個樣本而組成訓練資料，共生成 $n$ 資料集。
+
+2. 對每個訓練資料集，生成不同的隨機向量 $\theta_i$，隨機選擇 $m$ 的變數 (且 $m < M$)，對其中每個變數都嘗試分割，以選擇達到最小的 Gini 係數的分割方進行分裂，生成 CART 樹。
+
+3. 讓每顆樹生長，不進行剪枝。
+
+4. 對這 $n$ 顆樹的結果進行組合：若為分類資料，則用簡單多數投票法，若為迴歸，則用平均法。
+
+### Out-Of-Bag 估計
+
+透過 Bagging 方法應用於組合分類器演算法時，是透過自助採樣 (Bootstrap Sampling) 生成各不相同的訓練集來建構各個分類器，用 Bootstrap 方式生成的訓練資料集時，原始樣本中有一部分原始樣本資料(~ 40%)不會出現在訓練資料集中，這些資料便稱為 Out-Of-Bag (OOB) 資料。而透過這些資料來評估模型的方式，稱為 OOB 估計。
+
+可以透過 OOB 資料來估計樹的泛化誤差(Generalization error)，亦可以用來計算單個特徵的重要性。舉例而言，對於每一顆樹，我們都可以透過 OOB 資料來取得誤差估計，將森林中所有樹的 OOB 誤差估計取平均值，便可以得到隨機森林的泛化誤差估計值。
+
+一般而言，另一種用來估計分類器的資料採樣方式為交叉驗證(Cross Validation)，相較起交叉驗證，OOB 估計能透過少量資料的計算量達到近似於交叉驗證的結果，對於交叉驗證的高計算量下，是一個節省資源的採樣及估計方式。
+
+### 演算法優缺點
+
+#### 優點
+
+* 隨機森林的基礎演算法是基於 CART 演算法，故可以處理類別資料與連續資料。
+* 對大多數資料而言，隨機森林演算法的擬和結果準確率高。
+* 接受高維度特徵資料。
+* 使用 Bagging 採樣方式，以 OOB 方式進行誤差分析，能提升運算效率。
+* 對雜訊容忍度高。
+* 處理非平衡誤差資料時，能平衡誤差。
+* 分類資料時亦能算出相似度
+
+#### 缺點
+
+* 運算需要大量記憶體，儲存每顆樹的資訊。
+* 因隨機森林是決策樹的組合學習，無法針對單一顆樹作解釋。
+
+### Missing Value 問題
+
+一般處理缺失值的方式有二：以資料的統計值進行填值與透過相似度比較並配合加權值計算後填值。
+
+#### 統計填值
+
+* 數值型或連續資料:以樣本之中位數來填值。
+* 類別型資料:以眾數來填值。
+
+#### 加權方式填值
+
+透過樣本間的相似度比較，填補的缺失值依相似度進行加權後填值。
+
+### 平衡誤差
+
+在一些資料集中，可能存在類別間的非平衡誤差，特別是在一些類別不平衡的資料中，即一些類別的樣本數很大，一些類別的樣本數很小。而因隨機森林追求總體誤差最小，可能會造成一些類別的樣本數誤差很大，一些類別的樣本數誤差很小。
+
+這時便需要針對不同類別進行平衡，例如透過加權值方式達成，參考下方 randomForest 原型的參數 **classwt**。
+
+### 主要應用
+
+* 用來度量變數的重要性：如對一重要特徵加入雜訊後，會造成隨機森林的預測準確率顯著降低，用前後準確率之差來評估變數重要性。
+
+* 可以透過樣本相似度來找出局外點 (Outlier)。透過將兩個樣本資料在同一個葉子節點上，則視為同一類(相似度為1)，根據此規則可以建立樣本間的關係矩陣。若對不同樹的分類結果進行投票，之後再除以總數便可以得到兩個樣本相似度。根據相似度便可以判斷是否為野點。
+
+### 安裝套件
+
+```{r}
+packageName <- "randomForest"
+if(!(packageName %in% rownames(installed.packages()))) {
+  install.packages("randomForest")
+}
+library("randomForest")
+```
+
+### 準備資料
+
+使用內建的 iris 資料。
+
+```{r}
+data(iris)
+set.seed(111)
+
+# 建立抽樣樣本
+# 1 表示為訓練資料
+# 2 表示為測試資料
+ind <- sample(2, nrow(iris), replace = TRUE, prob = c(0.8, 0.2))
+```
+
+### 建立隨機森林模型
+
+```r
+# the prototype of randomForest
+# formula: 公式
+# data: 要進行訓練的資料
+# subset: 索引向量，表示那些行被用來訓練
+# x: 輸入變數
+# y: 預測變數及輸出變數
+# xtest: 測試集輸入的變數
+# ytest: 測試集輸出的變數
+# mtry: 每個枝中分裂的數目
+# ntree: 幾顆樹
+# replace: 是否重複選取資料
+# classwt: 各類的加權值，預設為 1
+# do.trace: 是否列出建樹運行過程
+# cutoff: 針對分類樹的切割點，預設為 1/k，k 為類數
+# strata: 分層抽樣中的因數向量
+# sampsize: 抽樣數
+# importance: 估計出變數的重要性
+# localImp: 計算出樣本的重要性
+# nPerm: 估計變數重要性，每顆樹 OOB 估計資料變化的次數
+# proximity: 估計樣本間的相似度
+randomForest(formula, data=NULL, ..., subset, na.action=na.fail)
+randomForest(x, y=NULL,  xtest=NULL, ytest=NULL, ntree=500,
+             mtry=if (!is.null(y) && !is.factor(y))
+             max(floor(ncol(x)/3), 1) else floor(sqrt(ncol(x))),
+             replace=TRUE, classwt=NULL, cutoff, strata,
+             sampsize = if (replace) nrow(x) else ceiling(.632*nrow(x)),
+             nodesize = if (!is.null(y) && !is.factor(y)) 5 else 1,
+             maxnodes = NULL,
+             importance=FALSE, localImp=FALSE, nPerm=1,
+             proximity, oob.prox=proximity,
+             norm.votes=TRUE, do.trace=FALSE,
+             keep.forest=!is.null(y) && is.null(xtest), corr.bias=FALSE,
+             keep.inbag=FALSE, ...)
+```
+
+```{r}
+iris.rf <- randomForest(Species ~ ., data=iris[ind == 1,])
+iris.rf
+```
+
+### 對測試資料進行預測
+
+```r
+# the prototype of predict
+# model: 隨機森林模型
+# testdata: 測試資料
+# type: response(預測的值), prob(預測各水準的機率), vote(預測各水準的投票數)
+predict(model, testdata, type=response, ...)
+```
+
+```{r}
+iris.pred <- predict(iris.rf, iris[ind==2,])
+iris.pred
+```
+
+### 生成交叉矩陣
+
+```{r}
+table(observed=iris[ind==2,"Species"], predicted = iris.pred)
+```
+
+由上的預測結果可以看出，測試資料中 setosa 的樣本全部都預測正確；versicolor 有 8 個樣本正確分類，而有 2 個樣本分類錯誤；virginica 則有 1 個樣本被分類錯誤。
+
+### 求得變數的重要性，並畫出重要性圖
+
+```{r}
+importance(iris.rf)
+```
+
+```{r}
+# sort: 是否按重要性降冪排列
+varImpPlot(iris.rf, sort = TRUE)
+```
+
+透過 Mean Decrease Gini 來衡量變數重要性指數，表示 Gini 係數減少的平均值。在隨機森林中，衡量變數的重要性方法是透過剔除該變數，並將剔除變數的模型與原模型比較，差異越大表示變數越重要。如本例中，重要變數為 Petal.Width，較不重要為 Sepal.Width。
+
+### 樣本相似度
+
+```{r}
+predict(iris.rf, iris[ind==2,], proximity = TRUE)
+```
+
+隨機森林中可以用來計算樣本相似度，根據原理為在 $n$ 顆樹中，樣本 A 與樣本 B 同時被分到同一個葉節點的比例就是兩個樣本的相似度。舉上例而言樣本 18 與樣本 25 相似度為 1.0。
+
+
+
+
+
+

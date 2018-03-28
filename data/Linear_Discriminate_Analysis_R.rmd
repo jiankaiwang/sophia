@@ -1,0 +1,93 @@
+---
+title: "線性判別分析 (Linear Discriminate Analysis)"
+author: "JianKai Wang"
+date: "2018年3月13日"
+output: html_document
+---
+
+
+試圖找到兩類物體或事件的特徵的一個線性組合，以能夠特徵化或區分它們。所得的組合可用來作為一個線性分類器，或者，更常見的是，為後續的分類做降維處理。
+
+## 安裝套件
+
+於 R 中套件 MASS 提供 LDA 函式。
+
+```{r}
+if(!("MASS" %in% rownames(installed.packages()))) {
+  install.packages("MASS")
+}
+library("MASS")
+```
+
+## 資料準備
+
+使用 R 內建的 iris 資料當例子，其中 iris 由 5 個變數組成，iris 資料維度為 [50,4,3] (50 行 x 4 列 x 3 類別) ，分別為 Sepal.L, Sepal.W, Petal.L, Petal.W 與 Sp。其中 Sp 由 3 類組成，即 Setosa (s), Versicolor (c) 及 Virginica (v)。此 5 項資料中，前 4 項為特徵變數，最後 1 項為分組變數。
+
+```{r}
+Iris = data.frame(
+  rbind(iris3[,,1],iris3[,,2],iris3[,,3])
+)
+Sp = rep(c("s","c","v"), rep(50,3))
+```
+
+## LDA 分析
+
+* train 為訓練用資料，從 1~150 筆資料中，隨機取得 75 筆做為測試用。而剩餘的 75 筆資料則作為驗證(預測)使用。
+* 底下為 LDA 的函式原型及說明
+
+```r
+# lda prototype
+# |- x: 公式，如 groups~x1+x2+...
+# |- data: 資料
+# |- prior: 用來指定總體上每組出現的機率，即先驗機率
+# |- subset: 指定資料中一部分當作 training data
+lda(x, data, prior=probability, subset=c(), ...)
+```
+
+```{r}
+train = sample(1:150, 75)
+
+# Sp~. 表示將分類(Sp)針對所有特徵(共四項)進行 LDA 分析
+z = lda(Sp~., Iris, prior=c(1,1,1)/3, subset=train)
+z
+```
+
+* 訓練出來的模型可以透過 **predict** 來預測資料
+
+```r
+# predict prototype
+# |- model: LDA 模型
+# |- testing_data: 用來預測的模型
+predict(model, testing_data)
+```
+
+```{r}
+# true class
+Sp[-train]
+
+# predicted class
+predict(z, Iris[-train,])$class
+```
+
+* 透過 **update** 更新 LDA 模型與指定要更新的特徵
+
+```r
+# update prototype
+# |- update_feature: .~. 為更新所有變數，或如　.~.-Petal.W. 表示去除 Petal.W 之外所有特徵皆更新
+update(Origin_model, update_features)
+```
+
+```{r}
+(z1 = update(z,.~.))
+```
+
+而 LD1 與 LD2 表示為判別係數，代表判別函式能夠解釋原來特徵之中變異資料所佔的比例。而 LD1 達 98.5% 表示已足夠用來判斷資料。
+
+
+
+
+
+
+
+
+
