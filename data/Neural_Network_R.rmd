@@ -1,0 +1,152 @@
+---
+title: "神經網路 (Neural Network)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月3日"
+output: html_document
+---
+
+## 類神經網路
+
+### 套件準備
+
+神經網路於 R 中可以透過套件 **nnet** 來實作，可以用來建構與擬和隱藏層 (Hidden Layers)。
+
+```{r}
+packageName <- c("nnet")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+lapply(packageName, require, character.only = TRUE)
+```
+
+### 資料準備
+
+使用內建的 **iris** 資料集。iris 以鳶尾花的特徵作為資料來源，共含有 150 筆資料，分成 3 類，每類各 50 筆資料，每筆資料各有 4 個特徵。
+
+類神經網路訓練的規律在樣本中，樣本需要足夠代表性，也需要注意樣本的均衡性及多樣性，盡量讓不同類的樣本數量大致相等為佳。本例中便是針對不同類別分別提取相同數量的樣本。其次透過函式 **class.ind** 處理分類標籤，回傳一分類向量，以 1,0 代表是否屬於該類別，似 one-hot encoding。
+
+```{r}
+data(iris3)
+set.seed(123)
+Iris <- rbind(iris3[,,1],iris3[,,2],iris3[,,3])
+class_encoding <- class.ind(c(rep("s",50), rep("c",50), rep("v",50)))
+head(class_encoding, 5)
+```
+
+```{r}
+training_idx <- c(sample(1:50,25), sample(51:100,25), sample(101:150,25))
+training_data.label <- class_encoding[training_idx, ]
+training_data <- Iris[training_idx,]
+testing_data <- Iris[-training_idx,]
+```
+
+### 建構網路
+
+```r
+# the prototype of nnet
+# x: 特徵矩陣
+# y: 分類矩陣
+# formula: 擬合公式，如 Class(輸出類別) ~ x1(屬性1) + x2(屬性2) + x3(屬性3) + ... 等
+# data: 含有特徵與分類的資料框
+# weights: 分類類別權重
+# subset: 指定用來訓練的樣本
+# na.action: 對缺失值的處理，如 na.pass, na.omit 等
+# size: 隱藏層的神經元個數
+# mask: 邏輯向量，用來表示那些參數需要被考慮用來建網路(默認為所有)
+# linout: 線性輸出單元的開關，預設為 logistic 輸出函式
+# entropy: 是否符合最大條件似然估計，預設為最小平方法(least-squares)
+# softmax: 符合對數線型模型(log-linear model)或最大條件似然估計的開關，而 linout, entropy, softmax 與 censored 為互斥
+# censored: softmax 的變種，產生出的結果表示所有可能的分類。舉例若 softmax 分類結果為 (0,1,1) 表示分類結果為第 2 `及`第 3 類，而若 censored 分類結果為 (0,1,1) 表示分類結果為第 2 `或`第 3 類
+# skip: 在輸入或輸出之間是否設置跳層連接
+# rang: 初始的隨機權重值定義範圍，及 [-rang, rang]
+# decay: 權重參數的衰減率，預設為 0
+# maxit: 最大反覆計算數值，預設為 100
+# Hess: 若為真，則回傳最佳權值的 Hess Matrix
+# trace: 列出每次優化過程
+# MaxNWs: 設定最大權值，值越大擬合會越耗時
+# abstol: 擬合終止條件，低於 abstol，表示達到可接受擬合
+# reltol: 若優化一值無法達到設定標準，則當已優化參數已達到 1-reltol 時，則停止
+nnet(formula, data, weights, subset, na.action, ...)
+nnet(x, y, weights, size, Wts, mask,
+     linout = FALSE, entropy = FALSE, softmax = FALSE,
+     censored = FALSE, skip = FALSE, rang = 0.7, decay = 0,
+     maxit = 100, Hess = FALSE, trace = TRUE, MaxNWts = 1000,
+     abstol = 1.0e-4, reltol = 1.0e-8, ...)
+```
+
+建立網路模型，隱藏層數為 3, 隨機權重值為 0.1，權值衰減率為 5e-6，最大反覆計算次數為 800。
+回傳值中 **weights** 表示共有幾個參數值(表示 node 間的加權值，此為訓練出的結果)，**value** 表示樣本誤差的值。而若有出現 **converged** 表示結果已經收斂，若是出現 `stopped after N iterations` 表示已達最大反覆計算次數，但尚未收斂。
+
+```{r}
+iris.nn <- nnet(training_data, training_data.label, 
+  size = 3, rang = 0.1, decay = 5e-6, maxit = 800)
+```
+
+### 網路建置方式與權值
+
+此網路共有 27 個參數，其中 21 個為權重值(weights)，5 個為偏差值(bias)。網路建構中 $b$ 為 bias，$i_n, n=1...k$ 表示輸入特徵值，而 $o$ 為 output (輸出)的節點。
+
+```{r}
+# 網路建置方式
+summary(iris.nn)
+
+# 網路層數中各有幾個 node 組成
+iris.nn$n
+
+# 顯示出學習後的 node 間參數值
+iris.nn$wts
+```
+
+### 預測資料並建立列聯表
+
+```{r}
+# max.col 會回傳該列(row)資料中值最大的行索引(column index)
+iris.nn.test <- function(real, pred) {
+  real.data <- max.col(real)
+  pred.data <- max.col(pred)
+  table(real.data, pred.data)
+}
+iris.nn.test(class_encoding[-training_idx,], predict(iris.nn, testing_data))
+```
+
+由上可以看出此模型分錯了 6 筆資料，sensitivity 約為 92%。
+
+### [optional] 透過擬合公式建立神經網路
+
+* 準備資料
+
+```{r}
+newIris <- data.frame(
+  rbind(iris3[,,1],iris3[,,2],iris3[,,3]), 
+  Species=factor(c(rep("s",50), rep("c",50), rep("v",50)))
+)
+head(newIris, 5)
+```
+
+* 透過擬合公式建立神經網路
+
+```{r}
+newIris.sample <- c(sample(1:50,25), sample(51:100,25), sample(101:150,25))
+newIris.nn <- nnet(
+  Species ~ ., newIris, subset = newIris.sample,
+  size = 3, rang = 0.1, decay = 5e-6, maxit = 800
+)
+```
+
+* 預測結果並建立列聯表
+
+```{r}
+table(
+  newIris$Species[-newIris.sample], 
+  predict(newIris.nn, newIris[-newIris.sample,], type = "class")
+)
+```
+
+
+
+
+
+
+

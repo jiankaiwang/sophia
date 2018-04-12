@@ -1,0 +1,308 @@
+---
+title: "支援向量機 (Support Vector Machine)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年3月28日"
+output: html_document
+---
+
+支援向量機(Support Vector Machine, SVM)最早於 1995 年由貝爾實驗室 Vapnik 博士團隊與 AT & T 實驗室以統計學習理論基礎，發展出針對資料分類、迴歸與圖形辨識的機器學習模型。SVM 為一監督式學習中，將自變數與應變數間的應對關係從較低維度的向量空間提升至較高維度的向量空間，並在高維空間中透過極佳化工具尋找新的對應函式，使其投影的分類效果最佳。經過訓練的 SVM 模組更可以產出一個模型檔案，並可持續性訓練或移至其他平台使用。
+
+**Reference**
+* https://cran.r-project.org/web/packages/e1071/e1071.pdf
+
+## 支援向量機架構
+
+SVM 架構主要由核心函式(Kernel Function)與超平面(Hyperplace)兩項組成，這也是影響 SVM 模型優劣的好壞。
+
+### 超平面(Hyperplane)
+
+SVM 主要理論為將資料特徵向量映射到一個更高維的空間裡，在這個空間中尋找一個最大間隔超平面(hyperplane)可以將資料一分為二。因可能遇到的實際資料為高維度的資料，故超平面表示在高維的平面。在超平面兩側建有兩個平行的超平面，目的為分隔超平面使兩個超平面距離最大化。以二維資料為例，希望能找出一條線能將黑點與白點分開，而且希望這條線距離這兩個集合的邊界(Margin)越大越好，如此一來才能有效的區分點是屬於哪個集合的，否則容易在計算上因精度問題造成誤差。
+
+![](images/hyperplane.png)
+
+### 核心函式(Kernel Functions)
+
+若資料為線性可分割狀況下可直接使用超平面進行分類，但若針對非線性資料進行分類，須採用核心函式將資料轉型，將輸入資料由低維度空間藉由核心函式(mapping function,  $\phi$)的轉換映射到高維度空間，讓資料分散程度更大，在高維空間中就可以將原本線性不可分割的資料透過線性(即最佳超平面)方式一分為二。簡而言之，核心函式就是將非線性資料轉換為線性資料，之後便可以進行分割。舉例而言，有一個二維投影至三維的映射函數 
+
+$$\phi:R^2 \rightarrow R^3,\ \phi(x_1,x_2) = (Z_1, Z_2, Z_3) = (x^2_1, 2x_1x_2, x^2_2)\ ... (1)$$
+
+則原來一點 $(1,0)\rightarrow(1,0,0)$，另一點 $(1,1)\rightarrow(1,2,1)$，當資料間分散程度更大時，對於找尋超平面更加容易。
+
+而高維度空間計算方式如下：
+$$
+||\phi(\vec{x})-\phi(\vec{x'})||^2 = \phi(\vec{x})\phi(\vec{x})-2\phi(\vec{x})\phi(\vec{x'})+\phi(\vec{x'})\phi(\vec{x'})\ ...(2)
+$$
+
+$$設\ \vec{x}=\lgroup^{x_1}_{x_2}\rgroup,\vec{x'}=\lgroup^{x'_1}_{x'_2}\rgroup$$
+則帶入$(1)$公式後，$\vec{x}$ 與 $\vec{x'}$ 距離為 
+
+$$
+\phi(\vec{x})\phi(\vec{x'})=[x^2_1, 2x_1x_2,x^2_2][x'^2_1, 2x'_1x'_2,x'^2_2] \\
+= x^2_1x'^2_1+4x_1x_2x'_1x'_2+x^2_2x'^2_2 \\
+= (x_1x'_1 + x_2x'_2)\triangle{K}(\vec{x},\vec{x'})=(\vec{x},\vec{x'})^2\ ...(3)
+$$
+
+由上述(3)可知，投影至高維度的內積結果，可以視為原始資料的某個函數型式，這個函數便稱為 **kernel function**。一般而言，映射函數$\phi$是一複雜函式，較不易求取，故 SVM 計算時會直接透過 kernel function 直接計算高維度空間內積的轉換。
+
+常見的 kernel function 如下：
+
+* Linear: $K(\vec{x_i},\vec{x_j}) = \vec{x^T_i}\vec{x_j}$
+* Polynomial: $K(\vec{x_i},\vec{x_j}) = \gamma{\vec{x^T_i}\vec{x_j}} + r,\ \gamma >0$
+* Radiasl Basis Function(RBF): $K(\vec{x_i},\vec{x_j}) = exp(-\gamma{||\vec{x_i}\vec{x_j}||^2},\ \gamma >0)$
+* sigmoid: $K(\vec{x_i},\vec{x_j}) = tanh(\gamma{\vec{x^T_i}\vec{x_j}} + r),\ \gamma >0$
+* Wahba's Representer theorem: 任何一個法向量皆可用投影至高維度的其他向量的線性組合來表示。
+
+在超平面的圖中的 $H_1$ 及 $H_2$ 便可稱為支援超平面 (Support Hyperplane)，此與最佳超平面(Optimal Seperating Hyperplane)平行。
+若以數學方式表示，$w$ 為平面法向量，$b$ 為偏移量，則決定函數為
+
+$$
+y_2 = \vec{w^T}\vec{X_i} + \vec{b} \geq 1,\ 其中\ y_i\ 為黑點\\
+y_1 = \vec{w^T}\vec{X_i} + \vec{b} \leq -1,\ 其中\ y_i\ 為白點\\
+...(4)
+$$
+
+而 $y_2$ 便可視成 $H_2$，$y_1$ 便可視成 $H_1$，此 $y_2$ 與 $y_1$ 便稱為 Support Hyperplane，與最佳平面($H_0$, 可視成 $y_0 = \vec{w^T}\vec{X_i} + \vec{b} = 0$ )平行，但距離兩類資料最接近的平面，其中邊界為(margin)可以寫成 $\frac{2}{||\vec{w}||} ... (5)$，期望能在上述(4)公式條件下，求得(5)公式的最大值。而 SVM 便是要尋找$H_0$(最佳超平面)。
+
+## 支援向量機實作
+
+* 結構化風險最小誤差法 (SRM): 由超平面及核心函數中已知(可參考超平面中圖)，$H_0$, $H_1$, $H_2$ 皆可達到區分類別的效果，但其中 $H_0$ 為最佳。而因 $H_0$ 與兩類資料的距離最大，此類學習方式過程稱為結構化風險最小誤差法(Structural Risk Minimization, SRM)，期望讓分類器在期望誤差中找到最小值。
+
+* 支援向量 (Support Vector): 參考函式 $y_1 = \vec{w^T}\vec{X_i} + \vec{b} \leq -1$ 與 $y_2 = \vec{w^T}\vec{X_i} + \vec{b} \geq 1$，若有一資料點 $x_i$ 可使上述函式成立，則稱 $x_i$ 為支援向量(Support Vector)。
+
+* SVM 實作: 由上已知支援向量為一重要特性，支援向量可被用來決定最佳平面上的向量集合，通常是所有樣本的其中一部分。實作上，可以選擇兩個不同的點，在特徵空間中決定一個 SVM 超平面，故選擇一組最小特徵組合使得分類結果最好是很重要。而配合 n-1 等交叉檢驗方法可以有效避免過度適應問題。
+
+
+## 支援向量機多類別分類
+
+基本的支援向量機是用於處理兩個類別(Binary Classification)的分類問題，如何有效的延伸至多類別分類仍然是重要的課題。目前 SVM 解決多元分類的方法有二種，一對多(One-against-rest)與一對一(One-against-one)。
+
+* 一對多(One-against-rest): 若有 n 類資料，則就有 n 個 svm，目的是分辨是否屬於特定類的 SVM。
+* 一對一(One-against-one): 對任兩類資料都製造一個 SVM，共需要 $\frac{k(k-1)}{2}$ 個 SVM。
+
+以下圖為例，全部有 8 類資料，每個圓圈都是一個 SVM，最底層有 8 個分類器(代表各類分類器)。每個分類器獨自訓練後，當有一測試資料進來後，依序由底層 8 個分類器進行判斷(或稱比賽)，將結果互相比較後，結果較佳的分類器進入下一輪比賽，其中`(m,n)`表示為由 m 及 n 兩類組成的二元分類器，依序下去找出最有可能的分類結果。
+
+![](images/oao-svm.png)
+
+## R 分類資料實作
+
+### 安裝套件
+
+```{r}
+packageName <- c("e1071","plot3D")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+lapply(packageName, require, character.only = TRUE)
+```
+
+### 準備資料
+
+```{r}
+data(iris)
+iris_color <- rep(c("red","green","blue"), rep(50,3))
+plot(
+  x = iris$Sepal.Length, 
+  y = iris$Sepal.Width,
+  main = "Iris Sepal",
+  xlab = "Length",
+  ylab = "Width",
+  col = iris_color
+)
+points(7.2, 2, pch = 21, col = "red", bg = "red")
+text(7.5, 2, "setosa")
+points(7.2, 2.2, pch = 21, col = "green", bg = "green")
+text(7.5, 2.2, "versicolor")
+points(7.2, 2.4, pch = 21, col = "blue", bg = "blue")
+text(7.5, 2.4, "virginica")
+```
+
+```{r}
+plot(
+  x = iris$Petal.Length, 
+  y = iris$Petal.Width,
+  main = "Iris Petal",
+  xlab = "Length",
+  ylab = "Width",
+  col = iris_color
+)
+points(6.0, 0.2, pch = 21, col = "red", bg = "red")
+text(6.5, 0.2, "setosa")
+points(6.0, 0.4, pch = 21, col = "green", bg = "green")
+text(6.5, 0.4, "versicolor")
+points(6.0, 0.6, pch = 21, col = "blue", bg = "blue")
+text(6.5, 0.6, "virginica")
+```
+
+由上可以看出 versicolor 與 virginica 的 Sepal.Length 與 Sepal.Width 兩特徵不易區分，但三種花的 Petel.Length 與 Petel.Width 皆呈正比，且 versicolor 與 virginica 的 Petel.Length 特徵應可以做出區分，故可以加上 Petal.Length 特徵後可將兩個區分出來。
+
+```{r}
+senInd <- which(iris[,5] == "setosa")
+newIris <- iris[-senInd,,]
+scatter3D(
+  newIris$Sepal.Length, newIris$Petal.Length, newIris$Sepal.Width
+  , col = iris_color[-senInd], surface=FALSE, groups = newIris$Species
+  , grid = FALSE,  ticktype = "detailed"
+  , xlab = "Sepal.Length", ylab="Petal.Length", zlab="Sepal.Width"
+  , cex = 1, pch = 1
+)
+```
+
+若僅將 versicolor 與 virginica 獨立畫出，結果如上，
+
+### SVM 模型建立
+
+```r
+# the prototype of svm
+# kernel: (/w parameters)
+# |- linear
+# |- polynomial: gamma, coef(0), degree
+# |- radial basis: gamma
+# |- sigmoid: gamma, coef(0)
+# type: svm 類型，c(分類), nu(分類或迴歸), one(分類,異常值檢測), eps(迴歸)
+# cost: C-constant of the regularization term in the Lagrange formulation
+# class.weights: 是否對特徵進行加權
+# na.action: 對 NA 值處理
+svm(formula, data, type, kernel
+  , degree=3, gamma, coef0, cost=1
+  , class.weights = 1
+  , na.action = na.omit)
+```
+
+```{r}
+set.seed(1338)
+training <- sample(seq(1,150), size=80)
+training_data <- iris[training,]
+testing_data <- iris[-training,]
+iris.svm <- svm(
+  Species~., training_data
+  , type="C-classification"
+  , kernel = "radial"
+  , gamma = 10
+)
+print(iris.svm)
+summary(iris.svm)
+```
+
+### SVM 預測
+
+```{r}
+# test with train data
+pred <- predict(iris.svm, testing_data)
+
+# 測試資料交叉矩陣
+table(prediction=pred, observed=iris$Species[-training])
+```
+
+由上結果可知，SVM 正確區分出 setosa；而在分類 versicolor，有誤分類 7 個樣本至 setosa 與 誤分類 4 個樣本至 virginica；在分類 virginica 上和 setosa 相同，皆全部分類正確。
+
+### SVM 顯示決定機率
+
+```{r}
+training_model <- predict(iris.svm, training_data, decision.values = TRUE)
+attr(training_model, "decision.values")[1:4,]
+```
+
+### 透過多維標度法 (Multidimensional Scaling, MDS) 歸類資料
+
+```{r}
+plot(
+  cmdscale(dist(iris[,-5])),
+  col = as.integer(iris[,5]),
+  pch = c("o","+")[1:150 %in% training + 1]
+)
+```
+
+其中 `+` 表示為用來訓練的樣本，而 `o` 表示為測試資料的樣本。
+
+## R 迴歸資料實作
+
+### 準備資料
+
+產生 Normal Distribution 資料，並嘗試找出一條迴歸線來符合這些資料。
+
+```{r}
+x <- seq(0.1, 5, by = 0.05)
+y <- log(x) + rnorm(x, sd = 0.2)
+plot(x, y)
+```
+
+### 建立 SVM 模型與預測資料
+
+```{r}
+# polynomial
+reg.svm <- svm(
+  y ~ x
+  , type="eps-regression"
+  , kernel = "polynomial"
+)
+reg.svm.poly <- predict(reg.svm, x)
+
+# linear
+reg.svm <- svm(
+  y ~ x
+  , type="eps-regression"
+  , kernel = "linear"
+)
+reg.svm.linear <- predict(reg.svm, x)
+```
+
+### 視覺化結果
+
+```{r}
+plot(x, y)
+points(x, log(x), col = 2)
+points(x, reg.svm.poly, col = 4)
+points(x, reg.svm.linear, col = 51)
+```
+
+藍色線為取 $log$ 函式結果，綠色線為 SVM 採用 linear 迴歸結果，而紅色線為 SVM 採用 polynomial 迴歸的結果。
+
+## R 密度估計實作
+
+### 準備資料
+
+```{r}
+# 創造 2 維訓練資料
+x <- data.frame(a = rnorm(1000), b = rnorm(1000))
+plot(x$a, x$b)
+
+# 創造 2 維測試資料
+newdata <- data.frame(a = c(0, 4), b = c(0, 4))
+```
+
+### 創建 SVM 模型並進行預測測試資料
+
+```{r}
+de.svm <- svm(~ a+b, data = x, gamma = 0.1)
+predict (de.svm, newdata)
+```
+
+### 視覺化資料
+
+```{r}
+plot(x, col = 1:1000 %in% de.svm$index + 1, xlim = c(-5,5), ylim=c(-5,5))
+points(newdata, pch = "+", col = 2, cex = 5)
+```
+
+## R 持續性訓練 SVM 模型
+
+### 儲存模型
+
+```{r}
+# export 
+write.svm.model <- write.svm(iris.svm, svm.file = "iris-classifier.svm", scale.file = "iris-classifier.scale")
+```
+
+### 存取模型
+
+```{r}
+# 存取 scale 檔案，第 n 列(row)表示第 n 個維度
+# 第 1 行(column)表示中間值，第 2 行為 scale 值
+read.table("iris-classifier.scale")
+```
+
+雖然 SVM 模組可以匯出，但 `e1071` 套件目前並無 `read.svm` 等函式可以直接 SVM 模型匯入。
+
+

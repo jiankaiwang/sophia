@@ -1,0 +1,69 @@
+---
+title: "超幾何機率分布 (Hypergeometeric test)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月12日"
+output: html_document
+---
+
+Hypergeometeric 分布為描述由有限 n 個物件，抽出指定種類的物件的次數，且抽出不放回去的機率分布。而 Hypergeometeric test 為一無母數的檢定方式。其定義如下：
+
+$$
+p=\sum_{i=E}^{n}\frac{\binom{M}{i}\binom{N-M}{n-i}}{\binom{N}{n}}
+$$
+
+其中 $N$ 為所有物件(或群體數)，$M$ 為在 $N$ 中擁有某屬性 $E$ 的物件總數，$N-M$ 為在 $N$ 中不含有屬性 $E$ 的物件總數，$n$ 為取樣數目，$i$ 為取樣 $n$ 中含有屬性 $E$ 的物件數目。
+
+範例如下:
+
+| 描述 | 標籤 |
+| -- | -- |
+| Gene ontology reference database contains 1000 genes. | i = 3, n = 10 |
+| There are 200 genes involving type "DNA repair". | M = 200, N = 1000 |
+| Now, one group contains 10 genes. what is p-value that contains at least 3 genes with the type? | p-value = p(3) + p(4) + p(5) + ... + p(10) = 0.2021 + 0.0877 + ... + 8.52e-08 = 0.32189479 |
+
+## R 實作
+
+可以透過 R 基礎套件 **stats** 中函式 **phyper** 來進行檢定
+
+```r
+# the prototype of phyper
+# q: 自含有黑球與白球的球桶中抽出白球的數目 (白球代表含有屬性 E 的球)
+# m: 球桶中白球的總數
+# n: 球桶中黑球的總數
+# k: 從球桶中抽出球的總數(包含白球與黑球)
+# lower.tail: 若為真 (預設), 機率值表示 P[X ≤ x], 否則 P[X > x]
+# log.p: 若為真，機率取 log 計算後回傳值
+phyper(q, m, n, k, lower.tail = TRUE, log.p = FALSE)
+```
+
+以上述為例
+
+群體總數(基因總數) : 1000
+抽樣數 : 10
+群體中含有特別屬性(特別基因)的總數 : 200
+抽樣數中含有特別屬性(特別基因)的總數 : $2 < n \leq 10$
+
+```{r}
+# 進行檢定
+# 需注意要 -1，因 lower.tail=FALSE 說明 P(X > x) == P(X > 2)
+phyper(3-1, 200, 800, 10, lower.tail = FALSE)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

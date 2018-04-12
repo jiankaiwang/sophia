@@ -1,0 +1,277 @@
+---
+title: "模糊 C 平均 (Fuzzy C-Means)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月11日"
+output: html_document
+---
+
+非監督式學習是機器學習中重要的一支，也是目前機器學習中發展核心，其中一議題便是分群(clustering)，將大量資料經機器透過一些規則自我形成一群聚。常見的分群演算法，如 k-means, SOM 等為硬分群 (hard partitions, hard clustering)，一筆資料只會被分配到單一群聚中，在資料具代表性且資料量多時，硬分群是效果佳的演算法；但在實務上，資料蒐集本身可能就是問題，甚至是需經長時間來收集不同樣態特徵的樣本，此時硬分群的結果就不盡人意。此外，資料中多有不同樣態的雜訊(noise)，硬分群在資料前處理不佳下，很容易受到雜訊的影響，也會對分群的結果大打折扣。針對資料蒐集、資料樣態或雜訊處理等議題，軟分群(soft clustering)的概念就被提出，其中最有名的就是模糊 C 平均(Fuzzy C-Means, FCM)演算法，最早由 J.C. Dunn 於 1973 提出，經 James C.Bezdek 進行優化。軟分群不同於硬分群有底下數點
+
+* 能說明該分群結果有多少程度能代表該資料
+* 能說明資料有多少程度屬於該分群，又有多少程度屬於另一分群
+* 對於雜訊具有較佳的容忍度
+
+Fuzzy C-means 演算法與 k-means 相似，不同於允許資料不同程度上屬於多個群聚，而 FCM 要解決的問題是最小化加權後平方誤差(minimization of a weighted square error function)，即最小化底下的目標函式
+
+$$
+J_m = \sum_{i=1}^{N}\sum_{j=1}^{C}u_{ij}^m||x_i-c_j||^2\ ,\ 1 \leq m < \infty
+$$
+
+其中 $m \geq 1$，$u_{ij}$ 代表資料 $X_i$ 屬於分群 $j$ 的程度(degree of membership), $x_i$ 是資料 $x$ 全部 $d$ 維度中第 $i$ 維的資料，$c_j$ 表示群集的中心(亦有 $d$ 維度資料)，$||*||$ 表示資料與中心點間的相似度。而模糊分群法是一反覆計算最佳化目標函式的過程，並不斷更新成員程度($u_{ij}$)與中心點 $c_j$，如下
+
+$$
+u_{ij} = \frac{1}{\sum_{k=1}^{C}(\frac{||x_i-c_j||}{||x_i-c_k||})^{(\frac{2}{m-1})}}, \\
+c_j = \frac{\sum_{i=1}^Nu_{ij}^m*x_i}{\sum_{i=1}^Nu_{ij}^m}
+$$
+
+而反覆計算停止的條件為當 $max_{ij}\{\|u_{ij}^{(k+1)}-u_{ij}^{(k)}|\} < \varepsilon$，而 $\varepsilon$ 為介於 0 至 1 的終止條件，而 $k$ 為反覆的步驟，這過程會收斂於目標函式 $J_m$ 的區域最小值(local minimum)或鞍點(saddle point)。
+
+FCM 演算法如下:
+
+1. 初始化 $U^{(0)}=[u_{ij}]$ 矩陣
+2. 在第 k 步驟時，計算中心點的特徵向量 $C^{(k)}=[c_j]$，$c_j$ 計算請參考上述
+3. 更新 $U^{(k)}$ 及 $U^{(k+1)}$ 矩陣
+4. 若 $||U^{(k+1)}-U^{(k)}|| < \varepsilon$，則停止；否則重覆 2-4 步驟
+
+FCM 最常用於模式判斷，如時間序列資料等。
+
+## R 實作
+
+可以透過套件 **e1071** 中的函式 **mfuzz** 來實作模糊分群演算法。
+
+### 安裝套件
+
+```{r}
+packageName <- c("e1071")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+library("e1071")
+library("Mfuzz")
+```
+
+### 資料準備
+
+底下透過套件內建的酵母菌細胞週期分子資料來實作軟分群演算法。此酵母菌細胞週期分子資料收集 6178 個基因於 160 分鐘內的 17 個時間點的表現資料，並經過整理後列出 3000 個基因於 17 個時間點的表現資料。
+
+```{r}
+data(yeast)
+str(yeast)
+```
+
+此資料是使用 microchip (Affymetrix chips) 產出，包含如分析資料(assayData), 表現資料 (phenoData), 註解資料 (annotation), 與使用的 protocol (protocolData)等內容。
+
+* 每個基因的表現資料
+
+其中 cdc28_0, cdc28_10, ... , cdc28_160 代表 17 個時間的標籤。可以透過 `yeast$time` 來取得時間(單位分鐘)。
+
+```{r}
+# 3000 (genes) x 17 (time points)
+head(yeast@assayData[["exprs"]], 10)
+```
+
+### 資料製作
+
+mfuzz 使用類別 **ExpressionSet** 產出的物件，若為自己的資料，可以透過套件 **Biobase** 來產生物件。相關內容可以參考 https://www.bioconductor.org/packages/3.7/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf。
+
+```{r}
+library("Biobase")
+```
+
+ExpressionSet 物件主要包含 3 個屬性，分別為 **assayData**, **phenoData**, **featureData**，其中最小資料集至少需包含 **assayData** 屬性。
+
+* 產生最小分析用的資料集
+
+```{r}
+set.seed(123)
+
+# 產生模擬資料
+miniDataSet <- matrix(cbind(
+  rnorm(1000, mean = 0, sd = 2),
+  rnorm(1000, mean = 100, sd = 10),
+  rnorm(1000, mean = 20, sd = 5),
+  rnorm(1000, mean = 10, sd = 10)
+), ncol=4)
+colnames(miniDataSet) <- c("feat1","feat2","feat3","feat4")
+rownames(miniDataSet) <- paste(rep("data_",1000),seq(1,1000,1),sep="")
+head(miniDataSet, 5)
+
+# 產生最小資料集
+miniDataSet.expset <- ExpressionSet(assayData = miniDataSet)
+```
+
+* 準備完整分析的資料集
+
+assayData 為記錄特徵值的表，phenoData 為記錄特徵為何模式或處理(`準備資料時須注意 phenoData 的列名需與 assayData 的行名相同`)，featureData 為紀錄每筆資料的對應資訊或真實資訊等(`準備資料時須注意 featureData 的列名需與 assayData 的列名相同`)。需要注意 phenoData 與 featureData 需經過函式 **AnnotatedDataFrame** 將資料進行轉換並記錄 meta data 等屬性。
+
+```{r}
+# 準備 assayData, 參考上述產生最小分析用的資料集
+full.assayData <- miniDataSet
+head(full.assayData, 5)
+
+# 準備 phenoData
+full.phenoData <- as.data.frame(rbind(
+  c("control","1"),
+  c("control","2"),
+  c("test","1"),
+  c("test","2")
+))
+colnames(full.phenoData) <- c("treatment","sequence")
+rownames(full.phenoData) <- colnames(miniDataSet)
+full.phenoData.annot <- AnnotatedDataFrame(full.phenoData)
+head(full.phenoData, 5)
+
+# 準備 featureData
+tureRowNames <- paste(rep("species_",1000),seq(1,1000,1),sep="")
+full.featureData <- as.data.frame(tureRowNames, ncol=1)
+colnames(full.featureData) <- c("symbol")
+rownames(full.featureData) <- rownames(miniDataSet)
+full.featureData.annot <- AnnotatedDataFrame(full.featureData)
+head(full.featureData, 5)
+
+# 產生完整的 ExpressionSet 物件
+fullDataSet.expset <- ExpressionSet(assayData = full.assayData, phenoData = full.phenoData.annot, featureData = full.featureData.annot)
+```
+
+當準備好資料結構後便可以接續下方的分析。
+
+### 資料前處理
+
+* 移除含有過有 NA 的資料
+
+```r
+# the prototype of filter.NA
+# eset: 由類別 ExpressionSet 產生的物件
+filter.NA(eset,thres=0.25)
+```
+
+```{r}
+# 移除含有超過 25% NA 的資料
+yeast.filter.na <- filter.NA(yeast, thres = 0.25)
+```
+
+* 對 NA 填值
+
+FCM 與其他許多分群演算法相同，不允許 NA 的存在，需要透過填值方式處理 NA。
+
+```r
+# the prototype of fill.NA
+# eset: 由類別 ExpressionSet 產生的物件
+# mode: 填值計算方法，包含有 mean, median, knn (需填後續的 k 值), knnw (需填後續的 k 值) 等
+# |- knnw: 與 knn 相同，但加入與資料的距離作為加權數
+# k: 若模式選擇 knn, knnw 時需指派有多少個鄰近值
+fill.NA(eset,mode="mean",k=10)
+```
+
+```{r}
+yeast.fill.na <- fill.NA(yeast.filter.na, mode = "mean")
+head(yeast.fill.na@assayData[["exprs"]], 10)
+```
+
+* 資料過濾
+
+許多分群工具皆有提供資料過濾步驟來移除變異低的資料(如小變化的基因表現等)，目的為挑出資料變異較大的資料供後續分析。
+
+```{r}
+yeast.filter.trim <- filter.std(yeast.fill.na, min.std = 0)
+```
+
+由上圖可以看出 Y 軸為標準差，X 軸為基因，可以看出此 3000 基因皆位於 $\pm\ 2\ S.D.$ 之間，沒有基因被排除。
+
+* 資料標準化 (Standardisation)
+
+因分群的距離計算是在 Euclidian 空間中，資料的特徵值(如基因的表現值)需要經過標準化處理使之相同樣本下的資料平均值為 0 及相對於 1 個標準差的對比值，促使可以讓樣本間來比較。
+
+```{r}
+yeast.std <- standardise(yeast.filter.trim)
+head(yeast.std@assayData[["exprs"]], 10)
+```
+
+需要注意的是，標準化(Standardisation)與正規化(Normalisation)並不相同，標準化目的使資料間(如基因間)可以比較，正規化目的使樣本間(如時間點間)可以比較。
+
+### 建立 FCM 模型
+
+```r
+# the prototype of mfuzz
+# eset: 類別 ExpressionSet 的物件
+# centers: 分群數目
+# m: 模糊化參數
+mfuzz(eset, centers, m)
+```
+
+```{r}
+yeast.fcm <- mfuzz(yeast.std, centers = 16, m = 1.25)
+summary(yeast.fcm)
+```
+
+### FCM 結果
+
+* 顯示各分群中心
+
+```{r}
+yeast.fcm$centers
+```
+
+* 顯示資料屬於各分群的程度
+
+```{r}
+head(yeast.fcm$membership, 5)
+```
+
+由上可以看出該資料於屬於各分群中的機率，針對單一筆資料(如單一基因)的所有分群的加總值為 1。
+
+* 各分群中的數目
+
+```{r}
+yeast.fcm$size
+```
+
+* 繪出分群結果
+
+```{r}
+png(filename="images/mfuzz.png", width = 1024, height = 1024)
+mfuzz.plot2(yeast.std, cl=yeast.fcm
+            , mfrow=c(4,4), time.labels=seq(0,160,10), x11 = FALSE
+            , cex.lab=1.8, cex.axis=1.8
+)
+dev.off()
+```
+
+![](./images/mfuzz.png)
+
+* 列出所有資料的硬分群
+
+可以從所屬分群表中找出每筆資料最有可能的分群結果(即最大機率)，即可以當作硬分群的結果。
+
+```{r}
+# 列出資料於各群的機率
+head(yeast.fcm$membership[1:10,])
+
+# 列出前 10 筆的硬分群
+yeast.fcm$cluster[1:10]
+```
+
+* 繪出單一分群結果
+
+```{r}
+png(filename="images/mfuzz_1.png", width = 500, height = 500)
+mfuzz.plot2(yeast.std, cl=yeast.fcm
+            , mfrow=c(1,1), time.labels=seq(0,160,10), x11 = FALSE
+            , cex.lab=1.8, cex.axis=1.8, single = 1
+)
+dev.off()
+```
+
+![](./images/mfuzz_1.png)
+
+
+
+
+
+
+
+
+
+

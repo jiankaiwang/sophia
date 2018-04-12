@@ -1,0 +1,96 @@
+---
+title: "K 個最近鄰居 (K Nearest Neighbor)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月9日"
+output: html_document
+---
+
+KNN 為一監督式學習(分類)方法，其假設為相似的資料有相似的特徵值。演算法為找出距離測試點最近的 K 個鄰近點，並透過加權方式計算(連續資料)或投票方式(離散資料)，決定此測試資料的類別或數值。
+
+## R 實作
+
+可以透過套件 **class** 中的函式 **knn** 來實作。
+
+### 套件安裝
+
+```{r}
+packageName <- c("class")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+lapply(packageName, require, character.only = TRUE)
+```
+
+### 資料準備
+
+使用 R 內建的 iris 資料集。
+
+```{r}
+data(iris)
+head(iris, 10)
+
+set.seed(111)
+training_idx <- c(sample(1:50,25), sample(51:100,25), sample(101:150,25))
+training_data <- iris[training_idx,]
+testing_data <- iris[-training_idx,]
+```
+
+### 建立 knn 模型
+
+```r
+# the prototype of knn
+# train: 訓練用資料
+# test: 測試用資料
+# k: 多少個鄰居需要被考慮
+# cl: 專家分類的結果或依據
+# l: 決定結果的最小投票數，一般而言為應為小於 k-1
+# prob: 若為真，投票的比例會以屬性 prob 回傳
+# use.all: 若為真，所有與第 k 個距離相同的資料皆被納入來決定測試資料；若為否，則隨機選挑出一個
+knn(train, test, cl, k = 1, l = 0, prob = FALSE, use.all = TRUE)
+```
+
+```{r}
+iris.knn <- knn(
+  training_data[,1:4], 
+  testing_data[,1:4], 
+  training_data[,5], 
+  k = 3, l = 0, prob = TRUE)
+iris.knn
+```
+
+由上可以看出測試資料的每個分類結果以及投票的結果(以比例呈現)。
+
+### 預測結果與交叉矩陣
+
+```{r}
+attributes(iris.knn)
+```
+
+可以透過函式 **attributes** 取得投票比例結果。
+
+```{r}
+table(testing_data[,5], pred=iris.knn)
+```
+
+由交叉矩陣可知，KNN 演算法將一 virginica 測試資料錯分成 versicolor。因 KNN 的 K 值需要預先指定，而 K 值需設為多少亦需視訓練資料是否有代表性來決定，此外 K 值的大小也會影響到預測結果，因此若訓練資料不夠具代表性，則可能選擇越多鄰居(K 值越大)，其預測結果反而比較差。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 ---
 title: "羅吉斯迴歸 (Logistic Regression)"
-author: "JianKai Wang"
+author: "JianKai Wang (https://sophia.ddns.net/)"
 date: "2018年3月14日"
 output: html_document
 ---

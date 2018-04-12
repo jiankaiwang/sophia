@@ -1,0 +1,180 @@
+---
+title: "Cox 迴歸分析 (Cox Regression)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月8日"
+output: html_document
+---
+
+在進行存活分析時，可以透過 Log-rank test 來比較組別之間的存活曲線是否有顯著差異。但當`自變項是連續變項`或`自變項超過2個以上`時的分析時，就需要透過 `Cox Regression (Cox Proportional Hazard Model)` 來達成。Cox Regression Model 是使用有母數分析的預測方式，用以分析影響死亡率的變數(或影響存活率的重要因子)。在討論 cox regression 時有二個部分需要先釐清，即 **存活函式** 與 **風險函式**:
+
+* 存活函式 (Survival Function):
+
+目的是呈現在某特定時間點下，個案可以活過此特定時間點的機率為何。
+
+$$
+S(t) = P(T > t) = \int_t^{\infty}f(u)du
+$$
+
+其中 $t$ 為時間點，$S(0)=1$, $S(\infty)=0$。
+
+* 風險函式 (Hazard Function):
+
+$$
+h(t) = \frac{\frac{-d[S(t)]}{dt}}{S(t)} = \frac{f(t)}{S(t)} \\
+S(t) = exp(-\int_0^th(u)du)
+$$
+
+其中 $t$ 為時間點，風險函式 $h(t)$ 值與存活時間有關，此代表在某一時間點下，事件機率(死亡)除以生存函式的值。若時間越久 ($t$ 越大)，存活函式 $S(t)$ 越小 (存活函式為遞減函式)，**假設死亡機率密度 $f(t)$ 對任何時間點都一樣**，則風險函式 $h(t)$ 值越大，預期存活時間短。
+
+**在經典的 Cox Regression 的等比例風險假設(Proportional hazard assumption, PH assumption)假設下，針對某一危險因子而言，其風險比，不能隨著時間而有所改變，必須要固定。**。
+
+由上可之，推導 Cox Regression 可得：
+
+$$
+h(t) = \lambda \\
+S(t) = exp(-\int_0^th(u)du) = exp(-\lambda t) = e^{-\lambda t} \\
+f(t) = h(t) * S(t) = \lambda * e^{-\lambda t}
+$$
+
+而因 $\lambda$ 為一定值，故可以推出 Cox Regression 為:
+
+$$
+log(HR(x))=log(\frac{h(t|x)}{h_0(t)}) = \beta_1{x_1} + \beta_2{x_2} + ... + \beta_k{x_k} + \varepsilon
+$$
+
+此即為迴歸方程式。Hazard Ratio ($HR$) 表示某個時間下會發生事件的風險比，而 $HR(x)$ 表示在給定 x 下會發生事件的風險比，x 即是自變項的數值，如年齡90歲便是一個數值 x。$h(t|x)$ 表示在第 $t$ 個時間點時，給定 x 值時的風險。$h_0(t)$ 表示在第 $t$ 個時間點時的基礎風險。而 Hazard Ratio ($HR$) 計算範例為當僅有一變項 $x_1$，$x_1=1$ 表示為男性，$x_1=0$ 表示為女性，則 $exp(\beta_1)$ 為男性相對於女性的危險比率，且 $HR=\frac{exp(\beta_0 + \beta_1)}{exp(\beta_0)}$。
+
+Cox Regression 不僅可以用來分析病因與死亡率之間的關係，更可以延伸至企業倒閉風險分析等議題上。
+
+## 套件安裝
+
+於 R 實作中，可以透過套件 **survival** 來實現存活分析。
+
+```{r}
+packageName <- c("survival")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+lapply(packageName, require, character.only = TRUE)
+```
+
+## 使用函式介紹
+
+| 函式名稱 | 函式用途 |
+|--|--|
+| Surv | 創造一個存活分析的物件，通常在迴歸公式中代表應變數(response variable) |
+| coxph | Fit Proportional Hazards Regression Model |
+| coxph.control | 控制 coxph 擬合的輔助參數 |
+| cox.zph | 測試迴歸模型中的比例風險假設 |
+| cox.detail | Cox 迴歸模型的細節，此函式會回傳在每個獨立時間下的 1 階, 2 階的導數矩陣 |
+| strata | 用來分層分析變數 |
+
+## 資料準備
+
+使用套件 **survival** 中內建的資料 **ovarian**，此為子宮癌生存時間的資料集。
+
+```{r}
+data("ovarian")
+head(ovarian, 10)
+```
+
+其中 futime 為生存或是資料不再更新(如刪除，不再追蹤)的時間，fustat 為是否有持續追蹤的指標(censoring status)，age 為年齡，resid.ds 是否目前仍有疾病 (1為無,2為有)，rx 為治療或控制組(1 為控制組 placebo, 2 為治療組 thiopeta)，ecog.ps 為美國東岸癌症臨床研究合作組織定義之日常體能狀態(1 為較佳，分數越高越差)。
+
+## 迴歸分析
+
+```r
+# the prototype of Surv
+# time 為與時間並進的變數
+# event 為指標，需考慮 type 為何；預設為 0 為存活，1 為死亡
+# type 為 censoring 的型態，此會與 event 之值有關
+Surv(time, time2, event,
+    type=c('right', 'left', 'interval', 'counting', 'interval2', 'mstate'))
+```
+
+```r
+# the prototype of coxph
+# formula: 需注意先將應變數透過函式(Surv)轉為物件
+# init: 反覆計算中使用的初始值向量，預設皆為 0
+# control: 其他用於反覆計算之參數選項，可接受 coxph.control 定義之物件
+# ties: 預設為 Efron，處理死亡時間更精確
+# singular.ok: 如何處理模型矩陣中的共線性
+# robust: 若為真，將可得到一穩定的變異(Variance)估計
+coxph(formula, data, weights, subset, 
+      na.action, init, control, 
+      ties=c("efron","breslow","exact"), 
+      singular.ok=TRUE, robust=FALSE, 
+      model=FALSE, x=FALSE, y=TRUE, tt, ...)
+```
+
+```r
+# the prototype of coxph.control
+coxph.control(eps = 1e-09, toler.chol = .Machine$double.eps^0.75,
+      iter.max = 20, toler.inf = sqrt(eps), outer.max = 10, timefix=TRUE)
+```
+
+```{r}
+ova.fit <- coxph(Surv(futime, fustat) ~ age + ecog.ps, data = ovarian)
+ova.fit
+```
+
+Cox regression 結果中顯示，coef 為變數 age 或 ecog.ps 的係數，exp(coef) 是一個生存比率，se(coef) 為係數的標準差，而 Z 表示 Z-score，P 為 P-value，可以透過 Z-score 來推求出 P-value。
+
+## 驗證風險假設
+
+```r
+# the prototype of cox.zph
+# transform: 指定在驗證假設前將存活時間進行轉換的方法
+# global: 除了單變數檢驗外，是否需要進行全域卡方檢驗
+cox.zph(fit.model, transform="km", global=TRUE)
+```
+
+```{r}
+ova.test <- cox.zph(ova.fit, transform="km", global=TRUE)
+print(ova.test)
+```
+
+由上可以看出，以 age 與 ecog.ps 二變數的 Cox 模型，其模型擬合結果並不顯著。
+
+## 繪迴歸曲線結果
+
+```{r}
+plot(ova.test)
+```
+
+## 迴歸模型細節
+
+透過 **coxph.detail** 回傳許多計算細節，將有利於導入新的方法。
+
+```{r}
+coxph.detail(ova.fit)
+```
+
+## 分層分析
+
+經典的存活分析建立在等比例風險假設(Proportional hazard assumption, PH assumption)。但當風險因子會隨著時間改變時，原本的 Cox 迴歸模型就需要修正，其中最常使用的便是分層 Cox 迴歸模型。分層 Cox 迴歸模型將這些不符合等比例風險假設的因子當作分層變數，表示不同層的基礎危險函式(baseline hazard function)是不同的，但需注意分層數若太多可能會降低統計檢定力(statistical power)。在 R 實作中可透過函式 **strata** 針對某一變數進行分層分析。
+
+```{r}
+strata.data <- data.frame(
+  time = c(4,3,1,1,2,2,3),
+  status = c(1,1,1,0,1,1,0),
+  x = c(0,2,1,1,1,0,0),
+  sex = c(0,0,0,0,1,1,1)
+)
+summary(coxph(Surv(time,status) ~ x + strata(sex), data=strata.data))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

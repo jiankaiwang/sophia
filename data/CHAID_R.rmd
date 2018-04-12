@@ -1,6 +1,6 @@
 ---
 title: "卡方自動交叉檢驗 (CHAID)"
-author: "JianKai Wang"
+author: "JianKai Wang (https://sophia.ddns.net/)"
 date: "2018年3月21日"
 output: html_document
 ---

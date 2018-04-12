@@ -1,6 +1,6 @@
 ---
 title: "隨機森林 (Random Forest)"
-author: "JianKai Wang"
+author: "JianKai Wang (https://sophia.ddns.net/)"
 date: "2018年3月26日"
 output: html_document
 ---

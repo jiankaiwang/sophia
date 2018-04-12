@@ -1,11 +1,13 @@
 ---
 title: "簡單線性迴歸 (Simple Linear Regression)"
-author: "JianKai Wang"
+author: "JianKai Wang (https://sophia.ddns.net/)"
 date: "2018年3月14日"
 output: html_document
 ---
 
 ## 準備資料
+
+底下模擬鱷魚的長度與重量資料。
 
 ```{r}
 alligator = data.frame(
@@ -24,17 +26,30 @@ plot(
 
 ## 建立簡單線性迴歸模型
 
+```r
+# the prototype of lm
+# subset: 選擇特徵的向量
+# weights: 特徵的加權值
+# lm(formula, data, subset, weights, na.action, ...)
+```
+
 ```{r}
-model = lm(lnWeight ~ lnLength, data = alligator)
+set.seed(123)
+training_idx <- sample(1:nrow(alligator), 10)
+training_data <- alligator[training_idx,]
+testing_data <- alligator[-training_idx,]
+model = lm(lnWeight ~ lnLength, data = training_data)
 summary(model)
 ```
+
+透過函式 **summary** 可以列出線性迴歸的相關資訊，包含 F-test, $R^2$ 值, 與殘差分析等。
 
 ## 繪圖檢視迴歸結果
 
 ```{r}
 plot(
-  alligator$lnLength, 
-  alligator$lnWeight,
+  training_data$lnLength, 
+  training_data$lnWeight,
   xlab = "Snout vent length (inches) on log scale",
   ylab = "Weight (pounds) on log scale",
   main = "Alligators in Central Florida"
@@ -42,7 +57,7 @@ plot(
 abline(model)
 ```
 
-## 建立方程式
+## 自建立方程式並用於迴歸預測
 
 ```{r}
 # 取得迴歸係數
@@ -66,8 +81,8 @@ new_weight_data <- apply(new_length_data, 1, y1)
 
 # 將新產生資料進行繪圖
 plot(
-  alligator$lnLength, 
-  alligator$lnWeight,
+  training_data$lnLength, 
+  training_data$lnWeight,
   xlab = "Snout vent length (inches) on log scale",
   ylab = "Weight (pounds) on log scale",
   main = "Alligators in Central Florida"
@@ -78,10 +93,19 @@ abline(v = 4.1, col="red", lty=2)
 points(new_length_data, new_weight_data, col="red")
 ```
 
+### 透過內建函式預測結果
 
+```{r}
+lm.pred <- predict(model, testing_data)
+data.frame(true=testing_data$lnWeight, pred=lm.pred)
+```
 
+### 計算殘差
 
-
+```{r}
+# type 為殘差計算方式，有 working, response, deviance, pearson, partial 等
+residuals(model, type="working")
+```
 
 
 

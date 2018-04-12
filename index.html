@@ -6,7 +6,8 @@
     <meta name="description" content="The sophia project is the coding-based tutorial for machine intelligence and artificial intelligence." />
     <meta name="author" content="JianKai Wang, 王建凱" />
     <title>Sophia | JianKai Wang</title>
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" integrity="sha384-DmABxgPhJN5jlTwituIyzIUk6oqyzf3+XuP7q3VfcWA2unxgim7OSSZKKf0KSsnh" crossorigin="anonymous">
     <style>
         @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
         body {
@@ -88,10 +89,10 @@
                 </div>
                 <div class="row col-lg-12 col-sm-12 mb-12">
                     <a href="https://github.com/jiankaiwang"><i class="fab fa-github fa-2x"></i></a>&nbsp;
-                    <a href="https://www.gitbook.com/@jiankaiwang"><i class="fab fa-github-alt fa-2x"></i></a>&nbsp;
-                    <a href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-2x"></i></a>&nbsp;
+                    <a href="https://rpubs.com/jiankaiwang/"><span class="simple-svg" data-icon="mdi-language-r" data-width="34" data-inline="false"></span></a>&nbsp; 
                     <a href="https://www.kaggle.com/jiankaiwang"><span class="simple-svg" data-icon="simple-icons:kaggle" data-width="28" data-inline="false"></span></a>&nbsp;
-                    <a href="https://www.facebook.com/jkw0620"><i class="fab fa-facebook-square fa-2x"></i></a>&nbsp;                 
+                    <a href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-2x"></i></a>&nbsp;                    
+                    <a href="https://www.facebook.com/jkw0620"><i class="fab fa-facebook-square fa-2x"></i></a>&nbsp;                            
                 </div>
             </div>
             <div class="col-lg-2 col-sm-1 mb-1"></div>
@@ -110,9 +111,9 @@
             <div class="col-md-3 col-lg-3 margin-section">
                 <!--<h3 class="my-4"><i class="fas fa-bars fa-1x"></i> Menu</h3>-->
                 <div class="list-group">
-                    <a data-toggle="tab" href="#model" class="list-group-item list-item active">Introduction to Model</a>
-                    <a data-toggle="tab" href="#flow" class="list-group-item list-item">Analyzing Flow</a>
-                    <a data-toggle="tab" href="#uitools" class="list-group-item list-item">UI Tools</a>
+                    <a data-toggle="tab" href="#model" class="list-group-item list-item active">Model</a>
+                    <a data-toggle="tab" href="#flow" class="list-group-item list-item">Framework</a>
+                    <a data-toggle="tab" href="#uitools" class="list-group-item list-item">UI Tool</a>
                     <a data-toggle="tab" href="#maker" class="list-group-item list-item">Maker</a>
                     <a data-toggle="tab" href="#statistics" class="list-group-item list-item">Statistics</a>
                 </div>
@@ -149,106 +150,48 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="resources/jquery/jquery.min.js"></script>
-    <script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="resources/fontawesome/svg-with-js/js/fontawesome-all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="//code.simplesvg.com/1/1.0.0-beta5/simple-svg.min.js"></script>
-    <script src="resources/async/async.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/async/2.6.0/async.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.5/showdown.min.js"></script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-78133465-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-78133465-2');
-</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-78133465-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-78133465-2');
+    </script>
 
 
     <script>
+    function fetchData(dataLink, updateItem, callback) {
+        $.ajax({
+            url: dataLink
+            , type: 'get'
+            , data: {}
+            , error: function (xhr, ajaxOptions, thrownError) {
+                $('#' + updateItem).html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
+                callback(xhr.status + " " + thrownError);
+            }
+            , success: function (response) {
+                var converter = new showdown.Converter(),
+                    html      = converter.makeHtml(response);
+                $('#' + updateItem).html(html);
+                callback(null, "");
+            }
+        })
+    }
     $(function() {
         async.parallel([
-            function(callback) {
-            $.ajax({
-                url: '/data/introduction.md',
-                type: 'get',
-                data: {},
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $('#model').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
-                    callback(xhr.status + " " + thrownError);
-                }
-                , success: function (response) {
-                    var converter = new showdown.Converter(),
-                        html      = converter.makeHtml(response);
-                    $('#model').html(html);
-                    callback(null, "");
-                }
-            })}
-            , function(callback) {
-            $.ajax({
-                url: '/data/statistics.md',
-                type: 'get',
-                data: {},
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $('#statistics').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
-                    callback(xhr.status + " " + thrownError);
-                }
-                , success: function (response) {
-                    var converter = new showdown.Converter(),
-                        html      = converter.makeHtml(response);
-                    $('#statistics').html(html);
-                    callback(null, "");
-                }
-            })}
-            , function(callback) {
-            $.ajax({
-                url: '/data/uitools.md',
-                type: 'get',
-                data: {},
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $('#uitools').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
-                    callback(xhr.status + " " + thrownError);
-                }
-                , success: function (response) {
-                    var converter = new showdown.Converter(),
-                        html      = converter.makeHtml(response);
-                    $('#uitools').html(html);
-                    callback(null, "");
-                }
-            })}
-            , function(callback) {
-            $.ajax({
-                url: '/data/maker.md',
-                type: 'get',
-                data: {},
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $('#maker').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
-                    callback(xhr.status + " " + thrownError);
-                }
-                , success: function (response) {
-                    var converter = new showdown.Converter(),
-                        html      = converter.makeHtml(response);
-                    $('#maker').html(html);
-                    callback(null, "");
-                }
-            })}
-            , function(callback) {
-            $.ajax({
-                url: '/data/flow.md',
-                type: 'get',
-                data: {},
-                error: function (xhr, ajaxOptions, thrownError) {
-                    $('#flow').html('<i class="fas fa-exclamation-triangle"></i> Can not fetch data.');
-                    callback(xhr.status + " " + thrownError);
-                }
-                , success: function (response) {
-                    var converter = new showdown.Converter(),
-                        html      = converter.makeHtml(response);
-                    $('#flow').html(html);
-                    callback(null, "");
-                }
-            })}
+            function(callback) { fetchData('data/model.md', 'model', callback) }
+            , function(callback) { fetchData('data/statistics.md', 'statistics', callback) }
+            , function(callback) { fetchData('data/uitools.md', 'uitools', callback) }
+            , function(callback) { fetchData('data/maker.md', 'maker', callback) }
+            , function(callback) { fetchData('data/framework.md', 'flow', callback) }
         ], function (err, message) {
 	    if(err) { 
 	       console.log(err); 

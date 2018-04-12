@@ -1,0 +1,70 @@
+---
+title: "費雪精確檢定 (Fisher's Exact Test)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月12日"
+output: html_document
+---
+
+Fisher's exact test 為無母數用來檢定兩個類別變數是否存在關聯性，且資料樣本數較小(如 $< 5$)時；反之，若樣本數較多(如 $\geq 5$)時，應使用卡方檢定 (Chi-square test)。Fisher's exact test 的概念為透過計算所有可能組合來進行檢定，如下:
+
+* 定義
+
+| | Sample.1 | Sample.2 | Total |
+|--|--|--|--|
+| Category.1 | a=A | b | a + b |
+| Category.2 | c | d | c + d |
+| Total | a + c | b + d | a + b + c + d = n |
+
+則由上的列連表，可以定義 Fisher's exact test 如下:
+
+$$
+p=\frac{\binom{a+b}{a}\binom{c+d}{c}}{\binom{n}{a+c}}=\frac{(a+b)!(c+d)!(a+c)!(b+d)!}{(a!)(b!)(c!)(d!)(n!)}
+$$
+
+計算出來的 $p$ 值的意義為，若隨機猜測 n 筆資料而得出上列表的機率
+
+* 檢定範例
+
+$H_o$ 為女生與男生節食的比例相同，$H_a$ 為女生節食比例比男生高，資料如下:
+
+| | Men | Women | Total |
+|--|--|--|--|
+| Dieting | 1 | 9 | 10 |
+| Non-Dieting | 11 | 3 | 14 |
+| Total | 12 | 12 | 24 |
+
+可以根據上表中的資料算出**單邊檢定**的 $p$ 值如下 (**此時 $a \leq 1$ 表示 $a = 0$ 與 $a = 1$ 的機率相加**)
+
+$$
+P(a \leq 1|a+b=10, c+d=14, a+c=12, b+d=12) = \frac{\binom{a+b}{a}\binom{c+d}{c}}{\binom{n}{a+c}}\\
+= \frac{\binom{10}{1}\binom{14}{11} + \binom{10}{0}\binom{14}{12}}{\binom{24}{12}} \approx 0.0014
+$$
+
+由上計算，假設 type I error 機率為 0.05，可根據上列 $p$ 值推論，上表中的資料提供證據拒絕 $H_0$，支持對立假設 $H_a$，說明女生節食比例比男生高。
+
+## R 實作
+
+可以於 R 內建的基礎套件 **stats** 中的函式 **fisher.test** 來進行檢定，如下:
+
+```{r}
+# 準備資料
+rawdata <- matrix(
+                c(1, 11, 9, 3), 
+                nrow = 2, 
+                dimnames = list(
+                  behavior = c("Dieting", "Non-dieting"), 
+                  sex = c("Men", "Women")
+                )
+            )
+head(rawdata, 2)
+
+# 計算單邊檢定 fisher's exact test 及取得 p.value
+rawdata.fisher <- fisher.test(rawdata, alternative = "less")
+summary(rawdata.fisher)
+
+# 透過屬性 p.value 來取得 p 值
+rawdata.fisher$p.value
+```
+
+
+

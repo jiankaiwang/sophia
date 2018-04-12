@@ -2,8 +2,8 @@
 # desc: render the *.md or *.rmd to *.html
 # notice: Please make sure "pandoc" is installed. (https://pandoc.org/installing.html)
 
+Sys.setlocale(category = "LC_ALL", locale = "cht")
 require("rmarkdown")
-
 sysArgs <- commandArgs(trailingOnly = TRUE)
 
 if(length(sysArgs) > 0) {

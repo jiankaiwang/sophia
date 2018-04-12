@@ -1,0 +1,76 @@
+---
+title: "因素分析 (Factor Analysis)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年3月13日"
+output: html_document
+---
+
+因素分析是主成分分析的推廣與發展，也是降維的一種方式，可用來分析隱藏在表面現象背後的因素。因素分析是研究相關矩陣或共變異矩陣的內部依賴關係，將多個變數綜合為少數幾個因素，再現原始變數與因素間的關係。
+
+## 原始資料
+
+了解學生學習狀況，隨機選取 12 名學生 5 門課程期末考成績(即 x1, x2, x3, x4, x5)，試用因素分析方法進行分析。
+
+```{r}
+data <- data.frame(
+  x1 = c(99,99,100,93,100,90,75,93,87,95,76,85),
+  x2 = c(94,88,98,88,91,78,73,84,73,82,72,75),
+  x3 = c(93,96,81,88,72,82,88,83,60,90,43,50),
+  x4 = c(100,99,96,99,96,75,97,68,76,62,67,34),
+  x5 = c(100,97,100,96,78,97,89,88,84,39,78,37)
+)
+data
+```
+
+## 因素分析
+
+### 目的
+
+1. 找出 5 門課程的公共因素，進行解釋
+2. 用迴歸方法計算樣本的因素分數，畫出第 1, 第 2 共因素的散點圖，並用此圖分析 12 名學生學習狀況。
+
+* 因素分析
+
+使用 **factanal** 進行分析，此方法使用最大似然估計 (Maximum likelihood estimation) 來估計參數。
+
+```r
+# the factanal prototype
+# x: 資料公式
+# factors: 因數個數
+# data: 資料內容
+# covmat: 樣本的相關矩陣或共變異矩陣
+# rotation: 進行矩陣旋轉變換
+# |- varimax(x, mormalize=TRUE, eps=1e-5)
+# scores: 因素得分計算方式
+factanal(x, factors, data = NULL, covmat=NULL, rotation="varimax", scores=c("none","rotation","regression","Bartlett"), ...)
+```
+
+```{r}
+fa = factanal(x = ~., factors=2, data = data, scores = "regression")
+fa
+```
+
+其中，**SS Loadings, Proportion Var, Cumulative Var** 定義如下:
+
+SS Loadings 為公共因素 $f_i$ 對變數 $x_1$, $x_2$, $x_3$, $x_4$, $x_5$ 的總方差貢獻，即 $g_j^2=\sum_{i=1}^{5}{a_{ij}^2}$
+
+Proportion Var 為方差貢獻率，即 $g_j^2 / \sum_{i=1}^{5}{var(x_i)}$
+
+Cumulative Var 為累積方差貢獻率，即 $\sum_{k=1}^{j}{g_j^2} / \sum_{i=1}^{5}{var(x_i)}$
+
+* 結果分析
+
+第一公共因素主要由 x1, x2 兩個係數絕對值較大的變數決定，第二公共因素主要由 x4, x5 兩個係數絕對值較大的變數決定，若畫出 12 名學生在第 1、第 2 公共因素下的散布圖，
+
+```{r}
+plot(fa$scores, type="n")
+text(fa$scores[,1], fa$scores[,2])
+```
+
+由上可以看出，學生 1, 2, 5, 3 總體表現較好。
+
+
+
+
+
+

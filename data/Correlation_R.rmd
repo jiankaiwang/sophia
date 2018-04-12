@@ -1,0 +1,145 @@
+---
+title: "連續資料相關性分析 (The Correlation of Continuous Data)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月12日"
+output: html_document
+---
+
+## Pearson's Correlation
+
+Pearson's Correlation 是對連續並符合常態假設(或符合中央極限定理)的資料進行相關分析的方法。若對於一群的資料，其定義為
+
+$$
+\rho_{X,Y} = \frac{cov(X,Y)}{\sigma_X\sigma_Y} = \frac{E[(X - \mu_X)(Y - \mu_Y)]}{\sigma_X\sigma_Y}
+$$
+
+其中 $cov$ 為共變異數 (covariance)， $\sigma_X$ 為 $x$ 的標準差，$\mu_X$ 為 x 的平均值, $E$ 為期望值。
+
+若對於單一樣本 (sample)，其定義為
+
+$$
+r = \frac{\Sigma_{i=1}^{n}(X_i-\bar{X})(Y_i-\bar{Y})}{\sqrt{\Sigma_{i=1}^{n}(X_i-\bar{X})^2}\sqrt{\Sigma_{i=1}^{n}(Y_i-\bar{Y})^2}}
+$$
+其上定義亦可表示為
+
+$$
+r = \frac{1}{n-1}\Sigma_{i=1}^{n}(\frac{X_i-\bar{X}}{S_X})(\frac{Y_i-\bar{Y}}{S_Y})\\
+\bar{X} = \frac{1}{n}\Sigma_{i=1}^{n}X_i \\
+\ S_X = \sqrt{\frac{1}{n-1}\Sigma_{i=1}^{n}(X_i-\bar{X})^{2}}
+$$
+
+$\bar{X}$ 為 x 的算術平均，$S_X$ 為 x 的標準差。
+
+## Spearman's Rank Correlation
+
+Spearman's Rank Correlation 是對**連續但不符合常態假設(或不符合中央極限定理)的資料進行相關分析**的方法。Spearman's Rank Correlation 被定義為**等級變量間**的 Pearson's Correlation，Spearman 會先將資料透過排序 (Rank) ，並將排序後的等級進行 Pearson's Correlation。
+
+舉例而言，會先將資料進行排序處理，
+
+| 變量 $x_i$ | 降序位置 | 等級 $rg_{x_i}$ |
+|--|--|--|
+| 0.8 | 5 | 5 |
+| 1.0 | 4 | $\frac{3+4}{2} = 3.5$ |
+| 1.0 | 3 | $\frac{3+4}{2} = 3.5$ |
+| 2.5 | 2 | 2 |
+| 3.0 | 1 | 1 |
+
+故 Spearman's Rank Correlation 如下定義
+
+$$
+r_s = \rho_{rg_x, rg_y} = \frac{cov(rg_x, rg_y)}{\rho_{rg_x}\rho_{rg_y}}
+$$
+
+其中 $\rho$ 即是 Pearson's Correlation 定義，但應用於排序後的值(rank variables)。$cov(rg_x, rg_y)$ 為排序值的共變異係數。$\rho_{rg_x}$ 與 $\rho_{rg_y}$ 為排序值的標準差。
+
+而在實際應用中，若所有 $n$ 個排序皆為不同的整數，更可直接透過推倒公式來計算相關性。
+
+$$
+r_s = 1 - \frac{3\sum d_i^2}{n(n^2-1)}
+$$
+
+$d_i = rg(x_i) - rg(y_i)$ 為兩個變數之排序值的差。$n$ 表示有幾個變數。
+
+相關性的值介於 -1 至 1 之間，其中 1 為完全正相關，-1 為完全負相關，0 為無相關。
+
+## R 實作
+
+### 相關性係數
+
+於 R 的基礎套件 **stats** 中已有內建函式 **cor** 可以計算相關性。其中可透過 **method** 來轉換 Pearson 或 Spearman 的相關性計算。
+
+```r
+# the prototype of correlation
+cor(x, y = NULL, use = "everything",
+    method = c("pearson", "kendall", "spearman"))
+```
+
+```{r}
+set.seed(123)
+
+# 準備資料
+data1 <- c(
+  c(1:100) + rnorm(100, mean = 10, sd = 5) - rnorm(100, mean = 5, sd = 5),
+  c(140:150) + rnorm(10, mean = 5, sd = 5)
+)
+data2 <- c(
+  c(1:100) + rnorm(100, mean = 20, sd = 10) - rnorm(100, mean = 10, sd = 10),
+  c(80:90) + rnorm(10, mean = 5, sd = 5)
+)
+
+# 繪出資料分布
+plot(x=data1, y=data2, col="orange", pch=19)
+
+# Pearson's Correlation
+pearsonRes <- cor(data1, data2, use = "everything", method = "pearson")
+pearsonRes
+
+# Spearman's Rank Correlation
+spearmanRes <- cor(data1, data2, use = "everything", method = "spearman")
+spearmanRes
+```
+
+由上可以看出 Pearson's 與 Spearman's 相關性計算結果有明顯差異。
+
+### 相關性檢驗
+
+於 R 的基礎套件 **stats** 中已有內建函式 **cor.test** 可以對相關性進行檢定。其中可透過 **method** 來轉換 Pearson 或 Spearman 的相關性計算。
+
+```r
+# the prototype of cor.test
+# alternative: 檢定方式為雙尾，單尾(less, greater)等
+cor.test(x, y,
+         alternative = c("two.sided", "less", "greater"),
+         method = c("pearson", "kendall", "spearman"),
+         exact = NULL, conf.level = 0.95, continuity = FALSE, ...)
+```
+
+* Pearson's Correlation
+
+```{r}
+# 相關性檢定
+pearsonTest <- cor.test(data1, data2, alternative = "two.sided", method = "pearson")
+
+# 透過屬性 estimate 來取得相關性
+pearsonTest$estimate
+
+# 透過屬性 p.value 來取得檢驗結果
+pearsonTest$p.value
+```
+
+* Spearman's Rank Correlation
+
+```{r}
+# 相關性檢定
+spearmanTest <- cor.test(data1, data2, alternative = "two.sided", method = "spearman")
+
+# 透過屬性 estimate 來取得相關性
+spearmanTest$estimate
+
+# 透過屬性 p.value 來取得檢驗結果
+spearmanTest$p.value
+```
+
+
+
+

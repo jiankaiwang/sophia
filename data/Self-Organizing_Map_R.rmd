@@ -1,0 +1,110 @@
+---
+title: "自組織映射網路 (Self-Organizing Map)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月3日"
+output: html_document
+---
+
+## 自組織映射網路(SOM)
+
+Self-Organizing Map (SOM) 網路亦為 Kohonen 神經網路，透過反覆運算優化目標函式來達成對資料分群 (Clustering)。SOM 為非監督學習的一類，優點為可將 N 維度的資料映射(mapping)至 2 維的空間上，並維持資料中的拓樸特性。其次，可透過調整權重係數，促使神經網路收斂。
+
+### SOM 架構與擬合
+
+SOM 神經網路是一個兩層前饋神經網路，僅含輸入層與輸出層，兩層間的各神經元是連接的，網路中沒有隱含層，輸入層含有 m 個神經元，神經元個數與輸入樣本的特徵數相同，而輸出層有 n 個神經元，神經元間與鄰近的神經元兩兩相接，故 SOM 中兩類型的權值：
+
+1. 輸入神經元與輸出神經元間的連接權值
+2. 輸出神經元間的側向連接權值
+
+SOM 架構如下圖:
+
+![](images/som.png)
+
+SOM 神經網路採用競爭學習演算法，在學習過程中相互競爭，對於每次輸入的樣本向量，對競爭勝利的神經元與鄰近神經元進行權重係數的修改，其他區域神經元的權重則不變。
+
+### SOM 優缺點
+
+* 優點
+    * 具有神經網路的特性與優勢，如平行處理、分散式儲存、容錯力等
+    * 具有分群的優點
+    * 透過競爭學習，訓練權重係數後，自動得出各分群的中心
+    * 不須事先指定分群數目
+    * 支援大數量的分群結果，有效找出異常資料類且網路訓練收斂速度快
+
+* 缺點
+    * 輸入資料少時，分群結果與資料輸入先後順序有關
+    * 與 adaptive resonance theory network (art) 不同，在學習完成前，不能加入新的類別
+
+### 安裝套件
+
+```{r}
+packageName <- c("kohonen")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+lapply(packageName, require, character.only = TRUE)
+```
+
+### 資料準備
+
+使用 kohonen 套件內建的資料 wines。wines 收集多筆酒的特徵資料，包含頻果酸(malic acid), 鎂(magnesium), 酚類數值(tot. phenols) 等。
+
+```{r}
+data(wines)
+head(wines, 5)
+som.data.idx <- sample(nrow(wines), 100)
+som.training.data <- wines[som.data.idx, ]
+som.testing.data <- wines[-som.data.idx, ]
+```
+
+
+### 建立 SOM 模型
+
+在將資料送入 SOM 學習時，需要將每個特徵的資料進行 scaling，透過計算離中心程度方式來計算，即 $\frac{x-\bar{x}}{sd(x)}，可參考底下的參數 (center = TRU)。
+
+```r
+# the prototype of som
+# data: 已經 scale 的資料框
+# grid: 
+# |- somgrid: 依照 x, y 及拓樸方法產生一系列網路的單元，此也決定輸出神經元數目
+#   |- xdim: (繪圖時) x 方向神經元數
+#   |- ydim: (繪圖時) y 方向神經元數
+#   |- topo: (繪圖時)呈現方式，有 "hexagonal" 與 "rectangular" 兩類
+#   |- neighbourhood.fct: 輸出神經元之間的相鄰函式，有 "gaussian" 與 "bubble" 兩類
+som(data, grid = somgrid(xdim,ydim,topo="hexagonal",neighbourhood.fct="gaussian"))
+```
+
+```{r}
+# scale 目的將值進行調整，可分為有中心(center = TRUE)或無中心(center = FALSE)兩類
+som.training.data.scale <- scale(som.training.data)
+som.model <- som(som.training.data.scale, grid = somgrid(5,5,"hexagonal","gaussian"))
+summary(som.model)
+```
+
+由可以看出 SOM 為一個 5x5 hexagonal 狀的拓樸，輸出神經元相鄰函式使用 gaussian。
+
+### 繪出輸出神經元及輸出層資訊
+
+```{r}
+# type 為繪圖方式，預設為 codes，有其他含 changes, counts, mappng, ... 等
+plot(som.model, type="codes")
+plot(som.model, type="counts")
+```
+
+由上述兩張圖可以看出每個輸出神經元使用的特徵為何，及在神經元中使用的特徵各自權重比例。
+
+### 預測資料
+
+SOM 為非監督式學習，透過 **predict** 函式可以了解每筆測試資料屬於哪個神經元的分群結果。
+
+```{r}
+som.testing.data.scale <- scale(som.testing.data)
+som.pred <- predict(som.model, som.testing.data.scale)
+
+# 顯示出分群結果
+som.pred$unit.classif
+```
+
+

@@ -1,0 +1,190 @@
+---
+title: "階層分群 (Hierarchical Clustering)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年4月10日"
+output: html_document
+---
+
+階層分群法透過階層架構方式，將資料層反覆地進行分裂與聚合，以產生最後的樹狀結構，常見方式有兩類：聚合方式與分裂方式。
+
+* **聚合方式 (bottom-up, agglomerative)**
+
+由樹狀結構的底部開始，將資料或分群逐次合併。起初將每一筆資料視成一個群聚 (cluster)，若有 n 筆資料，則可視成 n 個群聚，並依底下演算法形成聚合樹：
+
+1. 將每筆資料視成一個群聚 $C_i, i = 1\ to\ n$
+2. 找出所有群聚間，距離最近的兩個群聚 $C_i, C_j$
+3. 合併 $C_i, C_j$ 成一個新的群聚
+4. 若目前群聚數量大於設定的群聚數，則重複上述第 2-4 步驟，否則停止
+
+* **分裂方式 (top-down, divisible)**
+
+由樹狀結構的頂端開始，逐次分裂分群。起初將所有資料視成一個群聚 (cluster)，並依底下演算法形成分裂樹:
+
+1. 將所有資料視成一個群聚 $C$，內包含 n 筆資料 $\{x_1, x_2, x_3, ... , x_n\}$
+2. 找出所有的資料間，距離中心最遠的資料 $x_i$
+3. 將此筆資料自群聚 $C$ 分裂出來並形成子群聚 $N$，剩餘群聚稱為 $C_m$
+4. 計算剩餘群聚 $C_m$ 的每個資料點 $m$ 與本身群聚 $C_m$ 距離(記為 $d(c_m, m)$) 與 $N$ 距離(記為 $d(N,m)$)
+5. 若 $d(c_m, m) > d(N,m)$，則將該資料點 $m$ 併入新群聚中
+6. 若目前的群聚數量小於設定的群聚數，則重複上述第 2-5 步驟，否則停止
+
+而因在實作上**聚合方式**較易實作，故底下亦以介紹聚合方式為主，在聚合時需定義兩個群聚的距離，底下有 4 種常用的群聚距離的定義：
+
+* 單一連結演算法 (single-linkage algorithm): 群聚間的距離定義為不同群聚之最接近兩點資料間的距離 
+
+$$
+d(C_i, C_j) = min_{a \in C_i, b \in C_j}{d(a,b)}
+$$
+
+* 完整連結演算法 (complete-linkage algorithm): 群聚間的距離定義為不同群聚之最遠兩點資料間的距離
+
+$$
+d(C_i, C_j) = max_{a \in C_i, b \in C_j}{d(a,b)}
+$$
+
+* 平均連結演算法 (average-linkage algorithm): 群聚間的距離定義為不同群聚各兩點資料間距離總和的平均 ($|C_i|$ 與 $|C_j|$ 表示資料個數)
+
+$$
+d(C_i, C_j) = \sum_{a \in C_i, b \in C_j}{\frac{d(a,b)}{|C_i||C_j|}}
+$$
+
+* 泛德法 (Ward's method): 群聚間的距離定義為將兩群合併後，各點 $m$ 到合併後的新群聚中心的距離平方和 ($\mu$ 表示為新群聚的平均值)
+
+$$
+d(C_i, C_j) = \sum_{a \in C_i, b \in C_j}{||m - \mu||}
+$$
+
+## R 實作
+
+### 安裝套件
+
+```{r}
+packageName <- c("stats")
+for(i in 1:length(packageName)) {
+  if(!(packageName[i] %in% rownames(installed.packages()))) {
+    install.packages(packageName[i])
+  }
+}
+lapply(packageName, require, character.only = TRUE)
+```
+
+### 產生資料
+
+```{r}
+set.seed(123)
+getOriData <- matrix(c(
+    dim1 = rnorm(30,mean=100,sd=5),
+    dim2 = cos(rnorm(30,mean=200,sd=100)),
+    dim3 = sin(rnorm(30,mean=500,sd=300)),
+    dim4 = sample(c(-100:100,NA),size=30,replace=TRUE),
+    dim5 = sample(c(500:1000,NA),size=30,replace=TRUE))
+    , ncol = 5
+)
+
+# change name of matrix
+colnames(getOriData) <- c("dim1","dim2","dim3","dim4","dim5")
+rowNameList <- c()
+for(i in 1:nrow(getOriData)) {
+    rowNameList <- c(rowNameList,paste("data",toString(i),sep=""))
+}
+rownames(getOriData) <- rowNameList
+
+# get rid of NAs
+getOriData[is.na(getOriData)] <- 0
+
+head(getOriData, 5)
+```
+
+### 建立 hclust 模型
+
+```r
+# the prototype of hclust
+# d: 由函式 dist 產生的距離矩陣，或用 as.dist 來將矩陣轉換為距離矩陣
+# method: 計算聚集的方法，如 average, complete, single, median, ... 等
+hclust(d, method = "complete")
+
+# the prototype of dist
+# method: 距離計算方法，有 "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski" 等
+dist(x. method="euclidean", ...)
+```
+
+底下利用歐幾里得距離來計算兩筆資料間的距離，亦可利用 Correlation 來計算兩筆資料間的相關性，並以此做為兩筆資料間的距離。透過函式 **hclust** 及方法 average 或 complete 來產生階層分群結果。
+
+```{r}
+# clustering based on correlation
+getOriData.dist.cor <- as.dist(1 - cor(t(getOriData)))
+
+# clustering based on euclidean
+getOriData.dist.euc <- dist(getOriData)
+hc_ave <- hclust(getOriData.dist.euc, "average")
+hc_cmp <- hclust(getOriData.dist.euc, "complete")
+summary(hc_ave)
+```
+
+### 分群結果
+
+* 繪出階層分群結果
+
+```{r}
+# draw the dendrogram
+par(mar=c(3,1,1,3)) 
+plot(
+     as.dendrogram(hc_ave), labels = NULL, 
+     axes = TRUE, frame.plot = FALSE, ann = TRUE,
+     main = "Cluster Dendrogram - average",
+     sub = NULL, cex = .6, horiz=T
+)
+par(mar=c(3,1,1,3)) 
+plot(
+     as.dendrogram(hc_cmp), labels = NULL, 
+     axes = TRUE, frame.plot = FALSE, ann = TRUE,
+     main = "Cluster Dendrogram - complete",
+     sub = NULL, cex = .6, horiz=T
+)
+```
+
+* 列出各筆資料的高度
+
+階層分群結束後，會如上圖的階層樹結果，可以透過屬性 **height** 來取得**資料合併時在階層樹中的高度(代表資料的差異距離)**，之後可以透過高度來分群。
+
+```{r}
+hc_ave$height
+```
+
+* 列出階層分群中子群集的聚合順序
+
+可以透過屬性 **merge** 來取得資料聚合的順序。
+
+```{r}
+head(hc_ave$merge, 10)
+```
+
+由上可以看出第 1 次的聚合是第 18 筆(-18 標示)與第 23 筆(-23)資料，第 2 次的聚合是第 5 筆(-5)與第 24 筆(-24)資料，第 3 次的聚合是第 2 筆(-2)與第 11 筆(-11)資料，第 4 次的聚合是第 25 筆(-25)與第 3 次(+3 標示)合併後的資料，以此類推。
+
+### 取得分群結果
+
+* 透過分群數目來切樹
+
+```{r}
+# get sub-tree
+# by how much groups generated
+getSubtreeGroup <- cutree( hc_ave, k=15 )
+getSubtreeGroup
+```
+
+* 透過高度來分群
+
+```{r}
+# by tree height
+getSubtreeHeight <- cutree( hc_ave, h=100 )
+getSubtreeHeight
+```
+
+
+
+
+
+
+
+
+
+
