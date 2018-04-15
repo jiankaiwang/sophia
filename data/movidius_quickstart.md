@@ -59,7 +59,7 @@ $ make help
 
 [**Source Code**] 安裝 OpenCV 於 ARM, Raspberry Pi 等。
 
-[ys7yoo/PiOpenCV](github.com/ys7yoo/PiOpenCV)
+[https://github.com/ys7yoo/PiOpenCV](github.com/ys7yoo/PiOpenCV)
 
 
 
