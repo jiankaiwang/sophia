@@ -36,11 +36,11 @@
 * 標準化 (Standardisation): 目的使樣本內的資料間可以比較
 * 正規化 (Normalisation): 目的使含有資料的樣本間可以比較
     * 無母數
-        * Quantile Normalization, [Rscript](data/Quantile_Normalization_R.rmd)
+        * Quantile Normalization, [Rscript](data/Quantile_Normalization_R.html)
 * 相關分析
     * 連續資料
-        * 有母數: Pearson's Correlation, [Rscript](data/Correlation_R.rmd)
-        * 無母數: Spearman's Correlation, [Rscript](data/Correlation_R.rmd)
+        * 有母數: Pearson's Correlation, [Rscript](data/Correlation_R.html)
+        * 無母數: Spearman's Correlation, [Rscript](data/Correlation_R.html)
     * 類別資料
         * 兩個類別: Logistic Regression, [Rscript](data/Logistic_Regression_R.html)
         * 三類以上: Multinomial/Ordinal Logistic Regression,  [Rscript](data/Multinomial_Log-linear_Models_R.html)

@@ -1,74 +1,108 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Apr 13 09:35:57 2018
+@description: Check the link inside the markdown file is available.
 @author: JianKai Wang
 """
 
 import os
 from os.path import isfile, join, basename, splitext
-from pathlib import Path
 import sys
 import getopt
 import logging
-import subprocess
+import re
+import codecs
+
+# pre-defined variabled
+allFiles = ["model.md", "statistics.md", "uitools.md", "maker.md", "framework.md"]
 
 # help message
 def helpMessgae():
     print("""Usage: python ci.py [options]
 [options]
--e              the path of sophia project (necessary)
--i              input directory path (necessary)
--o              output directory path (necessary)
+-d              the 'data' path of sophia project (necessary)
 -h, --help      the help message
     """)
-
+    
 # parse opts
 def parseOpts(get_opts):
     return(dict((k,v) for k,v in get_opts))
     
 # check file path
 def checkFInOut(get_opts):
-    if '-e' in opts.keys() and '-i' in opts.keys() and '-o' in opts.keys():
-        logging.debug(opts['-i'])
-        if Path(opts['-e']).is_dir() and Path(opts['-i']).is_dir() and Path(opts['-o']).is_dir():
-            return 1, get_opts['-e'], get_opts['-i'], get_opts['-o']
+    if '-d' in opts.keys():
+        logging.debug(opts['-d'])
+        return 1, get_opts['-d']
     logging.debug("not existing parameter")
-    return -1, "", "", ""
+    return -1, ""
 
-# convert from *.md to *.html
-def getConvertList(fin, fout):
-    onlyfiles = {}
-    whiteList = ["model.md","framework.md","maker.md","uitools.md","statistics.md"]
+# check necessary file existing
+def checkMdFileExist(getPath):
+    global allFiles
     
-    for f in os.listdir(fin):
-        filepath = join(fin, f)
-        if isfile(filepath) and filepath.lower().endswith(('.md',)) and f not in whiteList:
-            name = splitext(basename(filepath))[0]
-            onlyfiles.setdefault(f,name + ".html")
+    retFlag = True
+    lossFileName = ""
+    for file in allFiles:
+        tmpPath = join(getPath, file)
+        if not isfile(tmpPath):
+            lossFileName = file
+            retFlag = False
+            break
+    return retFlag, lossFileName
     
-    return onlyfiles
+# get all content is file
+def getContentFromFile(fileName):
+    content = ""
+    with codecs.open(fileName, 'r', 'utf-8') as fin:
+        for line in fin:
+            content += line.strip()
+    return content
     
-# 
-def convertToHtml(fexec, fin, fout, getfiles):
-    templateHtml = join(fexec,"ci","template","default.html")
-    headerHtml = join(fexec,"ci","template","header.html")
+# check the link is vaild
+def checkMdLink(getPath):
+    global allFiles
     
-    for all_md in getfiles.keys():
-        bashCommand = """pandoc +RTS -K512m -RTS {} --to html4 --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash+smart --output {} --email-obfuscation none --self-contained --standalone --section-divs --template {} --no-highlight --variable highlightjs=1 --variable "theme:bootstrap" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --include-in-header {} """.format(join(fin,all_md), join(fin,getfiles[all_md]), templateHtml, headerHtml)
-         
-        logging.debug(bashCommand)
-        try:        
-            process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-            output, error = process.communicate()
-            print('Output:{},Error:{}'.format(output.decode('utf-8'), error.decode('utf-8')))
-        except:
-            print("Failure to convert markdown {}.".format(all_md))
+    retFlag = True
+    lossLinkName = []
+    allHtmlFiles = []
+    for file in allFiles:
+        tmpPath = join(getPath, file)
+        logging.debug("check link in " + tmpPath)
+        dataContent = getContentFromFile(tmpPath)
+        
+        # get all []() format in markdown
+        searchObj = re.finditer(r'\[.*?\]\(data[/|\\](\S*?)\)', dataContent, re.I)
+        if searchObj != None:
+            for mobj in searchObj:
+                if (not isfile(join(getPath, mobj.group(1)))) \
+                    or splitext(basename(mobj.group(1)))[1] != ".html":
+                    logging.debug('not html: ' + mobj.group(1))
+                    retFlag = False
+                    lossLinkName.append(mobj.group(1))
+                else:
+                    allHtmlFiles.append(mobj.group(1))
+                    #logging.debug(mobj.group(1))
     
+    return retFlag, lossLinkName, allHtmlFiles
+
+# check whether html files are on markdown or not
+def checkHtmlNotListOnMd(getPath, getMdLink):
+    
+    allPhysicalHtmlFiles = []
+    
+    for f in os.listdir(getPath):
+        filepath = join(getPath, f)
+        if isfile(filepath) and filepath.lower().endswith(('.html',)):
+            allPhysicalHtmlFiles.append(f)
+    
+    notListedHtmlData = set(allPhysicalHtmlFiles).difference(set(getMdLink)) 
+    return len(notListedHtmlData), notListedHtmlData
+        
     
 # main entry
 logging.basicConfig(level=logging.WARNING)
 
-opts, args = getopt.getopt(sys.argv[1:], "fhe:i:o:", ["help"])
+opts, args = getopt.getopt(sys.argv[1:], "fhd:", ["help"])
 opts = parseOpts(opts)
 
 if len(opts) < 1:
@@ -79,23 +113,34 @@ elif '--help' in opts.keys() or '-h' in opts.keys():
     helpMessgae()
 else:
     logging.debug("others")
-    flag, fexec, fin, fout = checkFInOut(opts)
-    os.chdir(fin)
-    if flag != 1:
-        print("Error: Parameter is not valid.")
-        helpMessgae()
-    else:
-        logging.debug("precheck ok")
-        fileNameList = getConvertList(fin, fout)
-        convertToHtml(fexec, fin, fout, fileNameList)
     
+    # check the data directory is vaild
+    status, dataPath = checkFInOut(opts)
+    if status != 1:
+        logging.debug("can not locate data path")
+        sys.exit(1)
     
+    # check the whole main markdown is available
+    status, lossFileName = checkMdFileExist(dataPath)
+    if not status:
+        logging.debug("markdown file is not exist: " + lossFileName)
+        sys.exit(1)
+        
+    # check the link in markdown file is available
+    status, lossMDLink, htmlFiles = checkMdLink(dataPath)
+    if not status:
+        logging.debug("some links in markdown file are lost: " + ','.join(lossMDLink))
+        sys.exit(1)
+            
+    # check all the link is list
+    logging.debug(','.join(htmlFiles))
+    objLen, notListHtmlFile = checkHtmlNotListOnMd(dataPath, htmlFiles)
+    if objLen > 0:
+        logging.debug("some physical files not listed in markdown : " + ','.join(list(notListHtmlFile)))
+        sys.exit(1)
     
-    
-    
-    
-    
-    
-    
-    
-    
+    # all check points are correct
+    sys.exit(0)
+
+
+

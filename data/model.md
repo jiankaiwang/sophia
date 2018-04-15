@@ -23,7 +23,7 @@
 
 * Principal Components Analysis (PCA): [Rscript](data/Principal_Components_Analysis_R.html)
 * Kernel Principal Components Analysis (KPCA)
-* Factor Analysis: 
+* Factor Analysis:  [Rscript](data/Factor_Analysis_R.html)
 * Multidimensional Scaling (MDS)
 * 字典學習
 * Nonparametric Weighted Feature Extraction (NWFE)
