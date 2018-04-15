@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # update the content
-cd /c/inetpub/wwwroot/sophia/ci
+cd /home/jkw/sophia/portal/ci
 git checkout master
-git pull
-git checkout develop
+git pull --rebase

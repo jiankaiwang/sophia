@@ -58,7 +58,7 @@ def convertToHtml(fexec, fin, fout, getfiles):
          
         logging.debug(bashCommand)
         try:        
-            process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+            process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
             output, error = process.communicate()
             print('Output:{},Error:{}'.format(output.decode('utf-8'), error.decode('utf-8')))
         except:

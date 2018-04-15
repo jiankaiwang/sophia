@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # convert md ro html
-cd /c/inetpub/wwwroot/sophia/ci
-python ConvertMd2Html.py -e /c/inetpub/wwwroot/sophia/ -i /c/inetpub/wwwroot/sophia/data -o /c/inetpub/wwwroot/sophia/data
+cd /home/jkw/sophia/portal/ci
+python ConvertMd2Html.py -e /home/jkw/sophia/portal -i /home/jkw/sophia/portal/data -o /home/jkw/sophia/portal/data
 
 # CI vaildation
-cd /c/inetpub/wwwroot/sophia/ci
-python ci.py -d /c/inetpub/wwwroot/sophia/data
+cd /home/jkw/sophia/portal/ci
+python ci.py -d /home/jkw/sophia/portal/data
 if [ $? = 1 ]; then
     echo "Not passing the CI test."
     exit 1
@@ -15,4 +15,5 @@ else
 fi
 
 exit 0
+
 
