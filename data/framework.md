@@ -66,6 +66,29 @@
 
 ### Tensorflow
 
+* Quick Start: [Python](data/Tensorflow_Quickstart_Python.html)
+* Tensorflow Visualization
+    * PlayGround: [http://playground.tensorflow.org](http://playground.tensorflow.org)
+    * TensorBoard
+* Tensorflow Basis
+* Tensorflow Integration:
+    * TFLearn
+    * Keras
+* Tensorflow Basic Flow
+* Image Recognition
+* Natural Language Processing
+* Vedio Description
+* Mimicking Content Generating
+* Reinforcement Learning
+* Tensorflow XLA
+* Tensorflow Debugger
+* Distributed Tensorflow System
+* Tensorflow with Kubernetes
+* Tensorflow on Spark
+* Tensorflow on android
+* Tensorflow on iOS
+* Tensorflow on Raspberry
+
 
 
 ### Caffe / Caffe2
