@@ -31,6 +31,10 @@
 * Quadratic Discriminate Analysis (QDA): [Rscript](data/Quadratic_Discriminant_Analysis_R.html)
 * Mixture of Generalized Gaussian (MGG)
 * Mixture of Gaussian (MoG)
+* Lsomap
+* Laplacian eigenmaps
+* Locally-linear Embeddings
+* t-SNE
 
 ### 矩陣分解
 

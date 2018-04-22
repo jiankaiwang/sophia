@@ -16,6 +16,19 @@ else
     cdPath=$2
 fi
 
+# check current vc status
+cd $cdPath
+originVer=$(git rev-parse HEAD)
+python github_api.py -o mlc -p jiankaiwang/sophia
+if [ $? = "-1" ]; then
+    echo "Error parsing repository information from Github API."
+    exit 1
+fi
+if [ $? = $originVer ]; then
+    echo "No need to start the cicd process."
+    exit 0
+fi
+
 # git clone to check
 testEnv=$ciTestPath/cicd_test
 mkdir -p $testEnv
@@ -48,7 +61,6 @@ fi
 cdlog=$cdPath/cdlog.txt
 cd $cdPath
 
-originVer=$(git rev-parse HEAD)
 git checkout master
 git pull --rebase
 lastVer=$(git rev-parse HEAD)
