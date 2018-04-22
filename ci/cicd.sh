@@ -19,7 +19,7 @@ fi
 # check current vc status
 cd $cdPath
 originVer=$(git rev-parse HEAD)
-python github_api.py -o mlc -p jiankaiwang/sophia
+python $cdPath/ci/github_api.py -o mlc -p jiankaiwang/sophia
 if [ $? = "-1" ]; then
     echo "Error parsing repository information from Github API."
     exit 1
