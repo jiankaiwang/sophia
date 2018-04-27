@@ -71,6 +71,19 @@
     * PlayGround: [http://playground.tensorflow.org](http://playground.tensorflow.org)
     * TensorBoard
 * Tensorflow Basis
+    * architecture
+    * API
+    * variable_scope vs. name_scope
+    * batch normalization
+    * neural network function
+        * activation function
+        * convolutional function
+        * pooling function
+        * classification function
+        * optimization function
+    * model portability
+    * queue and threading
+    * customized operation
 * Tensorflow Integration:
     * TFLearn
     * Keras
