@@ -1,13 +1,3 @@
-### Neural Network
-
-* AlexNet
-* LeNet
-* VGG Net
-* GoogLeNet
-* ResNet
-
-
-
 ### Keras
 
 
@@ -84,15 +74,18 @@
     * model portability
     * queue and threading
     * customized operation
-* Tensorflow Integration:
-    * TFLearn
-    * Keras
 * Tensorflow Basic Flow
+    * Data Reading
+    * Data Preprocessing
+    * Building Model
+    * Learning the Model
+    * Evaluating the Model
 * Image Recognition
 * Natural Language Processing
 * Vedio Description
 * Mimicking Content Generating
 * Reinforcement Learning
+* TF-Slim
 * Tensorflow XLA
 * Tensorflow Debugger
 * Distributed Tensorflow System
