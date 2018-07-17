@@ -130,30 +130,13 @@
 ### 深度學習的類型與主流方法
 
 * 監督式學習網路 (Supervised Learning Network)
-    * Deep Belief Network (DBN)
-    * Multi-Layer Preceptron (MLP)
-    * Feedforward Neural Network
-    * Feedback Neural Network
-    * CNN
-    * RNN: CNTK
-        * LSTM: CNTK
-    * 稀疏編碼 (Sparse Encoding)
-    * Back-Propagation Neural Network
-    * Learning Vector Quantization
-    * GAN
-    
-* 非監督式學習網路 (Unsupervised Learning Network)Each
-    * 自我組機對應 (SOM)
-    * 可適應式反響理論 (Adaptive Resonance Theory)
+    * MLP (Multi-Layer Preceptron)
+    * CNN (Convolutional Neural Network)
+    * RNN (Recurrent Neural Network)
 
-* 聯想式學習網路 (Associate Learning Network)
-    * 霍普菲爾網路 (Hopfield Neural Network)
-    * 雙向聯想記憶網路 (Bi-Directional Associative Memory)
-    
-* 最適化應用網路 (Optimization Application Network)
-    * 霍普菲爾-坦克網路 (Hopfield-Tank Neural Network)
-    * 退火網路 (Annealed Neural Network)
-    
+* 非監督式學習網路 (Unsupervised Learning Network)
+    * GAN (Generative Adversarial Network)
+
 ### 深度學習遭遇的問題
 
 * 區域最佳解 (Local Optimal)，舉 SGD 為例
