@@ -95,11 +95,5 @@
 * Tensorflow on iOS
 * Tensorflow on Raspberry
 
-
-
-### Caffe / Caffe2
-
-
-
 ### scikit-learn
 
