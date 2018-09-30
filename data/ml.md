@@ -14,8 +14,6 @@
 
 * 專家觀點
 * 等分法
-* S-Plus
-    * modification of Sturges's rule that ensures nice break points between the bins
 * Entropy Maximization Heuristic
 * Bayesian Belief Network
 
@@ -25,7 +23,6 @@
 * Kernel Principal Components Analysis (KPCA)
 * Factor Analysis:  [Rscript](data/Factor_Analysis_R.html)
 * Multidimensional Scaling (MDS)
-* 字典學習
 * Nonparametric Weighted Feature Extraction (NWFE)
 * Linear Discriminate Analysis (LDA): [Rscript](data/Linear_Discriminate_Analysis_R.html)
 * Quadratic Discriminate Analysis (QDA): [Rscript](data/Quadratic_Discriminant_Analysis_R.html)
@@ -40,13 +37,9 @@
 
 * Singular Value Decomposition (SVD)
 * QR Decomposition
-    * Q is an orthogonal matrix 
-    * R is an upper triangular matrix
 
 ### 最佳優化方法
 
-* Stochastic Gradient Descent (SGD)
-    * momentum_sgd
 * Unconstrained and constrained minimization of multivariate scalar functions (minimize)  
     * BFGS
     * Nelder-Mead simplex
@@ -62,10 +55,12 @@
     * hybrid Powell
     * Levenberg-Marquardt
     * large-scale methods such as Newton-Krylov
-* fsadagrad
-* adam
+* Stochastic Gradient Descent (SGD)
+* Momentum
+* AdaGrad
+* Adam
 * nesterov
-* rmsprop
+* RMSprop
 
 ### 迴歸/預測
 
@@ -96,9 +91,6 @@
     * Spectral Clustering
     * Self-Organizing Map (SOM): [Rscript](data/Self-Organizing_Map_R.html)
 
-* 強化學習 (Reinforcement Learning)
-    * Deep Q-Learning
-
 * 遺傳演算法 (Genetic Algorithm, GA)
 
 ### 機器學習面臨的問題
@@ -126,24 +118,3 @@
     * 達到誤差最小: 如最小平方法
     * 達到變異最小: 如貝式達到最小分類錯誤率
 * 結構性的預測模式
-
-### 深度學習的類型與主流方法
-
-* 監督式學習網路 (Supervised Learning Network)
-    * MLP (Multi-Layer Preceptron)
-    * CNN (Convolutional Neural Network)
-    * RNN (Recurrent Neural Network)
-
-* 非監督式學習網路 (Unsupervised Learning Network)
-    * GAN (Generative Adversarial Network)
-
-### 深度學習遭遇的問題
-
-* 區域最佳解 (Local Optimal)，舉 SGD 為例
-* 過度訓練或訓練不足
-* 隱藏層數目及神經元數目
-* 無法收斂
-
-
-
-
