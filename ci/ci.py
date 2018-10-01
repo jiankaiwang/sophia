@@ -12,9 +12,10 @@ import getopt
 import logging
 import re
 import codecs
+import requests
 
 # pre-defined variabled
-allFiles = ["model.md", "statistics.md", "uitools.md", "maker.md", "framework.md"]
+allFiles = ["ml.md", "dl.md", "statistics.md", "uitools.md", "maker.md", "framework.md"]
 
 # help message
 def helpMessgae():
@@ -37,6 +38,15 @@ def checkFInOut(get_opts):
     return -1, ""
 
 # check necessary file existing
+def __checkRemoteRepoExists(filename):
+    request = requests.get(\
+            'https://raw.githubusercontent.com/jiankaiwang/sophia/master/data/'\
+            + filename)
+    if request.status_code == 200:
+        return True
+    else:
+        return False
+
 def checkMdFileExist(getPath):
     global allFiles
     
@@ -45,8 +55,14 @@ def checkMdFileExist(getPath):
     for file in allFiles:
         tmpPath = join(getPath, file)
         if not isfile(tmpPath):
-            lossFileName = file
-            retFlag = False
+            remoteExists = __checkRemoteRepoExists(file)
+            if remoteExists:
+                # would be updated
+                retFlag, lossFileName = True, ""
+                continue
+            else:
+                lossFileName = file
+                retFlag = False
             break
     return retFlag, lossFileName
     
@@ -100,7 +116,7 @@ def checkHtmlNotListOnMd(getPath, getMdLink):
         
     
 # main entry
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 
 opts, args = getopt.getopt(sys.argv[1:], "fhd:", ["help"])
 opts = parseOpts(opts)

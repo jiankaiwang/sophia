@@ -113,10 +113,12 @@
 		* Fast R-CNN
 		* Faster R-CNN
 		* Single Shot MultiBox Detector (SSD)
+		* Mask R-CNN
 		* You Only Look Once (YOLO)
 	* 圖像分割 (Image Segmentation)
 		* Fully Convolutional Network (FCN)
 		* U-Net
+	* 物件追蹤
 	* 影像風格 (Artistic Style)
 	* 光學字元識別 (Optical Character Recognition, OCR)
 
