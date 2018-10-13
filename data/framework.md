@@ -61,7 +61,7 @@
     * PlayGround: [http://playground.tensorflow.org](http://playground.tensorflow.org)
     * TensorBoard
 * Tensorflow Basis
-    * architecture
+    * [architecture](data/Basic_Tensorflow.html)
     * API
     * variable_scope vs. name_scope
     * batch normalization
