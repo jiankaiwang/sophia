@@ -98,7 +98,7 @@
 	    * GAN (Generative Adversarial Network)
 
 * 空間與圖影像
-	* 資料擴增方法
+	* [資料擴增方法](data/ImageDataAugmentation.html)
 	* 圖像分類 (Image Classification)
 		* LeNet 
 		* AlexNet
