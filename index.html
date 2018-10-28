@@ -115,12 +115,12 @@
             <div class="col-md-3 col-lg-3 margin-section">
                 <!--<h3 class="my-4"><i class="fas fa-bars fa-1x"></i> Menu</h3>-->
                 <div class="list-group">
-                    <a data-toggle="tab" href="#ml" class="list-group-item list-item">Machine Learning</a>
-                    <a data-toggle="tab" href="#dl" class="list-group-item list-item active">Deep Learning</a>
-                    <a data-toggle="tab" href="#flow" class="list-group-item list-item">Framework</a>
-                    <a data-toggle="tab" href="#uitools" class="list-group-item list-item">UI Tool</a>
-                    <a data-toggle="tab" href="#maker" class="list-group-item list-item">Maker</a>
-                    <a data-toggle="tab" href="#statistics" class="list-group-item list-item">Statistics</a>
+                    <a data-toggle="tab" href="#ml" class="list-group-item list-item" onclick="getEachTopic('ml');">Machine Learning</a>
+                    <a data-toggle="tab" href="#dl" class="list-group-item list-item active" onclick="getEachTopic('dl');">Deep Learning</a>
+                    <a data-toggle="tab" href="#framework" class="list-group-item list-item" onclick="getEachTopic('framework');">Framework</a>
+                    <a data-toggle="tab" href="#uitools" class="list-group-item list-item" onclick="getEachTopic('uitools');">UI Tool</a>
+                    <a data-toggle="tab" href="#maker" class="list-group-item list-item" onclick="getEachTopic('maker');">Maker</a>
+                    <a data-toggle="tab" href="#statistics" class="list-group-item list-item" onclick="getEachTopic('statistics');">Statistics</a>
                 </div>
             </div>
 
@@ -133,7 +133,7 @@
                     <div id="dl" class="tab-pane fade show active">
                         <i class="fas fa-spinner fa-spin fa-2x"></i> 
                     </div>
-                    <div id="flow" class="tab-pane fade">
+                    <div id="framework" class="tab-pane fade">
                         <i class="fas fa-spinner fa-spin fa-2x"></i>
                     </div>
                     <div id="uitools" class="tab-pane fade">
@@ -193,19 +193,22 @@
             }
         })
     }
+	function getEachTopic(topic) {
+		console.log(topic);
+		switch(topic) {
+			case "ml": fetchData('data/ml.md', 'ml', function() {}); break;
+			case "statistics": fetchData('data/statistics.md', 'statistics', function() {}); break;
+			case "uitools": fetchData('data/uitools.md', 'uitools', function() {}); break;
+			case "maker": fetchData('data/maker.md', 'maker', function() {}); break;
+			case "framework": fetchData('data/framework.md', 'framework', function() {}); break;
+		}
+	}
     $(function() {
         async.parallel([
-            function(callback) { fetchData('data/ml.md', 'ml', callback) }
-            , function(callback) { fetchData('data/dl.md', 'dl', callback) }
-            , function(callback) { fetchData('data/statistics.md', 'statistics', callback) }
-            , function(callback) { fetchData('data/uitools.md', 'uitools', callback) }
-            , function(callback) { fetchData('data/maker.md', 'maker', callback) }
-            , function(callback) { fetchData('data/framework.md', 'flow', callback) }
+            function(callback) { fetchData('data/dl.md', 'dl', callback) }
         ], function (err, message) {
-	    if(err) { 
-	       console.log(err); 
-	    }
-	});
+			if(err) { console.log(err); }
+		});
     });
     </script>
 
