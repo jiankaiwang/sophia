@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Basic_Tensorflow</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>BasicCNN_Tensorflow</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -13,8 +11,8 @@
 *
 */
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -1109,7 +1107,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2538,7 +2535,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3029,7 +3025,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -8760,6 +8755,9 @@ body > #header .header-bar {
     margin-left: 10px;
   }
 }
+[dir="rtl"] #ipython_notebook {
+  float: right !important;
+}
 #noscript {
   width: auto;
   padding-top: 16px;
@@ -8962,8 +8960,14 @@ span#login_widget > .button .badge,
  *
  * Author: Jupyter Development Team
  */
+[dir="rtl"] #tabs li {
+  float: right;
+}
 ul#tabs {
   margin-bottom: 4px;
+}
+[dir="rtl"] ul#tabs {
+  margin-right: 0px;
 }
 ul#tabs a {
   padding-top: 6px;
@@ -8986,6 +8990,16 @@ ul.breadcrumb span {
 }
 .list_toolbar .tree-buttons {
   padding-top: 1px;
+}
+[dir="rtl"] .list_toolbar .tree-buttons {
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-right {
+  padding-top: 1px;
+  float: left !important;
+}
+[dir="rtl"] .list_toolbar .pull-left {
+  float: right !important;
 }
 .dynamic-buttons {
   padding-top: 3px;
@@ -9122,6 +9136,9 @@ ul.breadcrumb span {
 #tree-selector {
   padding-right: 0px;
 }
+[dir="rtl"] #tree-selector a {
+  float: right;
+}
 #button-select-all {
   min-width: 50px;
 }
@@ -9211,6 +9228,9 @@ ul#new-menu {
   left: auto;
   right: 0;
 }
+[dir="rtl"] #new-menu {
+  text-align: right;
+}
 .kernel-menu-icon {
   padding-right: 12px;
   width: 24px;
@@ -9255,6 +9275,9 @@ ul#new-menu {
 }
 #running .panel-group .panel .panel-body .list_container .list_item:last-child {
   border-bottom: 0px;
+}
+[dir="rtl"] #running .col-sm-8 {
+  float: right !important;
 }
 .delete-button {
   display: none;
@@ -9551,6 +9574,7 @@ div.cell.selected.jupyter-soft-selected {
   }
 }
 div.inner_cell {
+  min-width: 0;
   /* Old browsers */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -9571,11 +9595,6 @@ div.inner_cell {
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-}
-@-moz-document url-prefix() {
-  div.inner_cell {
-    overflow-x: hidden;
-  }
 }
 /* input_area and input_prompt must match in top border and margin for alignment */
 div.input_area {
@@ -11246,7 +11265,7 @@ div#pager .ui-resizable-handle::after {
 }
 .shortcut_key {
   display: inline-block;
-  width: 20ex;
+  width: 21ex;
   text-align: right;
   font-family: monospace;
 }
@@ -11558,6 +11577,7 @@ ul.typeahead-list > li > a {
   box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
 }
 .terminal-app .terminal {
+  width: 100%;
   float: left;
   font-family: monospace;
   color: white;
@@ -11571,6 +11591,9 @@ ul.typeahead-list > li > a {
 .terminal-app .terminal dummy-screen {
   line-height: 1em;
   font-size: 14px;
+}
+.terminal-app .terminal .xterm-rows {
+  padding: 10px;
 }
 .terminal-app .terminal-cursor {
   color: black;
@@ -11631,8 +11654,10 @@ ul.typeahead-list > li > a {
 .highlight .mh { color: #666666 } /* Literal.Number.Hex */
 .highlight .mi { color: #666666 } /* Literal.Number.Integer */
 .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
 .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -11643,9 +11668,11 @@ ul.typeahead-list > li > a {
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
@@ -11699,9 +11726,7 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}
-
-@media print {
+}@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11722,7 +11747,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11752,6 +11777,7 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">os</span>
 </pre></div>
 
 </div>
@@ -11762,7 +11788,11 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
   from ._conv import register_converters as _register_converters
@@ -11774,12 +11804,91 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Test-Installation">Test Installation<a class="anchor-link" href="#Test-Installation">&#182;</a></h1>
+<h1 id="Convolutional-Layer">Convolutional Layer<a class="anchor-link" href="#Convolutional-Layer">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">input: N x h x w x d </span>
+<span class="sd">  N: batch size</span>
+<span class="sd">  h: height</span>
+<span class="sd">  w: width</span>
+<span class="sd">  d: depth (channel)</span>
+
+<span class="sd">filter: e x e x d x k</span>
+<span class="sd">  e: filter (or kernel) width / height, 3 x 3 or 5 x 5</span>
+<span class="sd">  d: depth is the same with input&#39;s d</span>
+<span class="sd">  k: kernel sizes</span>
+
+<span class="sd">padding:</span>
+<span class="sd">  SAME: with zero padding</span>
+<span class="sd">  VALID: without padding</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> \
+             <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> \
+             <span class="n">strides</span><span class="o">=</span><span class="n">strides</span><span class="p">,</span> \
+             <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> \
+             <span class="n">use_cudnn_on_gpu</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> \
+             <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Pooling-Layer">Pooling Layer<a class="anchor-link" href="#Pooling-Layer">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Max-Pooling">Max Pooling<a class="anchor-link" href="#Max-Pooling">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">value: N x w x h x d</span>
+
+<span class="sd">ksize: [1, k, k, 1]</span>
+<span class="sd">  k: kernel size</span>
+
+<span class="sd">strides: [1, s, s, 1]</span>
+<span class="sd">  s: stride size</span>
+
+<span class="sd">padding: SAME or VALID</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> \
+               <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> \
+               <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> \
+               <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">,</span> \
+               <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Padding">Padding<a class="anchor-link" href="#Padding">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -11788,14 +11897,11 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dl</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="s1">&#39;Hello world, Deep Learning and Tensorflow!&#39;</span><span class="p">)</span>
-<span class="n">val1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">val2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">mul_val</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">val1</span><span class="p">,</span> <span class="n">val2</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">dl</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">mul_val</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># SAME vs. VALID</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]))</span>
+<span class="nb">filter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]))</span>
+<span class="n">conv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">conv</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11806,10 +11912,13 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>b&#39;Hello world, Deep Learning and Tensorflow!&#39;
-6
+<pre>Tensor(&#34;Conv2D:0&#34;, shape=(1, 5, 5, 7), dtype=float32)
 </pre>
 </div>
 </div>
@@ -11818,22 +11927,11 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Tensor-vs.-Variable">Tensor vs. Variable<a class="anchor-link" href="#Tensor-vs.-Variable">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Tensor is different from variable. Tensor is active data flow between the layers in neural network and it vanishs after sesson finish. Variable can be preserved among different sessions, it can be updated during training, it can be kept storing in memory and it can be stored after learning.</p>
-
+<h1 id="MNIST-Example">MNIST Example<a class="anchor-link" href="#MNIST-Example">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -11842,211 +11940,34 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Others tensors to initialize the tf.variables</span>
-<span class="sd">tf.zeros()</span>
-<span class="sd">tf.ones()</span>
-<span class="sd">tf.random_normal()</span>
-<span class="sd">tf.truncated_normal()</span>
-<span class="sd">tf.random_uniform()</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">([</span><span class="mi">300</span><span class="p">,</span><span class="mi">200</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;weights&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">):</span>
+    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
+    <span class="n">bias_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">bias_init</span><span class="p">)</span>
+    <span class="n">conv_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Requires <code>tf.initialize_all_variables()</code> or <code>tf.initialize_variables(var1, var2, var3, ...)</code> to initialize tensors in variables.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Operations-in-Tensorflow">Operations in Tensorflow<a class="anchor-link" href="#Operations-in-Tensorflow">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Operations in tensorflow represent to transform tensor.</p>
-<table>
-<thead><tr>
-<th>Class</th>
-<th>Examples</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Element-based Calculation</td>
-<td>Add, Sub, Mul, Div, Exp, Log, Equal, ...</td>
-</tr>
-<tr>
-<td>Array Operation</td>
-<td>Concat, Slice, Split, Constant, Rank, Shape, Shuffle, ...</td>
-</tr>
-<tr>
-<td>Matrix Operation</td>
-<td>MatMul, MatrixInverse, MatrixDeterminant, ...</td>
-</tr>
-<tr>
-<td>Status Operation</td>
-<td>Variable, Assign, AssignAdd, ...</td>
-</tr>
-<tr>
-<td>Neural Network Construction</td>
-<td>Softmax, Sigmoid, ReLu, Convolutional2D, Maxpool, ...</td>
-</tr>
-<tr>
-<td>Checkpoint Operation</td>
-<td>Save, Restore, ...</td>
-</tr>
-<tr>
-<td>Queue, Sync Operation</td>
-<td>Enqueue, Dequeue, MutexAcquire, MutexRelease, ...</td>
-</tr>
-<tr>
-<td>Flow Control</td>
-<td>Merge, Switch, Enter, Leave, NextIteration, ...</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Placeholder">Placeholder<a class="anchor-link" href="#Placeholder">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Placeholder is the data entry point (tensor) to neural network model.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>   <span class="c1"># None can be any size in minibatch</span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_uniform</span><span class="p">([</span><span class="mi">784</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">minval</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">)</span>
-<span class="n">multiply_val</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">max_pool</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Session-in-Tensorflow">Session in Tensorflow<a class="anchor-link" href="#Session-in-Tensorflow">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Tensor(Data/Operations), Variables(Weights) and Graphs(Nerual Network) are executed in session.</li>
-<li>All operations listed above, including initialization, are working in session.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">read_data</span> <span class="kn">import</span> <span class="n">get_minibatch</span>
-
-<span class="c1"># simple neural network</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>   <span class="c1"># None can be any size in minibatch</span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_uniform</span><span class="p">([</span><span class="mi">784</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">minval</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">10</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;biases&quot;</span><span class="p">)</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-
-<span class="c1"># initialization</span>
-<span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">initialize_all_variables</span><span class="p">()</span>
-
-<span class="c1"># start the session</span>
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="c1"># initialize all variables at the beginning</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init</span><span class="p">)</span>
-
-    <span class="c1"># use feed_dict to fill the data into placeholder</span>
-    <span class="c1"># and calculate around the whole graph</span>
-    <span class="n">feed_dict_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">get_minibatch</span><span class="p">()}</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="n">feed_dict_data</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Scope-in-Tensorflow">Scope in Tensorflow<a class="anchor-link" href="#Scope-in-Tensorflow">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li><p>Use <code>tf.get_variable()</code> instead of <code>tf.Variable()</code> to check whether the variable is initialized already, if it is not, tensorflow would initialize the variable as the same with <code>tf.Variable()</code>.</p>
-</li>
-<li><p>Use <code>tf.variable_scope()</code> as <code>scope</code> and script <code>scope.reuse_variables()</code> to allow reusing shared variables among minibatch training. (For the sake of information security, tensorflow is not allowed to shared variables by default.)</p>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Better-Variable-Construction">Better Variable Construction<a class="anchor-link" href="#Better-Variable-Construction">&#182;</a></h2>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -12054,27 +11975,12 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">):</span>
-    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_uniform_initializer</span><span class="p">(</span><span class="n">minval</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">bias_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">bias_init</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-
-<span class="k">def</span> <span class="nf">network</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A four-layer neural network example </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;layer_1&quot;</span><span class="p">):</span>
-        <span class="n">output_1</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="p">[</span><span class="mi">784</span><span class="p">,</span><span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">])</span>
-    
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;layer_2&quot;</span><span class="p">):</span>
-        <span class="n">output_2</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">output_1</span><span class="p">,</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span> <span class="p">[</span><span class="mi">50</span><span class="p">])</span>
-        
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;layer_3&quot;</span><span class="p">):</span>
-        <span class="n">output_3</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">output_2</span><span class="p">,</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
-        
-    <span class="k">return</span> <span class="n">output_3</span>
+    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">w_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">b_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">w_init</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">b_init</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12087,319 +11993,59 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;shared_variables&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
-    <span class="n">i_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">784</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;i_1&quot;</span><span class="p">)</span>
-    <span class="n">network</span><span class="p">(</span><span class="n">i_1</span><span class="p">)</span>
-    
-    <span class="c1"># you should add the script to allow sharing variables</span>
-    <span class="n">scope</span><span class="o">.</span><span class="n">reuse_variables</span><span class="p">()</span>
-    
-    <span class="n">i_2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">784</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;i_2&quot;</span><span class="p">)</span>
-    <span class="n">network</span><span class="p">(</span><span class="n">i_2</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits_v2</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Use-CPU-/-GPU">Use CPU / GPU<a class="anchor-link" href="#Use-CPU-/-GPU">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span># use the first CPU
-/cpu:0
-
-# use the first gpu
-/gpu:0
-
-# use the second gpu
-/gpu:1
-</pre></div>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check supported devices</span>
-<span class="kn">from</span> <span class="nn">tensorflow.python.client</span> <span class="k">import</span> <span class="n">device_lib</span>
-<span class="n">device_lib</span><span class="o">.</span><span class="n">list_local_devices</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">keep_prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;conv_1&quot;</span><span class="p">):</span>
+        <span class="n">conv_1</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="p">[</span><span class="mi">32</span><span class="p">])</span>                <span class="c1"># conv_1: 28 x 28 x 32</span>
+        <span class="n">pool_1</span> <span class="o">=</span> <span class="n">max_pool</span><span class="p">(</span><span class="n">conv_1</span><span class="p">)</span>                              <span class="c1"># pool_1: 14 x 14 x 32</span>
+    
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;conv_2&quot;</span><span class="p">):</span>
+        <span class="n">conv_2</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">pool_1</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span> <span class="p">[</span><span class="mi">64</span><span class="p">])</span>          <span class="c1"># conv_2: 14 x 14 x 64</span>
+        <span class="n">pool_2</span> <span class="o">=</span> <span class="n">max_pool</span><span class="p">(</span><span class="n">conv_2</span><span class="p">)</span>                              <span class="c1"># pool_2: 7 x 7 x 64</span>
+        
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;fc&quot;</span><span class="p">):</span>
+        <span class="n">pool_2_flat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pool_2</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">64</span><span class="p">])</span>     <span class="c1"># from pool_2</span>
+        <span class="c1">#pool_2_flat = tf.layers.flatten()                       # similar with the above line</span>
+        <span class="n">fc_1</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">pool_2_flat</span><span class="p">,</span> <span class="p">[</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">],</span> <span class="p">[</span><span class="mi">1024</span><span class="p">])</span>   <span class="c1"># fc_1: 1024</span>
+        
+        <span class="c1"># dropout</span>
+        <span class="n">fc_1_dropout</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">fc_1</span><span class="p">,</span> <span class="n">keep_prob</span><span class="o">=</span><span class="n">keep_prob</span><span class="p">)</span>
+        
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;out&quot;</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">fc_1_dropout</span><span class="p">,</span> <span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">out</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[name: &#34;/device:CPU:0&#34;
- device_type: &#34;CPU&#34;
- memory_limit: 268435456
- locality {
- }
- incarnation: 7154796531582009912]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Basic-use">Basic use<a class="anchor-link" href="#Basic-use">&#182;</a></h2>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;/gpu:1&#39;</span><span class="p">):</span>
-    
-    <span class="c1"># use tf.device() to assign the computing resource</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">10.</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    
-    <span class="c1"># allow_soft_placement: if device is not available to use, we allow tensorflow to change CPU or GPU:0, ...</span>
-    <span class="c1"># log_device_placement: record which devices we use</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">allow_soft_placement</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_device_placement</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[-10.]
- [-10.]]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Tower-like-fashion-way">Tower-like fashion way<a class="anchor-link" href="#Tower-like-fashion-way">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;/gpu:0&#39;</span><span class="p">,</span> <span class="s1">&#39;/gpu:1&#39;</span><span class="p">]:</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">10.</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.</span><span class="p">],</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
-        <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
-        
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;/cpu:0&#39;</span><span class="p">):</span>
-    <span class="n">sumAll</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add_n</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">allow_soft_placement</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_device_placement</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">sumAll</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[-20.]
- [-20.]]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="MNIST-Example">MNIST Example<a class="anchor-link" href="#MNIST-Example">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Inference">Inference<a class="anchor-link" href="#Inference">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">old_inference</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="n">init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">784</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">):</span>
-    <span class="n">weight_std</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mf">0.5</span>
-    <span class="n">w_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="n">weight_std</span><span class="p">)</span>
-    <span class="n">b_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">w_init</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">b_init</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;hidden_1&quot;</span><span class="p">):</span>
-        <span class="n">hidden_1</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">784</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">256</span><span class="p">])</span>
-        
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;hidden_2&quot;</span><span class="p">):</span>
-        <span class="n">hidden_2</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">hidden_1</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">],</span> <span class="p">[</span><span class="mi">256</span><span class="p">])</span>
-    
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;output&quot;</span><span class="p">):</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">hidden_2</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
-        
-    <span class="k">return</span> <span class="n">output</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Loss">Loss<a class="anchor-link" href="#Loss">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">old_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">product</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-    <span class="c1"># 0: column, 1: row</span>
-    <span class="n">cross_entropy</span> <span class="o">=</span> <span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">reduction_indices</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">loss</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits_v2</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">loss</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Training">Training<a class="anchor-link" href="#Training">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;cost&quot;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
-    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="mf">9e-1</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="mf">0.999</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Adam&quot;</span><span class="p">)</span>
     <span class="n">train_opt</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">train_opt</span>
 </pre></div>
@@ -12409,18 +12055,9 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Evaluate">Evaluate<a class="anchor-link" href="#Evaluate">&#182;</a></h2>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -12435,22 +12072,21 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Hyperparameters">Hyperparameters<a class="anchor-link" href="#Hyperparameters">&#182;</a></h2>
+<h2 id="Flow">Flow<a class="anchor-link" href="#Flow">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">full_training</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-2</span>
 <span class="n">training_epochs</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">1</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">1000</span>
 <span class="n">display_step</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">100</span>
@@ -12463,11 +12099,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># uncomment the below line to download the data</span>
-<span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="k">import</span> <span class="n">input_data</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="k">import</span> <span class="n">input_data</span>
 <span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/MNIST_data/&quot;</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
@@ -12479,9 +12114,13 @@ div#notebook {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>WARNING:tensorflow:From &lt;ipython-input-18-c6e8dc1cf347&gt;:3: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
+<pre>WARNING:tensorflow:From &lt;ipython-input-11-4e39c927863c&gt;:2: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
 Instructions for updating:
 Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
 WARNING:tensorflow:From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:260: maybe_download (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
@@ -12511,75 +12150,90 @@ Please use alternatives such as official/mnist/dataset.py from tensorflow/models
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Flow">Flow<a class="anchor-link" href="#Flow">&#182;</a></h2>
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;mlp_model&quot;</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>   <span class="c1"># x is batch input</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>   <span class="c1"># y is output for 10 classification</span>
-
-        <span class="n">output</span> <span class="o">=</span> <span class="n">inference</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># get the inference result</span>
-        <span class="n">cost</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>   <span class="c1"># get the loss</span>
-        <span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;global_step&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>   <span class="c1"># training step</span>
-        <span class="n">train_opt</span> <span class="o">=</span> <span class="n">training</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>   <span class="c1"># training body</span>
-        <span class="n">eval_opt_val</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>   <span class="c1"># evaluation result</span>
-        <span class="n">eval_opt_test</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>   <span class="c1"># evaluation result</span>
-
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;cnn_model&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+        
+        <span class="n">output</span> <span class="o">=</span> <span class="n">inference</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;global_step&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">train_opt</span> <span class="o">=</span> <span class="n">training</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
+        <span class="n">eval_opt_val</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>
+        <span class="n">eval_opt_test</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+        
         <span class="n">init_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
-        <span class="n">summary_opt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge_all</span><span class="p">()</span>   <span class="c1"># merge summary in each epoch</span>
-        <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>   <span class="c1"># for saving checkpoints</span>
-
+        <span class="n">summary_opt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge_all</span><span class="p">()</span>
+        <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
+        
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-            <span class="c1"># write the summary </span>
-            <span class="n">summary_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/logistic_logs_nn&quot;</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
-            <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>   <span class="c1"># initialize all variables</span>
-
+            
+            <span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/&quot;</span>
+            <span class="n">ckpt_log</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="s2">&quot;checkpoint&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">ckpt_log</span><span class="p">):</span>
+                <span class="c1">#ckpt_path = &quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint-{}&quot;.format(restrore_idx)</span>
+                <span class="n">ckpt_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ckpt_log</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fin</span><span class="p">:</span>
+                        <span class="n">ckpt_path</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>   <span class="c1"># only read the first line</span>
+                        <span class="k">break</span>
+                <span class="c1"># model_checkpoint_path: &quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint-1020&quot;</span>
+                <span class="n">ckpt_path</span> <span class="o">=</span> <span class="n">ckpt_path</span><span class="p">[</span><span class="mi">24</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">ckpt_path</span> <span class="o">+</span> <span class="s2">&quot;.meta&quot;</span><span class="p">):</span>
+                    <span class="n">scope</span><span class="o">.</span><span class="n">reuse_variables</span><span class="p">()</span>
+                    <span class="n">var_list_opt</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;conv_1/W&quot;</span><span class="p">,</span> <span class="s2">&quot;conv_1/b&quot;</span><span class="p">,</span> <span class="s2">&quot;conv_2/W&quot;</span><span class="p">,</span> <span class="s2">&quot;conv_2/b&quot;</span><span class="p">,</span> <span class="s2">&quot;fc/W&quot;</span><span class="p">,</span> <span class="s2">&quot;fc/b&quot;</span><span class="p">,</span> <span class="s2">&quot;out/W&quot;</span><span class="p">,</span> <span class="s2">&quot;out/b&quot;</span><span class="p">]</span>
+                    <span class="n">var_list_opt</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_list_opt</span><span class="p">]</span>
+                    <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">ckpt_path</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Load pretrained.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># no need to initialize if loading pretrained data</span>
+                    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># no need to initialize if loading pretrained data</span>
+                <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>
+            
+            <span class="n">summary_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span>\
+                    <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn&quot;</span><span class="p">,</span> \
+                    <span class="n">graph</span><span class="o">=</span><span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+            
             <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">training_epochs</span><span class="p">):</span>
                 <span class="n">avg_cost</span> <span class="o">=</span> <span class="mf">0.</span>
                 <span class="n">total_batch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">/</span> <span class="n">batch_size</span><span class="p">)</span>
-
+                
                 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_batch</span><span class="p">):</span>
-                    <span class="n">batch_x</span><span class="p">,</span> <span class="n">batch_y</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>   <span class="c1"># get the batch data</span>
-
-                    <span class="n">feed_dict_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">batch_x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">batch_y</span><span class="p">}</span>
-                    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_opt</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_data</span><span class="p">)</span>   <span class="c1"># feed into data and start training</span>
-
+                    <span class="n">b_x</span><span class="p">,</span> <span class="n">b_y</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+                    
+                    <span class="n">feed_dict_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">b_x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">b_y</span><span class="p">}</span>
+                    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_opt</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_data</span><span class="p">)</span>
+                    
                     <span class="n">batch_cost</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_data</span><span class="p">)</span>
-                    <span class="n">avg_cost</span> <span class="o">+=</span> <span class="n">batch_cost</span> <span class="o">/</span> <span class="n">total_batch</span>   <span class="c1"># calculate the average loss</span>
-
-                <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">display_step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="c1"># record log</span>
-
-                    <span class="n">feed_dict_val_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">labels</span><span class="p">}</span>
-                    <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt_val</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_val_data</span><span class="p">)</span>   <span class="c1"># calculate the accuracy</span>
-
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;Vaildation Error:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">acc</span><span class="p">))</span>
-                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;validation_accuracy&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>  
-
-                    <span class="n">summary_str</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">summary_opt</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_data</span><span class="p">)</span>
-                    <span class="n">summary_writer</span><span class="o">.</span><span class="n">add_summary</span><span class="p">(</span><span class="n">summary_str</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">global_step</span><span class="p">))</span>   <span class="c1"># write out the summary</span>
-
-                    <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> \
-                               <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/model-checkpoint&quot;</span><span class="p">,</span> \
-                              <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
-
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training finishing.&quot;</span><span class="p">)</span>
-
+                    <span class="n">avg_cost</span> <span class="o">+=</span> <span class="p">(</span><span class="n">batch_cost</span> <span class="o">/</span> <span class="n">total_batch</span><span class="p">)</span>
+                    
+                    <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">display_step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">feed_dict_val_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">labels</span><span class="p">}</span>
+                        <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt_val</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_val_data</span><span class="p">)</span>
+                        <span class="n">step</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">global_step</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step:&quot;</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;Vaildation Error:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">acc</span><span class="p">))</span>
+                        <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Validation_accuracy&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+                        
+                        <span class="n">summary_str</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">summary_opt</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="n">feed_dict_data</span><span class="p">)</span>
+                        <span class="n">summary_writer</span><span class="o">.</span><span class="n">add_summary</span><span class="p">(</span><span class="n">summary_str</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+                        
+                        <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> \
+                                   <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint&quot;</span><span class="p">,</span> \
+                                  <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training finished.&quot;</span><span class="p">)</span>
+            
             <span class="n">feed_dict_test_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">labels</span><span class="p">}</span>
-            <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt_test</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_test_data</span><span class="p">)</span>   <span class="c1"># test result</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Accuracy:&quot;</span><span class="p">,</span><span class="n">acc</span><span class="p">)</span>
+            <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt_test</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_test_data</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test accuracy:&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12590,573 +12244,36 @@ Please use alternatives such as official/mnist/dataset.py from tensorflow/models
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Accuracy: 0.1198 Vaildation Error: 0.8801999986171722
-Accuracy: 0.1252 Vaildation Error: 0.8747999966144562
-Accuracy: 0.1322 Vaildation Error: 0.8677999973297119
-Accuracy: 0.1386 Vaildation Error: 0.8613999933004379
-Accuracy: 0.142 Vaildation Error: 0.8579999953508377
-Accuracy: 0.1534 Vaildation Error: 0.8465999960899353
-Accuracy: 0.164 Vaildation Error: 0.835999995470047
-Accuracy: 0.171 Vaildation Error: 0.8289999961853027
-Accuracy: 0.1826 Vaildation Error: 0.8173999935388565
-Accuracy: 0.1906 Vaildation Error: 0.8094000071287155
-Accuracy: 0.1982 Vaildation Error: 0.8017999976873398
-Accuracy: 0.2046 Vaildation Error: 0.7953999936580658
-Accuracy: 0.2114 Vaildation Error: 0.7885999977588654
-Accuracy: 0.2192 Vaildation Error: 0.780799999833107
-Accuracy: 0.221 Vaildation Error: 0.778999999165535
-Accuracy: 0.226 Vaildation Error: 0.7740000039339066
-Accuracy: 0.2314 Vaildation Error: 0.7686000019311905
-Accuracy: 0.2362 Vaildation Error: 0.7637999951839447
-Accuracy: 0.241 Vaildation Error: 0.7590000033378601
-Accuracy: 0.2442 Vaildation Error: 0.7557999938726425
-Accuracy: 0.247 Vaildation Error: 0.7530000060796738
-Accuracy: 0.248 Vaildation Error: 0.7520000040531158
-Accuracy: 0.2524 Vaildation Error: 0.7475999891757965
-Accuracy: 0.2528 Vaildation Error: 0.7472000122070312
-Accuracy: 0.255 Vaildation Error: 0.7450000047683716
-Accuracy: 0.2596 Vaildation Error: 0.7403999865055084
-Accuracy: 0.2618 Vaildation Error: 0.7382000088691711
-Accuracy: 0.2632 Vaildation Error: 0.7367999851703644
-Accuracy: 0.265 Vaildation Error: 0.7350000143051147
-Accuracy: 0.2674 Vaildation Error: 0.7326000034809113
-Accuracy: 0.2712 Vaildation Error: 0.7287999987602234
-Accuracy: 0.271 Vaildation Error: 0.7290000021457672
-Accuracy: 0.2738 Vaildation Error: 0.7262000143527985
-Accuracy: 0.273 Vaildation Error: 0.7269999980926514
-Accuracy: 0.2738 Vaildation Error: 0.7262000143527985
-Accuracy: 0.2774 Vaildation Error: 0.7226000130176544
-Accuracy: 0.2778 Vaildation Error: 0.7222000062465668
-Accuracy: 0.2772 Vaildation Error: 0.7227999866008759
-Accuracy: 0.2788 Vaildation Error: 0.7211999893188477
-Accuracy: 0.2802 Vaildation Error: 0.7197999954223633
-Accuracy: 0.2816 Vaildation Error: 0.7184000015258789
-Accuracy: 0.282 Vaildation Error: 0.7179999947547913
-Accuracy: 0.287 Vaildation Error: 0.7129999995231628
-Accuracy: 0.2868 Vaildation Error: 0.7132000029087067
-Accuracy: 0.2872 Vaildation Error: 0.712799996137619
-Accuracy: 0.293 Vaildation Error: 0.7069999873638153
-Accuracy: 0.298 Vaildation Error: 0.7019999921321869
-Accuracy: 0.2958 Vaildation Error: 0.7041999995708466
-Accuracy: 0.3016 Vaildation Error: 0.6983999907970428
-Accuracy: 0.3042 Vaildation Error: 0.6958000063896179
-Accuracy: 0.3062 Vaildation Error: 0.6938000023365021
-Accuracy: 0.309 Vaildation Error: 0.6910000145435333
-Accuracy: 0.3068 Vaildation Error: 0.6931999921798706
-Accuracy: 0.308 Vaildation Error: 0.69200000166893
-Accuracy: 0.311 Vaildation Error: 0.6890000104904175
-Accuracy: 0.3098 Vaildation Error: 0.690200001001358
-Accuracy: 0.3114 Vaildation Error: 0.6886000037193298
-Accuracy: 0.312 Vaildation Error: 0.6879999935626984
-Accuracy: 0.3102 Vaildation Error: 0.6897999942302704
-Accuracy: 0.3074 Vaildation Error: 0.6926000118255615
-Accuracy: 0.3076 Vaildation Error: 0.6924000084400177
-Accuracy: 0.3094 Vaildation Error: 0.6906000077724457
-Accuracy: 0.312 Vaildation Error: 0.6879999935626984
-Accuracy: 0.3122 Vaildation Error: 0.6877999901771545
-Accuracy: 0.3138 Vaildation Error: 0.6861999928951263
-Accuracy: 0.316 Vaildation Error: 0.6839999854564667
-Accuracy: 0.3182 Vaildation Error: 0.6818000078201294
-Accuracy: 0.3196 Vaildation Error: 0.680400013923645
-Accuracy: 0.3208 Vaildation Error: 0.6791999936103821
-Accuracy: 0.3228 Vaildation Error: 0.6771999895572662
-Accuracy: 0.3222 Vaildation Error: 0.6777999997138977
-Accuracy: 0.321 Vaildation Error: 0.6789999902248383
-Accuracy: 0.3224 Vaildation Error: 0.6775999963283539
-Accuracy: 0.3238 Vaildation Error: 0.6762000024318695
-Accuracy: 0.3234 Vaildation Error: 0.6766000092029572
-Accuracy: 0.3248 Vaildation Error: 0.6751999855041504
-Accuracy: 0.3262 Vaildation Error: 0.673799991607666
-Accuracy: 0.3288 Vaildation Error: 0.6712000072002411
-Accuracy: 0.3334 Vaildation Error: 0.6665999889373779
-Accuracy: 0.335 Vaildation Error: 0.6649999916553497
-Accuracy: 0.3368 Vaildation Error: 0.6631999909877777
-Accuracy: 0.34 Vaildation Error: 0.6599999964237213
-Accuracy: 0.342 Vaildation Error: 0.6579999923706055
-Accuracy: 0.3452 Vaildation Error: 0.6547999978065491
-Accuracy: 0.3444 Vaildation Error: 0.6556000113487244
-Accuracy: 0.3458 Vaildation Error: 0.6541999876499176
-Accuracy: 0.3454 Vaildation Error: 0.6545999944210052
-Accuracy: 0.3432 Vaildation Error: 0.6568000018596649
-Accuracy: 0.3434 Vaildation Error: 0.6565999984741211
-Accuracy: 0.3418 Vaildation Error: 0.6581999957561493
-Accuracy: 0.3416 Vaildation Error: 0.6583999991416931
-Accuracy: 0.3396 Vaildation Error: 0.660400003194809
-Accuracy: 0.3388 Vaildation Error: 0.6611999869346619
-Accuracy: 0.3394 Vaildation Error: 0.6606000065803528
-Accuracy: 0.3402 Vaildation Error: 0.6597999930381775
-Accuracy: 0.3432 Vaildation Error: 0.6568000018596649
-Accuracy: 0.346 Vaildation Error: 0.6540000140666962
-Accuracy: 0.3448 Vaildation Error: 0.6552000045776367
-Accuracy: 0.347 Vaildation Error: 0.652999997138977
-Accuracy: 0.348 Vaildation Error: 0.6520000100135803
-Accuracy: 0.3514 Vaildation Error: 0.6486000120639801
-Accuracy: 0.3544 Vaildation Error: 0.6455999910831451
-Accuracy: 0.3564 Vaildation Error: 0.6435999870300293
-Accuracy: 0.3588 Vaildation Error: 0.6412000060081482
-Accuracy: 0.362 Vaildation Error: 0.6380000114440918
-Accuracy: 0.362 Vaildation Error: 0.6380000114440918
-Accuracy: 0.3616 Vaildation Error: 0.6383999884128571
-Accuracy: 0.3608 Vaildation Error: 0.6392000019550323
-Accuracy: 0.3626 Vaildation Error: 0.6374000012874603
-Accuracy: 0.3644 Vaildation Error: 0.6356000006198883
-Accuracy: 0.3644 Vaildation Error: 0.6356000006198883
-Accuracy: 0.3656 Vaildation Error: 0.6344000101089478
-Accuracy: 0.3652 Vaildation Error: 0.634799987077713
-Accuracy: 0.367 Vaildation Error: 0.632999986410141
-Accuracy: 0.3662 Vaildation Error: 0.6337999999523163
-Accuracy: 0.3656 Vaildation Error: 0.6344000101089478
-Accuracy: 0.3654 Vaildation Error: 0.6346000134944916
-Accuracy: 0.3652 Vaildation Error: 0.634799987077713
-Accuracy: 0.3662 Vaildation Error: 0.6337999999523163
-Accuracy: 0.3668 Vaildation Error: 0.6331999897956848
-Accuracy: 0.3688 Vaildation Error: 0.631199985742569
-Accuracy: 0.3702 Vaildation Error: 0.6297999918460846
-Accuracy: 0.3698 Vaildation Error: 0.6301999986171722
-Accuracy: 0.3722 Vaildation Error: 0.6277999877929688
-Accuracy: 0.3712 Vaildation Error: 0.6288000047206879
-Accuracy: 0.3714 Vaildation Error: 0.628600001335144
-Accuracy: 0.3742 Vaildation Error: 0.6258000135421753
-Accuracy: 0.3782 Vaildation Error: 0.6218000054359436
-Accuracy: 0.3756 Vaildation Error: 0.6243999898433685
-Accuracy: 0.3774 Vaildation Error: 0.6225999891757965
-Accuracy: 0.3798 Vaildation Error: 0.6202000081539154
-Accuracy: 0.3798 Vaildation Error: 0.6202000081539154
-Accuracy: 0.3816 Vaildation Error: 0.6184000074863434
-Accuracy: 0.379 Vaildation Error: 0.6209999918937683
-Accuracy: 0.3824 Vaildation Error: 0.6175999939441681
-Accuracy: 0.3834 Vaildation Error: 0.6166000068187714
-Accuracy: 0.3862 Vaildation Error: 0.6137999892234802
-Accuracy: 0.3864 Vaildation Error: 0.6135999858379364
-Accuracy: 0.3886 Vaildation Error: 0.6114000082015991
-Accuracy: 0.3906 Vaildation Error: 0.6094000041484833
-Accuracy: 0.3926 Vaildation Error: 0.6074000000953674
-Accuracy: 0.3988 Vaildation Error: 0.6012000143527985
-Accuracy: 0.3966 Vaildation Error: 0.6033999919891357
-Accuracy: 0.4 Vaildation Error: 0.5999999940395355
-Accuracy: 0.406 Vaildation Error: 0.5940000116825104
-Accuracy: 0.4062 Vaildation Error: 0.5938000082969666
-Accuracy: 0.4088 Vaildation Error: 0.5911999940872192
-Accuracy: 0.4108 Vaildation Error: 0.5891999900341034
-Accuracy: 0.4086 Vaildation Error: 0.5913999974727631
-Accuracy: 0.41 Vaildation Error: 0.5900000035762787
-Accuracy: 0.4146 Vaildation Error: 0.5853999853134155
-Accuracy: 0.4174 Vaildation Error: 0.5825999975204468
-Accuracy: 0.418 Vaildation Error: 0.5819999873638153
-Accuracy: 0.4238 Vaildation Error: 0.576200008392334
-Accuracy: 0.4278 Vaildation Error: 0.5722000002861023
-Accuracy: 0.4324 Vaildation Error: 0.5676000118255615
-Accuracy: 0.4384 Vaildation Error: 0.561599999666214
-Accuracy: 0.4416 Vaildation Error: 0.5584000051021576
-Accuracy: 0.4416 Vaildation Error: 0.5584000051021576
-Accuracy: 0.4416 Vaildation Error: 0.5584000051021576
-Accuracy: 0.4424 Vaildation Error: 0.5575999915599823
-Accuracy: 0.4464 Vaildation Error: 0.553600013256073
-Accuracy: 0.4508 Vaildation Error: 0.5491999983787537
-Accuracy: 0.4534 Vaildation Error: 0.5466000139713287
-Accuracy: 0.4514 Vaildation Error: 0.5485999882221222
-Accuracy: 0.4548 Vaildation Error: 0.545199990272522
-Accuracy: 0.4546 Vaildation Error: 0.5453999936580658
-Accuracy: 0.4586 Vaildation Error: 0.5413999855518341
-Accuracy: 0.4626 Vaildation Error: 0.5374000072479248
-Accuracy: 0.4618 Vaildation Error: 0.5381999909877777
-Accuracy: 0.4638 Vaildation Error: 0.5361999869346619
-Accuracy: 0.4632 Vaildation Error: 0.5367999970912933
-Accuracy: 0.4654 Vaildation Error: 0.5345999896526337
-Accuracy: 0.466 Vaildation Error: 0.5340000092983246
-Accuracy: 0.4662 Vaildation Error: 0.5338000059127808
-Accuracy: 0.4684 Vaildation Error: 0.5315999984741211
-Accuracy: 0.4678 Vaildation Error: 0.5322000086307526
-Accuracy: 0.4696 Vaildation Error: 0.5304000079631805
-Accuracy: 0.4704 Vaildation Error: 0.5295999944210052
-Accuracy: 0.4668 Vaildation Error: 0.5331999957561493
-Accuracy: 0.4636 Vaildation Error: 0.5363999903202057
-Accuracy: 0.4614 Vaildation Error: 0.5385999977588654
-Accuracy: 0.4612 Vaildation Error: 0.5388000011444092
-Accuracy: 0.4656 Vaildation Error: 0.5343999862670898
-Accuracy: 0.4672 Vaildation Error: 0.5327999889850616
-Accuracy: 0.4692 Vaildation Error: 0.5308000147342682
-Accuracy: 0.4718 Vaildation Error: 0.5282000005245209
-Accuracy: 0.473 Vaildation Error: 0.5270000100135803
-Accuracy: 0.4746 Vaildation Error: 0.5254000127315521
-Accuracy: 0.4772 Vaildation Error: 0.5227999985218048
-Accuracy: 0.4774 Vaildation Error: 0.522599995136261
-Accuracy: 0.4782 Vaildation Error: 0.5218000113964081
-Accuracy: 0.4822 Vaildation Error: 0.5178000032901764
-Accuracy: 0.4876 Vaildation Error: 0.5124000012874603
-Accuracy: 0.4884 Vaildation Error: 0.511599987745285
-Accuracy: 0.489 Vaildation Error: 0.511000007390976
-Accuracy: 0.4904 Vaildation Error: 0.5096000134944916
-Accuracy: 0.4912 Vaildation Error: 0.5087999999523163
-Accuracy: 0.4902 Vaildation Error: 0.509799987077713
-Accuracy: 0.4894 Vaildation Error: 0.5106000006198883
-Accuracy: 0.4888 Vaildation Error: 0.5112000107765198
-Accuracy: 0.4898 Vaildation Error: 0.5101999938488007
-Accuracy: 0.4898 Vaildation Error: 0.5101999938488007
-Accuracy: 0.4896 Vaildation Error: 0.5103999972343445
-Accuracy: 0.4896 Vaildation Error: 0.5103999972343445
-Accuracy: 0.4932 Vaildation Error: 0.5067999958992004
-Accuracy: 0.494 Vaildation Error: 0.5060000121593475
-Accuracy: 0.4938 Vaildation Error: 0.506199985742569
-Accuracy: 0.4916 Vaildation Error: 0.5083999931812286
-Accuracy: 0.4942 Vaildation Error: 0.5058000087738037
-Accuracy: 0.4954 Vaildation Error: 0.5045999884605408
-Accuracy: 0.4992 Vaildation Error: 0.5008000135421753
-Accuracy: 0.4986 Vaildation Error: 0.5013999938964844
-Accuracy: 0.5008 Vaildation Error: 0.4991999864578247
-Accuracy: 0.5002 Vaildation Error: 0.49980002641677856
-Accuracy: 0.5 Vaildation Error: 0.5
-Accuracy: 0.5006 Vaildation Error: 0.4994000196456909
-Accuracy: 0.5008 Vaildation Error: 0.4991999864578247
-Accuracy: 0.501 Vaildation Error: 0.49900001287460327
-Accuracy: 0.5004 Vaildation Error: 0.49959999322891235
-Accuracy: 0.5028 Vaildation Error: 0.49720001220703125
-Accuracy: 0.5034 Vaildation Error: 0.4965999722480774
-Accuracy: 0.5042 Vaildation Error: 0.4958000183105469
-Accuracy: 0.505 Vaildation Error: 0.4950000047683716
-Accuracy: 0.505 Vaildation Error: 0.4950000047683716
-Accuracy: 0.5044 Vaildation Error: 0.49559998512268066
-Accuracy: 0.5044 Vaildation Error: 0.49559998512268066
-Accuracy: 0.5076 Vaildation Error: 0.49239999055862427
-Accuracy: 0.5054 Vaildation Error: 0.49459999799728394
-Accuracy: 0.5044 Vaildation Error: 0.49559998512268066
-Accuracy: 0.5044 Vaildation Error: 0.49559998512268066
-Accuracy: 0.5048 Vaildation Error: 0.495199978351593
-Accuracy: 0.5036 Vaildation Error: 0.49639999866485596
-Accuracy: 0.503 Vaildation Error: 0.49699997901916504
-Accuracy: 0.5066 Vaildation Error: 0.493399977684021
-Accuracy: 0.5066 Vaildation Error: 0.493399977684021
-Accuracy: 0.507 Vaildation Error: 0.49299997091293335
-Accuracy: 0.5076 Vaildation Error: 0.49239999055862427
-Accuracy: 0.5066 Vaildation Error: 0.493399977684021
-Accuracy: 0.5072 Vaildation Error: 0.4927999973297119
-Accuracy: 0.5074 Vaildation Error: 0.4926000237464905
-Accuracy: 0.5086 Vaildation Error: 0.49140000343322754
-Accuracy: 0.5082 Vaildation Error: 0.4918000102043152
-Accuracy: 0.508 Vaildation Error: 0.4919999837875366
-Accuracy: 0.5092 Vaildation Error: 0.49080002307891846
-Accuracy: 0.509 Vaildation Error: 0.4909999966621399
-Accuracy: 0.5094 Vaildation Error: 0.49059998989105225
-Accuracy: 0.5092 Vaildation Error: 0.49080002307891846
-Accuracy: 0.5126 Vaildation Error: 0.48739999532699585
-Accuracy: 0.513 Vaildation Error: 0.4869999885559082
-Accuracy: 0.5144 Vaildation Error: 0.48559999465942383
-Accuracy: 0.5132 Vaildation Error: 0.48680001497268677
-Accuracy: 0.513 Vaildation Error: 0.4869999885559082
-Accuracy: 0.5142 Vaildation Error: 0.48580002784729004
-Accuracy: 0.5132 Vaildation Error: 0.48680001497268677
-Accuracy: 0.514 Vaildation Error: 0.4860000014305115
-Accuracy: 0.5142 Vaildation Error: 0.48580002784729004
-Accuracy: 0.5132 Vaildation Error: 0.48680001497268677
-Accuracy: 0.5126 Vaildation Error: 0.48739999532699585
-Accuracy: 0.5118 Vaildation Error: 0.48820000886917114
-Accuracy: 0.5138 Vaildation Error: 0.4861999750137329
-Accuracy: 0.5136 Vaildation Error: 0.4864000082015991
-Accuracy: 0.515 Vaildation Error: 0.48500001430511475
-Accuracy: 0.516 Vaildation Error: 0.484000027179718
-Accuracy: 0.5184 Vaildation Error: 0.48159998655319214
-Accuracy: 0.5184 Vaildation Error: 0.48159998655319214
-Accuracy: 0.5232 Vaildation Error: 0.47680002450942993
-Accuracy: 0.5278 Vaildation Error: 0.4721999764442444
-Accuracy: 0.5264 Vaildation Error: 0.47359997034072876
-Accuracy: 0.5304 Vaildation Error: 0.46960002183914185
-Accuracy: 0.5354 Vaildation Error: 0.4646000266075134
-Accuracy: 0.5406 Vaildation Error: 0.4593999981880188
-Accuracy: 0.5428 Vaildation Error: 0.45719999074935913
-Accuracy: 0.546 Vaildation Error: 0.45399999618530273
-Accuracy: 0.5548 Vaildation Error: 0.44520002603530884
-Accuracy: 0.5604 Vaildation Error: 0.43959999084472656
-Accuracy: 0.5636 Vaildation Error: 0.43639999628067017
-Accuracy: 0.5632 Vaildation Error: 0.4368000030517578
-Accuracy: 0.5624 Vaildation Error: 0.4376000165939331
-Accuracy: 0.5644 Vaildation Error: 0.4355999827384949
-Accuracy: 0.5644 Vaildation Error: 0.4355999827384949
-Accuracy: 0.5694 Vaildation Error: 0.43059998750686646
-Accuracy: 0.5736 Vaildation Error: 0.42640000581741333
-Accuracy: 0.5746 Vaildation Error: 0.4254000186920166
-Accuracy: 0.578 Vaildation Error: 0.421999990940094
-Accuracy: 0.586 Vaildation Error: 0.4139999747276306
-Accuracy: 0.5884 Vaildation Error: 0.4115999937057495
-Accuracy: 0.5916 Vaildation Error: 0.4083999991416931
-Accuracy: 0.5992 Vaildation Error: 0.4007999897003174
-Accuracy: 0.6022 Vaildation Error: 0.3978000283241272
-Accuracy: 0.605 Vaildation Error: 0.39499998092651367
-Accuracy: 0.6112 Vaildation Error: 0.3888000249862671
-Accuracy: 0.6172 Vaildation Error: 0.38279998302459717
-Accuracy: 0.6126 Vaildation Error: 0.38739997148513794
-Accuracy: 0.6224 Vaildation Error: 0.3776000142097473
-Accuracy: 0.6234 Vaildation Error: 0.3766000270843506
-Accuracy: 0.625 Vaildation Error: 0.375
-Accuracy: 0.6222 Vaildation Error: 0.37779998779296875
-Accuracy: 0.624 Vaildation Error: 0.37599998712539673
-Accuracy: 0.6238 Vaildation Error: 0.37620002031326294
-Accuracy: 0.6258 Vaildation Error: 0.3741999864578247
-Accuracy: 0.6324 Vaildation Error: 0.3676000237464905
-Accuracy: 0.634 Vaildation Error: 0.3659999966621399
-Accuracy: 0.6368 Vaildation Error: 0.36320000886917114
-Accuracy: 0.6492 Vaildation Error: 0.3507999777793884
-Accuracy: 0.6534 Vaildation Error: 0.3465999960899353
-Accuracy: 0.6588 Vaildation Error: 0.34119999408721924
-Accuracy: 0.6652 Vaildation Error: 0.33480000495910645
-Accuracy: 0.6644 Vaildation Error: 0.33560001850128174
-Accuracy: 0.6644 Vaildation Error: 0.33560001850128174
-Accuracy: 0.666 Vaildation Error: 0.33399999141693115
-Accuracy: 0.6662 Vaildation Error: 0.3338000178337097
-Accuracy: 0.6654 Vaildation Error: 0.33459997177124023
-Accuracy: 0.6716 Vaildation Error: 0.32840001583099365
-Accuracy: 0.6696 Vaildation Error: 0.3303999900817871
-Accuracy: 0.6654 Vaildation Error: 0.33459997177124023
-Accuracy: 0.6702 Vaildation Error: 0.329800009727478
-Accuracy: 0.6724 Vaildation Error: 0.32760000228881836
-Accuracy: 0.6696 Vaildation Error: 0.3303999900817871
-Accuracy: 0.6748 Vaildation Error: 0.32520002126693726
-Accuracy: 0.6768 Vaildation Error: 0.323199987411499
-Accuracy: 0.6802 Vaildation Error: 0.3198000192642212
-Accuracy: 0.681 Vaildation Error: 0.3190000057220459
-Accuracy: 0.6776 Vaildation Error: 0.32239997386932373
-Accuracy: 0.6784 Vaildation Error: 0.3216000199317932
-Accuracy: 0.678 Vaildation Error: 0.32200002670288086
-Accuracy: 0.6776 Vaildation Error: 0.32239997386932373
-Accuracy: 0.6788 Vaildation Error: 0.32120001316070557
-Accuracy: 0.681 Vaildation Error: 0.3190000057220459
-Accuracy: 0.6802 Vaildation Error: 0.3198000192642212
-Accuracy: 0.6784 Vaildation Error: 0.3216000199317932
-Accuracy: 0.6816 Vaildation Error: 0.3184000253677368
-Accuracy: 0.6838 Vaildation Error: 0.31620001792907715
-Accuracy: 0.6842 Vaildation Error: 0.3158000111579895
-Accuracy: 0.6856 Vaildation Error: 0.3144000172615051
-Accuracy: 0.6844 Vaildation Error: 0.3155999779701233
-Accuracy: 0.6856 Vaildation Error: 0.3144000172615051
-Accuracy: 0.684 Vaildation Error: 0.31599998474121094
-Accuracy: 0.6852 Vaildation Error: 0.3148000240325928
-Accuracy: 0.6844 Vaildation Error: 0.3155999779701233
-Accuracy: 0.6842 Vaildation Error: 0.3158000111579895
-Accuracy: 0.6844 Vaildation Error: 0.3155999779701233
-Accuracy: 0.6858 Vaildation Error: 0.3141999840736389
-Accuracy: 0.6838 Vaildation Error: 0.31620001792907715
-Accuracy: 0.6862 Vaildation Error: 0.31379997730255127
-Accuracy: 0.6872 Vaildation Error: 0.31279999017715454
-Accuracy: 0.6886 Vaildation Error: 0.31139999628067017
-Accuracy: 0.6886 Vaildation Error: 0.31139999628067017
-Accuracy: 0.6878 Vaildation Error: 0.31220000982284546
-Accuracy: 0.6872 Vaildation Error: 0.31279999017715454
-Accuracy: 0.6876 Vaildation Error: 0.3123999834060669
-Accuracy: 0.69 Vaildation Error: 0.3100000023841858
-Accuracy: 0.6904 Vaildation Error: 0.30959999561309814
-Accuracy: 0.6916 Vaildation Error: 0.3083999752998352
-Accuracy: 0.6922 Vaildation Error: 0.3077999949455261
-Accuracy: 0.6922 Vaildation Error: 0.3077999949455261
-Accuracy: 0.6928 Vaildation Error: 0.30720001459121704
-Accuracy: 0.6928 Vaildation Error: 0.30720001459121704
-Accuracy: 0.694 Vaildation Error: 0.3059999942779541
-Accuracy: 0.6948 Vaildation Error: 0.3051999807357788
-Accuracy: 0.6938 Vaildation Error: 0.3062000274658203
-Accuracy: 0.6954 Vaildation Error: 0.3046000003814697
-Accuracy: 0.696 Vaildation Error: 0.30400002002716064
-Accuracy: 0.697 Vaildation Error: 0.30299997329711914
-Accuracy: 0.6986 Vaildation Error: 0.30140000581741333
-Accuracy: 0.6984 Vaildation Error: 0.30159997940063477
-Accuracy: 0.6974 Vaildation Error: 0.30260002613067627
-Accuracy: 0.696 Vaildation Error: 0.30400002002716064
-Accuracy: 0.6988 Vaildation Error: 0.3011999726295471
-Accuracy: 0.6968 Vaildation Error: 0.30320000648498535
-Accuracy: 0.6974 Vaildation Error: 0.30260002613067627
-Accuracy: 0.6986 Vaildation Error: 0.30140000581741333
-Accuracy: 0.7008 Vaildation Error: 0.29919999837875366
-Accuracy: 0.7006 Vaildation Error: 0.2993999719619751
-Accuracy: 0.6998 Vaildation Error: 0.3001999855041504
-Accuracy: 0.6992 Vaildation Error: 0.30080002546310425
-Accuracy: 0.6998 Vaildation Error: 0.3001999855041504
-Accuracy: 0.6988 Vaildation Error: 0.3011999726295471
-Accuracy: 0.6982 Vaildation Error: 0.301800012588501
-Accuracy: 0.6988 Vaildation Error: 0.3011999726295471
-Accuracy: 0.7006 Vaildation Error: 0.2993999719619751
-Accuracy: 0.701 Vaildation Error: 0.2990000247955322
-Accuracy: 0.7026 Vaildation Error: 0.29739999771118164
-Accuracy: 0.7026 Vaildation Error: 0.29739999771118164
-Accuracy: 0.7008 Vaildation Error: 0.29919999837875366
-Accuracy: 0.7016 Vaildation Error: 0.29839998483657837
-Accuracy: 0.7028 Vaildation Error: 0.2972000241279602
-Accuracy: 0.7022 Vaildation Error: 0.2978000044822693
-Accuracy: 0.7038 Vaildation Error: 0.2961999773979187
-Accuracy: 0.7032 Vaildation Error: 0.29680001735687256
-Accuracy: 0.704 Vaildation Error: 0.29600000381469727
-Accuracy: 0.7034 Vaildation Error: 0.29659998416900635
-Accuracy: 0.7046 Vaildation Error: 0.2954000234603882
-Accuracy: 0.705 Vaildation Error: 0.29500001668930054
-Accuracy: 0.704 Vaildation Error: 0.29600000381469727
-Accuracy: 0.7024 Vaildation Error: 0.2975999712944031
-Accuracy: 0.7042 Vaildation Error: 0.29579997062683105
-Accuracy: 0.7034 Vaildation Error: 0.29659998416900635
-Accuracy: 0.7052 Vaildation Error: 0.2947999835014343
-Accuracy: 0.707 Vaildation Error: 0.2929999828338623
-Accuracy: 0.7064 Vaildation Error: 0.29360002279281616
-Accuracy: 0.707 Vaildation Error: 0.2929999828338623
-Accuracy: 0.7076 Vaildation Error: 0.2924000024795532
-Accuracy: 0.7084 Vaildation Error: 0.29159998893737793
-Accuracy: 0.7076 Vaildation Error: 0.2924000024795532
-Accuracy: 0.709 Vaildation Error: 0.29100000858306885
-Accuracy: 0.7092 Vaildation Error: 0.29079997539520264
-Accuracy: 0.7102 Vaildation Error: 0.2897999882698059
-Accuracy: 0.7102 Vaildation Error: 0.2897999882698059
-Accuracy: 0.7118 Vaildation Error: 0.2882000207901001
-Accuracy: 0.7118 Vaildation Error: 0.2882000207901001
-Accuracy: 0.71 Vaildation Error: 0.2900000214576721
-Accuracy: 0.7096 Vaildation Error: 0.29040002822875977
-Accuracy: 0.71 Vaildation Error: 0.2900000214576721
-Accuracy: 0.7096 Vaildation Error: 0.29040002822875977
-Accuracy: 0.7096 Vaildation Error: 0.29040002822875977
-Accuracy: 0.7104 Vaildation Error: 0.2896000146865845
-Accuracy: 0.71 Vaildation Error: 0.2900000214576721
-Accuracy: 0.7128 Vaildation Error: 0.2871999740600586
-Accuracy: 0.7128 Vaildation Error: 0.2871999740600586
-Accuracy: 0.71 Vaildation Error: 0.2900000214576721
-Accuracy: 0.7114 Vaildation Error: 0.28860002756118774
-Accuracy: 0.711 Vaildation Error: 0.2889999747276306
-Accuracy: 0.7108 Vaildation Error: 0.2892000079154968
-Accuracy: 0.7116 Vaildation Error: 0.28839999437332153
-Accuracy: 0.7104 Vaildation Error: 0.2896000146865845
-Accuracy: 0.7092 Vaildation Error: 0.29079997539520264
-Accuracy: 0.7106 Vaildation Error: 0.28939998149871826
-Accuracy: 0.7076 Vaildation Error: 0.2924000024795532
-Accuracy: 0.711 Vaildation Error: 0.2889999747276306
-Accuracy: 0.712 Vaildation Error: 0.2879999876022339
-Accuracy: 0.713 Vaildation Error: 0.28700000047683716
-Accuracy: 0.7126 Vaildation Error: 0.2874000072479248
-Accuracy: 0.7138 Vaildation Error: 0.28619998693466187
-Accuracy: 0.7134 Vaildation Error: 0.2865999937057495
-Accuracy: 0.7114 Vaildation Error: 0.28860002756118774
-Accuracy: 0.7124 Vaildation Error: 0.28759998083114624
-Accuracy: 0.713 Vaildation Error: 0.28700000047683716
-Accuracy: 0.7126 Vaildation Error: 0.2874000072479248
-Accuracy: 0.7136 Vaildation Error: 0.2864000201225281
-Accuracy: 0.7142 Vaildation Error: 0.2857999801635742
-Accuracy: 0.7152 Vaildation Error: 0.2847999930381775
-Accuracy: 0.7136 Vaildation Error: 0.2864000201225281
-Accuracy: 0.7144 Vaildation Error: 0.2856000065803528
-Accuracy: 0.7144 Vaildation Error: 0.2856000065803528
-Accuracy: 0.713 Vaildation Error: 0.28700000047683716
-Accuracy: 0.7122 Vaildation Error: 0.28780001401901245
-Accuracy: 0.7128 Vaildation Error: 0.2871999740600586
-Accuracy: 0.7138 Vaildation Error: 0.28619998693466187
-Accuracy: 0.713 Vaildation Error: 0.28700000047683716
-Accuracy: 0.713 Vaildation Error: 0.28700000047683716
-Accuracy: 0.713 Vaildation Error: 0.28700000047683716
-Accuracy: 0.7132 Vaildation Error: 0.2868000268936157
-Accuracy: 0.7132 Vaildation Error: 0.2868000268936157
-Accuracy: 0.7132 Vaildation Error: 0.2868000268936157
-Accuracy: 0.7142 Vaildation Error: 0.2857999801635742
-Accuracy: 0.7136 Vaildation Error: 0.2864000201225281
-Accuracy: 0.7136 Vaildation Error: 0.2864000201225281
-Accuracy: 0.7136 Vaildation Error: 0.2864000201225281
-Accuracy: 0.714 Vaildation Error: 0.28600001335144043
-Accuracy: 0.7138 Vaildation Error: 0.28619998693466187
-Accuracy: 0.7154 Vaildation Error: 0.28460001945495605
-Accuracy: 0.7158 Vaildation Error: 0.2842000126838684
-Accuracy: 0.7146 Vaildation Error: 0.2853999733924866
-Accuracy: 0.7158 Vaildation Error: 0.2842000126838684
-Accuracy: 0.716 Vaildation Error: 0.2839999794960022
-Accuracy: 0.7148 Vaildation Error: 0.28519999980926514
-Accuracy: 0.7162 Vaildation Error: 0.28380000591278076
-Accuracy: 0.7164 Vaildation Error: 0.28359997272491455
-Accuracy: 0.7166 Vaildation Error: 0.2833999991416931
-Accuracy: 0.7162 Vaildation Error: 0.28380000591278076
-Accuracy: 0.716 Vaildation Error: 0.2839999794960022
-Accuracy: 0.7168 Vaildation Error: 0.2832000255584717
-Accuracy: 0.716 Vaildation Error: 0.2839999794960022
-Accuracy: 0.7158 Vaildation Error: 0.2842000126838684
-Accuracy: 0.7152 Vaildation Error: 0.2847999930381775
-Accuracy: 0.714 Vaildation Error: 0.28600001335144043
-Accuracy: 0.7146 Vaildation Error: 0.2853999733924866
-Accuracy: 0.715 Vaildation Error: 0.2850000262260437
-Accuracy: 0.7148 Vaildation Error: 0.28519999980926514
-Accuracy: 0.715 Vaildation Error: 0.2850000262260437
-Accuracy: 0.7188 Vaildation Error: 0.28119999170303345
-Accuracy: 0.7188 Vaildation Error: 0.28119999170303345
-Accuracy: 0.7176 Vaildation Error: 0.2824000120162964
-Accuracy: 0.718 Vaildation Error: 0.28200000524520874
-Accuracy: 0.7168 Vaildation Error: 0.2832000255584717
-Accuracy: 0.7186 Vaildation Error: 0.28140002489089966
-Accuracy: 0.7186 Vaildation Error: 0.28140002489089966
-Accuracy: 0.7192 Vaildation Error: 0.2807999849319458
-Accuracy: 0.7188 Vaildation Error: 0.28119999170303345
-Accuracy: 0.7204 Vaildation Error: 0.27960002422332764
-Accuracy: 0.7192 Vaildation Error: 0.2807999849319458
-Accuracy: 0.7192 Vaildation Error: 0.2807999849319458
-Accuracy: 0.7202 Vaildation Error: 0.2797999978065491
-Accuracy: 0.719 Vaildation Error: 0.281000018119812
-Accuracy: 0.7204 Vaildation Error: 0.27960002422332764
-Accuracy: 0.719 Vaildation Error: 0.281000018119812
-Accuracy: 0.7202 Vaildation Error: 0.2797999978065491
-Accuracy: 0.7212 Vaildation Error: 0.27880001068115234
-Accuracy: 0.7202 Vaildation Error: 0.2797999978065491
-Accuracy: 0.72 Vaildation Error: 0.2799999713897705
-Accuracy: 0.7188 Vaildation Error: 0.28119999170303345
-Accuracy: 0.719 Vaildation Error: 0.281000018119812
-Accuracy: 0.7198 Vaildation Error: 0.2802000045776367
-Accuracy: 0.7194 Vaildation Error: 0.28060001134872437
-Accuracy: 0.7206 Vaildation Error: 0.2793999910354614
-Accuracy: 0.7204 Vaildation Error: 0.27960002422332764
-Accuracy: 0.7214 Vaildation Error: 0.27859997749328613
-Accuracy: 0.72 Vaildation Error: 0.2799999713897705
-Accuracy: 0.7214 Vaildation Error: 0.27859997749328613
-Accuracy: 0.7226 Vaildation Error: 0.27740001678466797
-Accuracy: 0.722 Vaildation Error: 0.27799999713897705
-Accuracy: 0.7224 Vaildation Error: 0.2775999903678894
-Accuracy: 0.7208 Vaildation Error: 0.27920001745224
-Accuracy: 0.7218 Vaildation Error: 0.2781999707221985
-Accuracy: 0.7218 Vaildation Error: 0.2781999707221985
-Accuracy: 0.7222 Vaildation Error: 0.2778000235557556
-Accuracy: 0.7216 Vaildation Error: 0.2784000039100647
-Accuracy: 0.722 Vaildation Error: 0.27799999713897705
-Accuracy: 0.7206 Vaildation Error: 0.2793999910354614
-Accuracy: 0.7206 Vaildation Error: 0.2793999910354614
-Accuracy: 0.7208 Vaildation Error: 0.27920001745224
-Accuracy: 0.7196 Vaildation Error: 0.28039997816085815
-Accuracy: 0.7214 Vaildation Error: 0.27859997749328613
-Accuracy: 0.7204 Vaildation Error: 0.27960002422332764
-Accuracy: 0.7206 Vaildation Error: 0.2793999910354614
-Accuracy: 0.7198 Vaildation Error: 0.2802000045776367
-Accuracy: 0.7216 Vaildation Error: 0.2784000039100647
-Accuracy: 0.7218 Vaildation Error: 0.2781999707221985
-Accuracy: 0.7218 Vaildation Error: 0.2781999707221985
-Accuracy: 0.7224 Vaildation Error: 0.2775999903678894
-Accuracy: 0.723 Vaildation Error: 0.2770000100135803
-Accuracy: 0.7228 Vaildation Error: 0.27719998359680176
-Accuracy: 0.7234 Vaildation Error: 0.2766000032424927
-Accuracy: 0.723 Vaildation Error: 0.2770000100135803
-Accuracy: 0.7218 Vaildation Error: 0.2781999707221985
-Accuracy: 0.7214 Vaildation Error: 0.27859997749328613
-Accuracy: 0.7208 Vaildation Error: 0.27920001745224
-Accuracy: 0.7208 Vaildation Error: 0.27920001745224
-Accuracy: 0.7216 Vaildation Error: 0.2784000039100647
-Accuracy: 0.7218 Vaildation Error: 0.2781999707221985
-Accuracy: 0.7224 Vaildation Error: 0.2775999903678894
-Accuracy: 0.7234 Vaildation Error: 0.2766000032424927
-Accuracy: 0.7234 Vaildation Error: 0.2766000032424927
-Accuracy: 0.7242 Vaildation Error: 0.2757999897003174
-Accuracy: 0.7228 Vaildation Error: 0.27719998359680176
-Accuracy: 0.7226 Vaildation Error: 0.27740001678466797
-Accuracy: 0.7226 Vaildation Error: 0.27740001678466797
-Accuracy: 0.7226 Vaildation Error: 0.27740001678466797
-Accuracy: 0.7228 Vaildation Error: 0.27719998359680176
+<pre>INFO:tensorflow:Restoring parameters from /Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint-1017
+Load pretrained.
+Step: 1018 Accuracy: 0.7738 Vaildation Error: 0.22619998455047607
+Step: 1019 Accuracy: 0.7694 Vaildation Error: 0.2305999994277954
+Step: 1020 Accuracy: 0.7722 Vaildation Error: 0.22780001163482666
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-19-cbe514283a11&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     28</span> 
-<span class="ansi-green-intense-fg ansi-bold">     29</span>                     feed_dict_data <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> batch_x<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">:</span> batch_y<span class="ansi-blue-fg">}</span>
-<span class="ansi-green-fg">---&gt; 30</span><span class="ansi-red-fg">                     </span>sess<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>train_opt<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">=</span>feed_dict_data<span class="ansi-blue-fg">)</span>   <span class="ansi-red-fg"># feed into data and start training</span>
-<span class="ansi-green-intense-fg ansi-bold">     31</span> 
-<span class="ansi-green-intense-fg ansi-bold">     32</span>                     batch_cost <span class="ansi-blue-fg">=</span> sess<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>cost<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">=</span>feed_dict_data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">&lt;ipython-input-12-01ece064aa31&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">     58</span>                     <span class="ansi-green-fg">if</span> epoch <span class="ansi-blue-fg">%</span> display_step <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     59</span>                         feed_dict_val_data <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> mnist<span class="ansi-blue-fg">.</span>validation<span class="ansi-blue-fg">.</span>images<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">:</span> mnist<span class="ansi-blue-fg">.</span>validation<span class="ansi-blue-fg">.</span>labels<span class="ansi-blue-fg">}</span>
+<span class="ansi-green-fg">---&gt; 60</span><span class="ansi-red-fg">                         </span>acc <span class="ansi-blue-fg">=</span> sess<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>eval_opt_val<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">=</span>feed_dict_val_data<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     61</span>                         step <span class="ansi-blue-fg">=</span> sess<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>global_step<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     62</span>                         print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;Step:&#34;</span><span class="ansi-blue-fg">,</span> step<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;Accuracy:&#34;</span><span class="ansi-blue-fg">,</span> acc<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;Vaildation Error:&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">-</span>acc<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self, fetches, feed_dict, options, run_metadata)</span>
 <span class="ansi-green-intense-fg ansi-bold">    898</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
@@ -13208,12 +12325,229 @@ Accuracy: 0.7228 Vaildation Error: 0.27719998359680176
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Image-Pre-processing">Image Pre-processing<a class="anchor-link" href="#Image-Pre-processing">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">per_image_standardization</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Image-Data-Augmentation">Image Data Augmentation<a class="anchor-link" href="#Image-Data-Augmentation">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">random_crop</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">transpose_image</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_up_down</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_left_right</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_brightness</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_contrast</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_saturation</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_hue</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Batch-Normalizarion">Batch Normalizarion<a class="anchor-link" href="#Batch-Normalizarion">&#182;</a></h1>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.python.ops</span> <span class="k">import</span> <span class="n">control_flow_ops</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="BN-for-Convolutional-Layer">BN for Convolutional Layer<a class="anchor-link" href="#BN-for-Convolutional-Layer">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example for control_flow_ops.cond</span>
+<span class="c1"># similar with if-else</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">condition</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">control_flow_ops</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">conv_batch_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">beta_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">gamma_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;beta&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">beta_init</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">gamma_init</span><span class="p">)</span>
+    
+    <span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;moments&#39;</span><span class="p">)</span>
+    
+    <span class="n">ema</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">ExponentialMovingAverage</span><span class="p">(</span><span class="n">decay</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">ema_apply_op</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">apply</span><span class="p">([</span><span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span><span class="p">])</span>
+    <span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">mean_var_with_update</span><span class="p">():</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="n">ema_apply_op</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
+    
+    <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">control_flow_ops</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">phase_train</span><span class="p">,</span> <span class="n">mean_var_with_update</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span><span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span><span class="p">))</span>
+    
+    <span class="n">normed</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">batch_norm_with_global_normalization</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">normed</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">BN_conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
+    <span class="n">bias_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">bias_init</span><span class="p">)</span>
+    <span class="n">conv_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv_batch_norm</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">phase_train</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="BN-for-Non-Convolutional-Layer">BN for Non-Convolutional Layer<a class="anchor-link" href="#BN-for-Non-Convolutional-Layer">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">layer_batch_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">beta_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">gamma_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;beta&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">beta_init</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">gamma_init</span><span class="p">)</span>
+    
+    <span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;moments&#39;</span><span class="p">)</span>
+    
+    <span class="n">ema</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">ExponentialMovingAverage</span><span class="p">(</span><span class="n">decay</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="n">ema_apply_op</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">apply</span><span class="p">([</span><span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span><span class="p">])</span>
+    <span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">mean_var_with_update</span><span class="p">():</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="n">ema_apply_op</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
+    
+    <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">control_flow_ops</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">phase_train</span><span class="p">,</span> <span class="n">mean_var_with_update</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span><span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span><span class="p">))</span>
+    
+    <span class="n">x_r</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_out</span><span class="p">])</span>
+    <span class="n">normed</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">batch_norm_with_global_normalization</span><span class="p">(</span><span class="n">x_r</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">normed</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_out</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">BN_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">w_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">b_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">w_init</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">b_init</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">layer_batch_norm</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">phase_train</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -13224,4 +12558,8 @@ Accuracy: 0.7228 Vaildation Error: 0.27719998359680176
     </div>
   </div>
 </body>
+
+ 
+
+
 </html>

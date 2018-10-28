@@ -78,9 +78,10 @@
     * Data Reading
     * Data Preprocessing
     * Building Model
-    * Learning the Model
+    * [Learning the Model](data/BasicLearning_Tensorflow.html) 
     * Evaluating the Model
 * Image Recognition
+	* [Convolutional Neural Network](data/BasicCNN_Tensorflow.html)
 * Natural Language Processing
 * Vedio Description
 * Mimicking Content Generating
