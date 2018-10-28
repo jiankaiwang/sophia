@@ -6,13 +6,6 @@
 
 * Quick Start: [Python](data/CNTK_Quickstart_Python.html)
 
-* CNTK Basis
-    *   Data reading
-    *   Data preprocessing
-    *   Model creation
-    *   Learning the model
-    *   Evaluation
-
 * CNTK Basic Flow
     *   FeedForward Neural Network (FNN)
     *   Logistic Regression 
@@ -59,38 +52,34 @@
 * Quick Start: [Python](data/Tensorflow_Quickstart_Python.html)
 * Tensorflow Visualization
     * PlayGround: [http://playground.tensorflow.org](http://playground.tensorflow.org)
-    * TensorBoard
+    * [TensorBoard](data/Tensorboard.html)
 * Tensorflow Basis
-    * [architecture](data/Basic_Tensorflow.html)
-    * API
-    * variable_scope vs. name_scope
+    * [architecture](data/Basic_Tensorflow.html): API, Variable Scope vs. Name Scope, Session, CPU/GPU
     * batch normalization
+    * dropout
+    * regularization
     * neural network function
-        * activation function
-        * convolutional function
-        * pooling function
-        * classification function
+        * [activation function](data/BasicLearning_Tensorflow.html)
         * optimization function
-    * model portability
+    * model portability: `ckpt with meta`, `frozen pb`
     * queue and threading
     * customized operation
-* Tensorflow Basic Flow
-    * Data Reading
-    * Data Preprocessing
-    * Building Model
-    * [Learning the Model](data/BasicLearning_Tensorflow.html) 
-    * Evaluating the Model
 * Image Recognition
-	* [Convolutional Neural Network](data/BasicCNN_Tensorflow.html)
+  * Convolutional Neural Network: [Basic CNN](data/BasicCNN_Tensorflow.html), [CNN Tensorboard](data/CNN_Tensorboard.html)
 * Natural Language Processing
+    * Word to Vector: [WordEmbedding_Tensorflow](data/WordEmbedding_Tensorflow.html)
+    * Independent Sequence: [Part of Speech](data/seq2seq_PartOfSpeech.html)
+    * Dependent Sequence: [RNN LSTM](data/RNN_LSTM_Tensorflow.html)
 * Vedio Description
+* Encoder / Decoder
+    * [Dimensionality Reduction](data/EncoderDecoder_Tensorflow.html)
 * Mimicking Content Generating
 * Reinforcement Learning
 * TF-Slim
 * Tensorflow XLA
 * Tensorflow Debugger
 * Distributed Tensorflow System
-* Tensorflow with Kubernetes
+* Tensorflow with Kubernetes and Docker
 * Tensorflow on Spark
 * Tensorflow on android
 * Tensorflow on iOS

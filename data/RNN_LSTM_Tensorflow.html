@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>BasicCNN_Tensorflow</title>
+<title>RNN_LSTM_Tensorflow</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11752,7 +11752,10 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tensorflow version: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -11771,127 +11774,9 @@ div#notebook {
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Convolutional-Layer">Convolutional Layer<a class="anchor-link" href="#Convolutional-Layer">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">input: N x h x w x d </span>
-<span class="sd">  N: batch size</span>
-<span class="sd">  h: height</span>
-<span class="sd">  w: width</span>
-<span class="sd">  d: depth (channel)</span>
-
-<span class="sd">filter: e x e x d x k</span>
-<span class="sd">  e: filter (or kernel) width / height, 3 x 3 or 5 x 5</span>
-<span class="sd">  d: depth is the same with input&#39;s d</span>
-<span class="sd">  k: kernel sizes</span>
-
-<span class="sd">padding:</span>
-<span class="sd">  SAME: with zero padding</span>
-<span class="sd">  VALID: without padding</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> \
-             <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> \
-             <span class="n">strides</span><span class="o">=</span><span class="n">strides</span><span class="p">,</span> \
-             <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span> \
-             <span class="n">use_cudnn_on_gpu</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> \
-             <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Pooling-Layer">Pooling Layer<a class="anchor-link" href="#Pooling-Layer">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Max-Pooling">Max Pooling<a class="anchor-link" href="#Max-Pooling">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">value: N x w x h x d</span>
-
-<span class="sd">ksize: [1, k, k, 1]</span>
-<span class="sd">  k: kernel size</span>
-
-<span class="sd">strides: [1, s, s, 1]</span>
-<span class="sd">  s: stride size</span>
-
-<span class="sd">padding: SAME or VALID</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> \
-               <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> \
-               <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> \
-               <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">,</span> \
-               <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Padding">Padding<a class="anchor-link" href="#Padding">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># SAME vs. VALID</span>
-<span class="nb">input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]))</span>
-<span class="nb">filter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]))</span>
-<span class="n">conv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">conv</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Tensor(&#34;Conv2D:0&#34;, shape=(1, 5, 5, 7), dtype=float32)
+<pre>Tensorflow version: 1.9.0
 </pre>
 </div>
 </div>
@@ -11905,26 +11790,152 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="MNIST-Example">MNIST Example<a class="anchor-link" href="#MNIST-Example">&#182;</a></h1>
+<h1 id="RNN-in-Tensorflow">RNN in Tensorflow<a class="anchor-link" href="#RNN-in-Tensorflow">&#182;</a></h1>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="RNN-Cell">RNN Cell<a class="anchor-link" href="#RNN-Cell">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">basicRNNCell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">BasicRNNCell</span><span class="p">(</span><span class="n">num_units</span><span class="o">=</span><span class="n">num_units</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tanh</span><span class="p">)</span>
+
+<span class="n">basicLSTMCell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">BasicLSTMCell</span><span class="p">(</span><span class="n">num_units</span><span class="o">=</span><span class="n">num_units</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tanh</span><span class="p">,</span> \
+                                             <span class="n">forget_bias</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>  <span class="n">state_is_tuple</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">LSTMCell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="n">num_units</span><span class="o">=</span><span class="n">num_units</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tanh</span><span class="p">,</span> \
+                                  <span class="n">forget_bias</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">state_is_tuple</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> \
+                                  <span class="n">use_peepholes</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cell_clip</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">num_proj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> \
+                                  <span class="n">num_unit_shards</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_proj_shards</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">GRUCell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">GRUCell</span><span class="p">(</span><span class="n">num_units</span><span class="o">=</span><span class="n">num_units</span><span class="p">,</span> <span class="n">input_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tanh</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="RNN-Flow">RNN Flow<a class="anchor-link" href="#RNN-Flow">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="c1"># create LSTM cell</span>
+<span class="n">cell_layer_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">BasicLSTMCell</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># create another LSTM Cell</span>
+<span class="n">cell_layer_2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">BasicLSTMCell</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">DropoutWrapper</span><span class="p">(</span><span class="n">cell_layer_2</span><span class="p">,</span> <span class="n">input_keep_prob</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">output_keep_prob</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>   <span class="c1"># dropout</span>
+
+<span class="c1"># assemble the rnn layer</span>
+<span class="n">full_cell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">MultiRNNCell</span><span class="p">([</span><span class="n">cell_layer_1</span><span class="p">,</span> <span class="n">cell_layer_2</span><span class="p">])</span>
+
+<span class="c1"># assemble the rnn network</span>
+<span class="c1"># input@time_major = F, inputs = [batch_size, max_time, ...], outputs = [batch_size, max_time, cell.output_size]</span>
+<span class="c1">#                    T, inputs = [max_time, batch_size, ...], outputs = [max_time, batch_size, cell.output_size]</span>
+<span class="c1"># state = [batch_size, cell.state_size]</span>
+<span class="n">outputs</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dynamic_rnn</span><span class="p">(</span><span class="n">full_cell</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">sequence_length</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> \
+                                   <span class="n">parallel_iterations</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">swap_memory</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Emotion-Analyzing">Emotion Analyzing<a class="anchor-link" href="#Emotion-Analyzing">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-preparation">Data preparation<a class="anchor-link" href="#Data-preparation">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip install tflearn
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: tflearn in /anaconda3/lib/python3.6/site-packages (0.3.2)
+Requirement already satisfied: Pillow in /anaconda3/lib/python3.6/site-packages (from tflearn) (5.1.0)
+Requirement already satisfied: numpy in /anaconda3/lib/python3.6/site-packages (from tflearn) (1.14.3)
+Requirement already satisfied: six in /anaconda3/lib/python3.6/site-packages (from tflearn) (1.11.0)
+<span class="ansi-yellow-fg">You are using pip version 18.0, however version 18.1 is available.
+You should consider upgrading via the &#39;pip install --upgrade pip&#39; command.</span>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">):</span>
-    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
-    <span class="n">bias_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">bias_init</span><span class="p">)</span>
-    <span class="n">conv_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">tflearn</span>
+
+<span class="o">!</span>pip list <span class="p">|</span> grep <span class="s1">&#39;tflearn&#39;</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>tflearn                            0.3.2    
+<span class="ansi-yellow-fg">You are using pip version 18.0, however version 18.1 is available.
+You should consider upgrading via the &#39;pip install --upgrade pip&#39; command.</span>
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -11934,8 +11945,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">max_pool</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tflearn.data_utils</span> <span class="k">import</span> <span class="n">to_categorical</span><span class="p">,</span> <span class="n">pad_sequences</span>
+<span class="kn">from</span> <span class="nn">tflearn.datasets</span> <span class="k">import</span> <span class="n">imdb</span>
 </pre></div>
 
 </div>
@@ -11948,13 +11959,18 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">):</span>
-    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">w_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">b_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">w_init</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">b_init</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># n_word=30000, most common used 300000 word</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/notebooks/data&#39;</span><span class="p">):</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">imdb</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;/notebooks/data/imdb/imdb.pkl&#39;</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">valid_portion</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/Volumes/Data&#39;</span><span class="p">):</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">imdb</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;/Volumes/Data/imdb/imdb.pkl&#39;</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="mi">30000</span><span class="p">,</span> <span class="n">valid_portion</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;no such path&quot;</span><span class="p">)</span>
+
+<span class="c1"># trainX, testX: the sequence</span>
+<span class="c1"># trainY, testY: the emotion label (positive/negative, 1/0)</span>
+<span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span> <span class="o">=</span> <span class="n">train</span>
+<span class="n">testX</span><span class="p">,</span> <span class="n">testY</span> <span class="o">=</span> <span class="n">test</span>
 </pre></div>
 
 </div>
@@ -11962,14 +11978,24 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Preprocessing">Data Preprocessing<a class="anchor-link" href="#Data-Preprocessing">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits_v2</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># expand sequence to length of 500 with value = 0 if the sequence length &lt;= 500</span>
+<span class="c1"># truncated sequence to length of 500 if the sequence length &gt; 500</span>
+<span class="n">trainX</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">testX</span> <span class="o">=</span> <span class="n">pad_sequences</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11982,29 +12008,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">keep_prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;conv_1&quot;</span><span class="p">):</span>
-        <span class="n">conv_1</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="p">[</span><span class="mi">32</span><span class="p">])</span>                <span class="c1"># conv_1: 28 x 28 x 32</span>
-        <span class="n">pool_1</span> <span class="o">=</span> <span class="n">max_pool</span><span class="p">(</span><span class="n">conv_1</span><span class="p">)</span>                              <span class="c1"># pool_1: 14 x 14 x 32</span>
-    
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;conv_2&quot;</span><span class="p">):</span>
-        <span class="n">conv_2</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">pool_1</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span> <span class="p">[</span><span class="mi">64</span><span class="p">])</span>          <span class="c1"># conv_2: 14 x 14 x 64</span>
-        <span class="n">pool_2</span> <span class="o">=</span> <span class="n">max_pool</span><span class="p">(</span><span class="n">conv_2</span><span class="p">)</span>                              <span class="c1"># pool_2: 7 x 7 x 64</span>
-        
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;fc&quot;</span><span class="p">):</span>
-        <span class="n">pool_2_flat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pool_2</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">64</span><span class="p">])</span>     <span class="c1"># from pool_2</span>
-        <span class="c1">#pool_2_flat = tf.layers.flatten()                       # similar with the above line</span>
-        <span class="n">fc_1</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">pool_2_flat</span><span class="p">,</span> <span class="p">[</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">],</span> <span class="p">[</span><span class="mi">1024</span><span class="p">])</span>   <span class="c1"># fc_1: 1024</span>
-        
-        <span class="c1"># dropout</span>
-        <span class="n">fc_1_dropout</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">fc_1</span><span class="p">,</span> <span class="n">keep_prob</span><span class="o">=</span><span class="n">keep_prob</span><span class="p">)</span>
-        
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;out&quot;</span><span class="p">):</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">fc_1_dropout</span><span class="p">,</span> <span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
-    
-    <span class="k">return</span> <span class="n">out</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># change label to one-hot encoding</span>
+<span class="n">trainY</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">trainY</span><span class="p">,</span> <span class="n">nb_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">testY</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">testY</span><span class="p">,</span> <span class="n">nb_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12017,14 +12023,72 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;cost&quot;</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
-    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="mi">9</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="mf">0.999</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Adam&quot;</span><span class="p">)</span>
-    <span class="n">train_opt</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">train_opt</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># a simple example</span>
+<span class="n">trainX</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([  16,  586,   32,  885,   17,   39,   68,   31, 2994, 2389,  328,
+          4,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0], dtype=int32)</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -12034,10 +12098,248 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-    <span class="n">compare</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># data loading method</span>
+<span class="k">class</span> <span class="nc">IMDBDataset</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">Y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ptr</span> <span class="o">=</span> <span class="mi">0</span>
+        
+    <span class="k">def</span> <span class="nf">minibatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ptr</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_count</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span><span class="p">:(</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span> <span class="o">+</span> <span class="n">size</span><span class="p">)],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span><span class="p">:(</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span> <span class="o">+</span> <span class="n">size</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span><span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[:</span><span class="n">size</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span><span class="p">:])])),</span> \
+                  <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span><span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[:</span><span class="n">size</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span><span class="p">:])]))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">ptr</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ptr</span> <span class="o">+</span> <span class="n">size</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_count</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">IMDBDataset</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">IMDBDataset</span><span class="p">(</span><span class="n">testX</span><span class="p">,</span> <span class="n">testY</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Hyperparameters">Hyperparameters<a class="anchor-link" href="#Hyperparameters">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">full_training</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">training_epochs</span> <span class="o">=</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">2000</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">1000</span>
+<span class="n">display_step</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;notebooks&quot;</span><span class="p">,</span><span class="s2">&quot;devops&quot;</span><span class="p">)):</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;notebooks&quot;</span><span class="p">,</span><span class="s2">&quot;devops&quot;</span><span class="p">,</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span><span class="s2">&quot;emotion_log&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;Users&quot;</span><span class="p">,</span><span class="s2">&quot;jiankaiwang&quot;</span><span class="p">,</span><span class="s2">&quot;devops&quot;</span><span class="p">)):</span>
+    <span class="n">log_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span><span class="s2">&quot;Users&quot;</span><span class="p">,</span><span class="s2">&quot;jiankaiwang&quot;</span><span class="p">,</span><span class="s2">&quot;devops&quot;</span><span class="p">,</span><span class="s2">&quot;tmp&quot;</span><span class="p">,</span><span class="s2">&quot;emotion_log&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;no such log path&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;log path: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>log path: /Users/jiankaiwang/devops/tmp/emotion_log
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="network">network<a class="anchor-link" href="#network">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">embedding_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">):</span>
+    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
+    <span class="n">incoming</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">incoming</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">embeddings</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">lstm</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">lstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">BasicLSTMCell</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">)</span>
+    <span class="n">dropout_lstm</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">rnn_cell</span><span class="o">.</span><span class="n">DropoutWrapper</span><span class="p">(</span><span class="n">lstm</span><span class="p">,</span> <span class="n">input_keep_prob</span><span class="o">=</span><span class="n">keep_prob</span><span class="p">,</span> <span class="n">output_keep_prob</span><span class="o">=</span><span class="n">keep_prob</span><span class="p">)</span>
+    <span class="n">lstm_outputs</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dynamic_rnn</span><span class="p">(</span><span class="n">dropout_lstm</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    
+    <span class="c1"># (batch_size, max_time, cell.output_size) -&gt; (batch_size, 1, cell.output_size)</span>
+    <span class="n">slice_output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="n">lstm_outputs</span><span class="p">,</span> \
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">lstm_outputs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">lstm_outputs</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">lstm_outputs</span><span class="p">)[</span><span class="mi">1</span><span class="p">]])</span>
+    
+    <span class="c1"># (batch_size, 1, cell.output_size) -&gt; (batch_size, cell.output_size)</span>
+    <span class="n">squeeze_output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">slice_output</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">squeeze_output</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">dense</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">bias_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
+    <span class="n">bias</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">bias_init</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight</span><span class="p">),</span> <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">inference</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
+    <span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="p">[</span><span class="mi">30000</span><span class="p">,</span> <span class="mi">500</span><span class="p">])</span>
+    <span class="n">lstm_output</span> <span class="o">=</span> <span class="n">lstm</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">dense</span><span class="p">(</span><span class="n">lstm_output</span><span class="p">,</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">phase_train</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="target">target<a class="anchor-link" href="#target">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    output: the logits value from inference</span>
+<span class="sd">    y: the labeling data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits_v2</span><span class="p">(</span><span class="n">logits</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">training</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">())</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">()))</span>
+    <span class="n">apply_grads</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="n">grads</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grads</span><span class="p">,</span> <span class="n">apply_grads</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">compare</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">compare</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;eval/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)),</span> <span class="n">accuracy</span><span class="p">)</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;eval&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">accuracy</span>
 </pre></div>
 
@@ -12051,34 +12353,16 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Flow">Flow<a class="anchor-link" href="#Flow">&#182;</a></h2>
+<h1 id="Learning">Learning<a class="anchor-link" href="#Learning">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">full_training</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">2</span>
-<span class="n">training_epochs</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">1</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">1000</span>
-<span class="n">display_step</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">if</span> <span class="n">full_training</span> <span class="k">else</span> <span class="mi">100</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="k">import</span> <span class="n">input_data</span>
-<span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/MNIST_data/&quot;</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run &#39;tensorboard --logdir=</span><span class="si">{}</span><span class="s2">&#39; to monitor the training process.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_path</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12091,28 +12375,7 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>WARNING:tensorflow:From &lt;ipython-input-11-4e39c927863c&gt;:2: read_data_sets (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
-WARNING:tensorflow:From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:260: maybe_download (from tensorflow.contrib.learn.python.learn.datasets.base) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please write your own downloading logic.
-WARNING:tensorflow:From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:262: extract_images (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please use tf.data to implement this functionality.
-Extracting /Users/jiankaiwang/Desktop/devops/tmp/MNIST_data/train-images-idx3-ubyte.gz
-WARNING:tensorflow:From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:267: extract_labels (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please use tf.data to implement this functionality.
-Extracting /Users/jiankaiwang/Desktop/devops/tmp/MNIST_data/train-labels-idx1-ubyte.gz
-WARNING:tensorflow:From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:110: dense_to_one_hot (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please use tf.one_hot on tensors.
-Extracting /Users/jiankaiwang/Desktop/devops/tmp/MNIST_data/t10k-images-idx3-ubyte.gz
-Extracting /Users/jiankaiwang/Desktop/devops/tmp/MNIST_data/t10k-labels-idx1-ubyte.gz
-WARNING:tensorflow:From /anaconda3/lib/python3.6/site-packages/tensorflow/contrib/learn/python/learn/datasets/mnist.py:290: DataSet.__init__ (from tensorflow.contrib.learn.python.learn.datasets.mnist) is deprecated and will be removed in a future version.
-Instructions for updating:
-Please use alternatives such as official/mnist/dataset.py from tensorflow/models.
+<pre>Run &#39;tensorboard --logdir=/Users/jiankaiwang/devops/tmp/emotion_log&#39; to monitor the training process.
 </pre>
 </div>
 </div>
@@ -12123,88 +12386,68 @@ Please use alternatives such as official/mnist/dataset.py from tensorflow/models
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;cnn_model&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">scope</span><span class="p">:</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s2">&quot;LSTM&quot;</span><span class="p">):</span>
+        <span class="c1"># input, label</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">500</span><span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="n">keep_prob</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">phase_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
         
-        <span class="n">output</span> <span class="o">=</span> <span class="n">inference</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">cost</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-        <span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;global_step&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">train_opt</span> <span class="o">=</span> <span class="n">training</span><span class="p">(</span><span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
-        <span class="n">eval_opt_val</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>
-        <span class="n">eval_opt_test</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+        <span class="c1"># inference, training, evaluation</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">inference</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">)</span>
+        <span class="n">loss_val</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;global_step&quot;</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">train_grads</span><span class="p">,</span> <span class="n">train_opt</span> <span class="o">=</span> <span class="n">training</span><span class="p">(</span><span class="n">loss_val</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+        <span class="n">eval_opt</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         
-        <span class="n">init_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
+        <span class="c1"># summary</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">():</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+            
+        <span class="k">for</span> <span class="n">grad</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">train_grads</span><span class="p">:</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;/gradient&quot;</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+        
         <span class="n">summary_opt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">merge_all</span><span class="p">()</span>
+            
+        <span class="c1"># initialization</span>
+        <span class="n">init_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span>
         <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
         
+        <span class="c1"># start leanring</span>
         <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+            <span class="n">summary_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+            <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>
             
-            <span class="n">model_path</span> <span class="o">=</span> <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/&quot;</span>
-            <span class="n">ckpt_log</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="s2">&quot;checkpoint&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">ckpt_log</span><span class="p">):</span>
-                <span class="c1">#ckpt_path = &quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint-{}&quot;.format(restrore_idx)</span>
-                <span class="n">ckpt_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ckpt_log</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fin</span><span class="p">:</span>
-                        <span class="n">ckpt_path</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>   <span class="c1"># only read the first line</span>
-                        <span class="k">break</span>
-                <span class="c1"># model_checkpoint_path: &quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint-1020&quot;</span>
-                <span class="n">ckpt_path</span> <span class="o">=</span> <span class="n">ckpt_path</span><span class="p">[</span><span class="mi">24</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                
-                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">ckpt_path</span> <span class="o">+</span> <span class="s2">&quot;.meta&quot;</span><span class="p">):</span>
-                    <span class="n">scope</span><span class="o">.</span><span class="n">reuse_variables</span><span class="p">()</span>
-                    <span class="n">var_list_opt</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;conv_1/W&quot;</span><span class="p">,</span> <span class="s2">&quot;conv_1/b&quot;</span><span class="p">,</span> <span class="s2">&quot;conv_2/W&quot;</span><span class="p">,</span> <span class="s2">&quot;conv_2/b&quot;</span><span class="p">,</span> <span class="s2">&quot;fc/W&quot;</span><span class="p">,</span> <span class="s2">&quot;fc/b&quot;</span><span class="p">,</span> <span class="s2">&quot;out/W&quot;</span><span class="p">,</span> <span class="s2">&quot;out/b&quot;</span><span class="p">]</span>
-                    <span class="n">var_list_opt</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_list_opt</span><span class="p">]</span>
-                    <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">ckpt_path</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Load pretrained.&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># no need to initialize if loading pretrained data</span>
-                    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># no need to initialize if loading pretrained data</span>
-                <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">init_var</span><span class="p">)</span>
-            
-            <span class="n">summary_writer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">FileWriter</span><span class="p">(</span>\
-                    <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn&quot;</span><span class="p">,</span> \
-                    <span class="n">graph</span><span class="o">=</span><span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
-            
+            <span class="n">batch_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">trainX</span><span class="p">)</span> <span class="o">/</span> <span class="n">batch_size</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">training_epochs</span><span class="p">):</span>
                 <span class="n">avg_cost</span> <span class="o">=</span> <span class="mf">0.</span>
-                <span class="n">total_batch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">num_examples</span> <span class="o">/</span> <span class="n">batch_size</span><span class="p">)</span>
                 
-                <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_batch</span><span class="p">):</span>
-                    <span class="n">b_x</span><span class="p">,</span> <span class="n">b_y</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_count</span><span class="p">):</span>
+                    <span class="n">b_x</span><span class="p">,</span> <span class="n">b_y</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">minibatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+                    <span class="n">feed_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">b_x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">b_y</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+                    <span class="n">grads</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_grads</span><span class="p">,</span> <span class="n">train_opt</span><span class="p">],</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_data</span><span class="p">)</span>
                     
-                    <span class="n">feed_dict_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">b_x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">b_y</span><span class="p">}</span>
-                    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_opt</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_data</span><span class="p">)</span>
-                    
-                    <span class="n">batch_cost</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_data</span><span class="p">)</span>
-                    <span class="n">avg_cost</span> <span class="o">+=</span> <span class="p">(</span><span class="n">batch_cost</span> <span class="o">/</span> <span class="n">total_batch</span><span class="p">)</span>
+                    <span class="n">batch_loss</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">loss_val</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_data</span><span class="p">)</span>
+                    <span class="n">avg_cost</span> <span class="o">+=</span> <span class="n">batch_loss</span> <span class="o">/</span> <span class="n">batch_size</span>
                     
                 <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">display_step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">feed_dict_val_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">validation</span><span class="o">.</span><span class="n">labels</span><span class="p">}</span>
-                    <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt_val</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_val_data</span><span class="p">)</span>
-                    <span class="n">step</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">global_step</span><span class="p">)</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step:&quot;</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;Vaildation Error:&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">acc</span><span class="p">))</span>
-                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;Validation_accuracy&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
-
-                    <span class="n">summary_str</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">summary_opt</span><span class="p">,</span> <span class="n">feed_dict</span> <span class="o">=</span> <span class="n">feed_dict_data</span><span class="p">)</span>
-                    <span class="n">summary_writer</span><span class="o">.</span><span class="n">add_summary</span><span class="p">(</span><span class="n">summary_str</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
-
-                    <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> \
-                               <span class="s2">&quot;/Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint&quot;</span><span class="p">,</span> \
-                              <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
-            
+                    <span class="c1"># validation </span>
+                    <span class="n">b_v_x</span><span class="p">,</span> <span class="n">b_v_y</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">minibatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+                    <span class="n">feed_val_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">b_v_x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">b_v_y</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+                    <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_val_data</span><span class="p">)</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="s2">&quot;val_acc&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch: </span><span class="si">{}</span><span class="s2">, accuracy: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
+                    
+                    <span class="c1"># summary</span>
+                    <span class="n">summary_str</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">summary_opt</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_val_data</span><span class="p">)</span>
+                    <span class="n">summary_writer</span><span class="o">.</span><span class="n">add_summary</span><span class="p">(</span><span class="n">summary_str</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">global_step</span><span class="p">))</span>
+                    <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s2">&quot;model-checkpoint&quot;</span><span class="p">),</span> <span class="n">global_step</span><span class="o">=</span><span class="n">global_step</span><span class="p">)</span>
+                    
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training finished.&quot;</span><span class="p">)</span>
-            
-            <span class="n">feed_dict_test_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">images</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">labels</span><span class="p">}</span>
-            <span class="n">acc</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">eval_opt_test</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict_test_data</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test accuracy:&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12217,185 +12460,18 @@ Please use alternatives such as official/mnist/dataset.py from tensorflow/models
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO:tensorflow:Restoring parameters from /Users/jiankaiwang/Desktop/devops/tmp/basic_tf/basic_cnn/model-checkpoint-1017
-Load pretrained.
-Step: 1018 Accuracy: 0.7738 Vaildation Error: 0.22619998455047607
-Step: 1019 Accuracy: 0.7694 Vaildation Error: 0.2305999994277954
-Step: 1020 Accuracy: 0.7722 Vaildation Error: 0.22780001163482666
-</pre>
-</div>
-</div>
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-12-01ece064aa31&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     58</span>                     <span class="ansi-green-fg">if</span> epoch <span class="ansi-blue-fg">%</span> display_step <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     59</span>                         feed_dict_val_data <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>x<span class="ansi-blue-fg">:</span> mnist<span class="ansi-blue-fg">.</span>validation<span class="ansi-blue-fg">.</span>images<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">:</span> mnist<span class="ansi-blue-fg">.</span>validation<span class="ansi-blue-fg">.</span>labels<span class="ansi-blue-fg">}</span>
-<span class="ansi-green-fg">---&gt; 60</span><span class="ansi-red-fg">                         </span>acc <span class="ansi-blue-fg">=</span> sess<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>eval_opt_val<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">=</span>feed_dict_val_data<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     61</span>                         step <span class="ansi-blue-fg">=</span> sess<span class="ansi-blue-fg">.</span>run<span class="ansi-blue-fg">(</span>global_step<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     62</span>                         print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;Step:&#34;</span><span class="ansi-blue-fg">,</span> step<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;Accuracy:&#34;</span><span class="ansi-blue-fg">,</span> acc<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#34;Vaildation Error:&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">-</span>acc<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(self, fetches, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">    898</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    899</span>       result = self._run(None, fetches, feed_dict, options_ptr,
-<span class="ansi-green-fg">--&gt; 900</span><span class="ansi-red-fg">                          run_metadata_ptr)
-</span><span class="ansi-green-intense-fg ansi-bold">    901</span>       <span class="ansi-green-fg">if</span> run_metadata<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    902</span>         proto_data <span class="ansi-blue-fg">=</span> tf_session<span class="ansi-blue-fg">.</span>TF_GetBuffer<span class="ansi-blue-fg">(</span>run_metadata_ptr<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_run</span><span class="ansi-blue-fg">(self, handle, fetches, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1133</span>     <span class="ansi-green-fg">if</span> final_fetches <span class="ansi-green-fg">or</span> final_targets <span class="ansi-green-fg">or</span> <span class="ansi-blue-fg">(</span>handle <span class="ansi-green-fg">and</span> feed_dict_tensor<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1134</span>       results = self._do_run(handle, final_targets, final_fetches,
-<span class="ansi-green-fg">-&gt; 1135</span><span class="ansi-red-fg">                              feed_dict_tensor, options, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1136</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1137</span>       results <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">]</span>
-
-<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_run</span><span class="ansi-blue-fg">(self, handle, target_list, fetch_list, feed_dict, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1314</span>     <span class="ansi-green-fg">if</span> handle <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1315</span>       return self._do_call(_run_fn, feeds, fetches, targets, options,
-<span class="ansi-green-fg">-&gt; 1316</span><span class="ansi-red-fg">                            run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1317</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1318</span>       <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_do_call<span class="ansi-blue-fg">(</span>_prun_fn<span class="ansi-blue-fg">,</span> handle<span class="ansi-blue-fg">,</span> feeds<span class="ansi-blue-fg">,</span> fetches<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_do_call</span><span class="ansi-blue-fg">(self, fn, *args)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1320</span>   <span class="ansi-green-fg">def</span> _do_call<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> fn<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1321</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1322</span><span class="ansi-red-fg">       </span><span class="ansi-green-fg">return</span> fn<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1323</span>     <span class="ansi-green-fg">except</span> errors<span class="ansi-blue-fg">.</span>OpError <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1324</span>       message <span class="ansi-blue-fg">=</span> compat<span class="ansi-blue-fg">.</span>as_text<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">.</span>message<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_run_fn</span><span class="ansi-blue-fg">(feed_dict, fetch_list, target_list, options, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1305</span>       self<span class="ansi-blue-fg">.</span>_extend_graph<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1306</span>       return self._call_tf_sessionrun(
-<span class="ansi-green-fg">-&gt; 1307</span><span class="ansi-red-fg">           options, feed_dict, fetch_list, target_list, run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1308</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1309</span>     <span class="ansi-green-fg">def</span> _prun_fn<span class="ansi-blue-fg">(</span>handle<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">,</span> fetch_list<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">/anaconda3/lib/python3.6/site-packages/tensorflow/python/client/session.py</span> in <span class="ansi-cyan-fg">_call_tf_sessionrun</span><span class="ansi-blue-fg">(self, options, feed_dict, fetch_list, target_list, run_metadata)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1407</span>       return tf_session.TF_SessionRun_wrapper(
-<span class="ansi-green-intense-fg ansi-bold">   1408</span>           self<span class="ansi-blue-fg">.</span>_session<span class="ansi-blue-fg">,</span> options<span class="ansi-blue-fg">,</span> feed_dict<span class="ansi-blue-fg">,</span> fetch_list<span class="ansi-blue-fg">,</span> target_list<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">-&gt; 1409</span><span class="ansi-red-fg">           run_metadata)
-</span><span class="ansi-green-intense-fg ansi-bold">   1410</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1411</span>       <span class="ansi-green-fg">with</span> errors<span class="ansi-blue-fg">.</span>raise_exception_on_not_ok_status<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> status<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Image-Pre-processing">Image Pre-processing<a class="anchor-link" href="#Image-Pre-processing">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">per_image_standardization</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Image-Data-Augmentation">Image Data Augmentation<a class="anchor-link" href="#Image-Data-Augmentation">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">random_crop</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">transpose_image</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_up_down</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_flip_left_right</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_brightness</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_contrast</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_saturation</span><span class="p">()</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">random_hue</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Batch-Normalizarion">Batch Normalizarion<a class="anchor-link" href="#Batch-Normalizarion">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">tensorflow.python.ops</span> <span class="k">import</span> <span class="n">control_flow_ops</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="BN-for-Convolutional-Layer">BN for Convolutional Layer<a class="anchor-link" href="#BN-for-Convolutional-Layer">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example for control_flow_ops.cond</span>
-<span class="c1"># similar with if-else</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="n">condition</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
-<span class="n">test</span> <span class="o">=</span> <span class="n">control_flow_ops</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">b</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10
+<pre>INFO:tensorflow:Summary name LSTM/E:0 is illegal; using LSTM/E_0 instead.
+INFO:tensorflow:Summary name LSTM/rnn/basic_lstm_cell/kernel:0 is illegal; using LSTM/rnn/basic_lstm_cell/kernel_0 instead.
+INFO:tensorflow:Summary name LSTM/rnn/basic_lstm_cell/bias:0 is illegal; using LSTM/rnn/basic_lstm_cell/bias_0 instead.
+INFO:tensorflow:Summary name LSTM/W:0 is illegal; using LSTM/W_0 instead.
+INFO:tensorflow:Summary name LSTM/b:0 is illegal; using LSTM/b_0 instead.
+INFO:tensorflow:Summary name LSTM/E:0/gradient is illegal; using LSTM/E_0/gradient instead.
+INFO:tensorflow:Summary name LSTM/rnn/basic_lstm_cell/kernel:0/gradient is illegal; using LSTM/rnn/basic_lstm_cell/kernel_0/gradient instead.
+INFO:tensorflow:Summary name LSTM/rnn/basic_lstm_cell/bias:0/gradient is illegal; using LSTM/rnn/basic_lstm_cell/bias_0/gradient instead.
+INFO:tensorflow:Summary name LSTM/W:0/gradient is illegal; using LSTM/W_0/gradient instead.
+INFO:tensorflow:Summary name LSTM/b:0/gradient is illegal; using LSTM/b_0/gradient instead.
+epoch: 0, accuracy: 0.48399999737739563
+Training finished.
 </pre>
 </div>
 </div>
@@ -12406,114 +12482,10 @@ Step: 1020 Accuracy: 0.7722 Vaildation Error: 0.22780001163482666
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">conv_batch_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
-    <span class="n">beta_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="n">gamma_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    
-    <span class="n">beta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;beta&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">beta_init</span><span class="p">)</span>
-    <span class="n">gamma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">gamma_init</span><span class="p">)</span>
-    
-    <span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;moments&#39;</span><span class="p">)</span>
-    
-    <span class="n">ema</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">ExponentialMovingAverage</span><span class="p">(</span><span class="n">decay</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-    <span class="n">ema_apply_op</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">apply</span><span class="p">([</span><span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span><span class="p">])</span>
-    <span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">mean_var_with_update</span><span class="p">():</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="n">ema_apply_op</span><span class="p">]):</span>
-            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
-    
-    <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">control_flow_ops</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">phase_train</span><span class="p">,</span> <span class="n">mean_var_with_update</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span><span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span><span class="p">))</span>
-    
-    <span class="n">normed</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">batch_norm_with_global_normalization</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">normed</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">BN_conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
-    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">weight_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">weight_init</span><span class="p">)</span>
-    <span class="n">bias_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">bias_init</span><span class="p">)</span>
-    <span class="n">conv_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span>
-    <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">bias_add</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv_batch_norm</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">phase_train</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="BN-for-Non-Convolutional-Layer">BN for Non-Convolutional Layer<a class="anchor-link" href="#BN-for-Non-Convolutional-Layer">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">layer_batch_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
-    <span class="n">beta_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    <span class="n">gamma_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-    
-    <span class="n">beta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;beta&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">beta_init</span><span class="p">)</span>
-    <span class="n">gamma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">n_out</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">gamma_init</span><span class="p">)</span>
-    
-    <span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">moments</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;moments&#39;</span><span class="p">)</span>
-    
-    <span class="n">ema</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">ExponentialMovingAverage</span><span class="p">(</span><span class="n">decay</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-    <span class="n">ema_apply_op</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">apply</span><span class="p">([</span><span class="n">batch_mean</span><span class="p">,</span> <span class="n">batch_var</span><span class="p">])</span>
-    <span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span> <span class="o">=</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">mean_var_with_update</span><span class="p">():</span>
-        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">control_dependencies</span><span class="p">([</span><span class="n">ema_apply_op</span><span class="p">]):</span>
-            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_mean</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">batch_var</span><span class="p">)</span>
-    
-    <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">control_flow_ops</span><span class="o">.</span><span class="n">cond</span><span class="p">(</span><span class="n">phase_train</span><span class="p">,</span> <span class="n">mean_var_with_update</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span><span class="n">ema_mean</span><span class="p">,</span> <span class="n">ema_var</span><span class="p">))</span>
-    
-    <span class="n">x_r</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_out</span><span class="p">])</span>
-    <span class="n">normed</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">batch_norm_with_global_normalization</span><span class="p">(</span><span class="n">x_r</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">normed</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_out</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">BN_layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">phase_train</span><span class="p">):</span>
-    <span class="n">in_count</span> <span class="o">=</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">w_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random_normal_initializer</span><span class="p">(</span><span class="n">stddev</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">in_count</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
-    <span class="n">b_init</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">w_init</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">b_init</span><span class="p">)</span>
-    <span class="n">logits</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">layer_batch_norm</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">weight_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">phase_train</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
 </div>
