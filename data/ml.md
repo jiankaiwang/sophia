@@ -81,7 +81,6 @@
     * 高斯過程 (Gaussian Processes, GP)
     * 單純貝氏 (Naive Bayes) 與貝式網路 (Bayes Network): [Rscript](data/Bayes_R.html)
     * 卡方自動交互檢視法決策樹 (CHAID for Decision Tree): [Rscript](data/CHAID_R.html)
-
 * 非監督式學習, 分群演算法
     * K-平均 (K-means): [Rscript](data/K_Means_R.html)
     * X-平均 (X-means)
@@ -90,8 +89,11 @@
     * Fuzzy C-Means: [Rscript](data/Fuzzy_C-Means_R.html)
     * Spectral Clustering
     * Self-Organizing Map (SOM): [Rscript](data/Self-Organizing_Map_R.html)
-
 * 遺傳演算法 (Genetic Algorithm, GA)
+
+### 機器學習資料集
+
+* Hard Drive Disk: https://www.backblaze.com/b2/hard-drive-test-data.html
 
 ### 機器學習面臨的問題
 

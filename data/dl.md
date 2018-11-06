@@ -68,13 +68,11 @@
   * 非監督式學習網路 (Unsupervised Learning Network)
     * GAN (Generative Adversarial Network)
     * 編碼器與解碼器 (Encoder and Decoder)
-
 * 空間與圖影像
   * [資料擴增方法](data/ImageDataAugmentation.html)
   * 圖像分類 (Image Classification)
     * AlexNet
     * VGG16, VGG19
-    * GoogLeNet
     * Inception V1, V2, V3
     * MobileNet
     * ResNet
@@ -90,6 +88,8 @@
   * 物件追蹤
   * 影像風格 (Artistic Style)
   * 光學字元識別 (Optical Character Recognition, OCR)
+  * 立體影像 (3D)
+  * 動作辨識 (Action Recognition)
   * 圖像資料集
     * MS-COCO: [http://cocodataset.org/#home](http://cocodataset.org/#home)
     * ImageNet: [http://www.image-net.org/](http://www.image-net.org/)
@@ -97,43 +97,50 @@
     * VisualQA: [http://www.visualqa.org/](http://www.visualqa.org/)
     * The Street View House Numbers: [http://ufldl.stanford.edu/housenumbers/](http://ufldl.stanford.edu/housenumbers/)
     * CIFAR-10: [http://www.cs.toronto.edu/~kriz/cifar.html](http://www.cs.toronto.edu/~kriz/cifar.html)
-    * UF101: [http://crcv.ucf.edu/data/UCF101.php](http://crcv.ucf.edu/data/UCF101.php)
   * 影像資料集
     * YT8M: [https://research.google.com/youtube8m/](https://research.google.com/youtube8m/) 
-
+    * UF101: [http://crcv.ucf.edu/data/UCF101.php](http://crcv.ucf.edu/data/UCF101.php)
+    * MPII Human Pose Dataset: http://human-pose.mpi-inf.mpg.de/#dataset
+    * BDD100k: https://bair.berkeley.edu/blog/2018/05/30/bdd/
 * 時間, 語言與音訊
   * 機器翻譯
-  	* 長短期記憶模型 (Long Short Term Memory Network)
+    * 長短期記憶模型 (Long Short Term Memory Network, LSTM)
+    * Gated Recurrent Unit (GRU)
   * 語言資料集
-  	* IMDB Reviews: [http://ai.stanford.edu/~amaas/data/sentiment/](http://ai.stanford.edu/~amaas/data/sentiment/), [IMDB Dataset]()
-  	* Twenty Newsgroups: [https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups](https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups)
-  	* Sentiment140: [http://help.sentiment140.com/for-students/](http://help.sentiment140.com/for-students/)
-  	* WordNet: [https://wordnet.princeton.edu/](https://wordnet.princeton.edu/)
-  	* Yelp Reviews: [https://www.yelp.com/dataset](https://www.yelp.com/dataset)
-  	* The Wikipedia Corpus: [http://nlp.cs.nyu.edu/wikipedia-data/](http://nlp.cs.nyu.edu/wikipedia-data/)
-  	* The Blog Authorship Corpus: [http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm)
-  	* Machine Translation of Various Languages: [http://statmt.org/wmt18/index.html](http://statmt.org/wmt18/index.html)
-  	* Google News Dataset: [https://code.google.com/archive/p/word2vec/](https://code.google.com/archive/p/word2vec/)
+    * IMDB Reviews: [http://ai.stanford.edu/~amaas/data/sentiment/](http://ai.stanford.edu/~amaas/data/sentiment/), [IMDB Dataset]()
+    * Twenty Newsgroups: [https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups](https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups)
+    * Sentiment140: [http://help.sentiment140.com/for-students/](http://help.sentiment140.com/for-students/)
+    * WordNet: [https://wordnet.princeton.edu/](https://wordnet.princeton.edu/)
+    * Yelp Reviews: [https://www.yelp.com/dataset](https://www.yelp.com/dataset)
+    * The Wikipedia Corpus: [http://nlp.cs.nyu.edu/wikipedia-data/](http://nlp.cs.nyu.edu/wikipedia-data/)
+    * The Blog Authorship Corpus: [http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm)
+    * Machine Translation of Various Languages: [http://statmt.org/wmt18/index.html](http://statmt.org/wmt18/index.html)
+    * Google News Dataset: [https://code.google.com/archive/p/word2vec/](https://code.google.com/archive/p/word2vec/)
+    * WMT'15: http://www.statmt.org/wmt15/translation-task.html
   * 音訊資料集
-  	* Free Spoken Digit Dataset: [https://github.com/Jakobovski/free-spoken-digit-dataset](https://github.com/Jakobovski/free-spoken-digit-dataset)
-  	* Free Music Archive: [https://github.com/mdeff/fma](https://github.com/mdeff/fma)
-  	* Ballroom: [http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html](http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html)
-  	* Million Song Dataset: [https://labrosa.ee.columbia.edu/millionsong/](https://labrosa.ee.columbia.edu/millionsong/)
-  	* LibriSpeech: [http://www.openslr.org/12/](http://www.openslr.org/12/)
-  	* VoxCeleb: [http://www.robots.ox.ac.uk/~vgg/data/voxceleb/](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
-
+    * Free Spoken Digit Dataset: [https://github.com/Jakobovski/free-spoken-digit-dataset](https://github.com/Jakobovski/free-spoken-digit-dataset)
+    * Free Music Archive: [https://github.com/mdeff/fma](https://github.com/mdeff/fma)
+    * Ballroom: [http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html](http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html)
+    * Million Song Dataset: [https://labrosa.ee.columbia.edu/millionsong/](https://labrosa.ee.columbia.edu/millionsong/)
+    * LibriSpeech: [http://www.openslr.org/12/](http://www.openslr.org/12/)
+    * VoxCeleb: [http://www.robots.ox.ac.uk/~vgg/data/voxceleb/](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
+  * 對話資料集
+      * Persona-Chat
 * 示意推論
   * 圖像標注 (Image Caption)
-
+  * Visual Question Answering
+  * 文字推論資料集
+      * bAbI: https://research.fb.com/downloads/babi/
 * 自駕車 (Auto-Driving)
   * 辨識道路 
   	* SegNet 
 
 ### 深度學習遭遇的問題
 
-* 區域最佳解 (Local Optimal)，舉 SGD 為例
+* 區域最佳解 (Local Optimal)
 * 過度訓練或訓練不足
 * 隱藏層深度及神經元數目
+* 自動調整超參數 
 * Gradient Vanishing
 
 
