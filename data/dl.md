@@ -1,21 +1,16 @@
 ### 深度學習的流程
 
-* Deciding the Data Type: 決定訓練資料的型態，如透過圖像，語音等方式
-* Collecting the Training Dataset: 蒐集訓練資料，需含有真實世界的特徵
 * **Data Reading**: 讀入資料
 * **Data Preprocessing**: 進行資料前處理
-* Extracting the Learning Feature: 決定學習函數的輸入特徵及其表示法
-* **Create a Model**: 決定學習函數及其對應的學習演算法使用的資料結構
-* **Learning the Model Parameters**: 完成設計
-* **Evaluating the Model**: 測試與預測
-* Evoluting the Model: 持續性演化
+* **Create a Model**: 定義神經網路及超參數
+* **Learning the Model Parameters**: 學習過程
+* **Evaluating the Model**: 驗證模型
 
-### 神經網路
+### 神經網路組成
 
 * 活化函式: Sigmoid, tanh, ReLu, Softplus
 * 多層神經網路
-* 輸出函式: 恆等式, Softmax
-* 使用 MNIST 資料  
+* 輸出函式: 恆等式, Softmax 
 
 ### 神經網路學習
 
@@ -23,13 +18,9 @@
 * 微分與偏微分
 * 求梯度: 梯度下降 (Gradient Descent), 梯度下降與學習
 
-### 神經網路組合
-
 * 使用正向傳播梯度下降法訓練的神經網路
 * 計算權重的梯度
 * 學習過程
-
-### 批次學習
 
 * 導入批次的學習
 
@@ -43,36 +34,44 @@
 * 反向傳播的學習
 * 反向傳播的損失度
 
-### 進階學習
+### 神經網路進階學習
 
 * 最佳優化方法: Stochastic Gradient Descent (SGD), Momentum, AdaGrad, Adam, nesterov, RMSprop
-
 * 權重參數的預設值: Xavier method, Kaiming He method
-
 * Batch Normalization
 * Overfitting 與 Normalization: Weight Decay / Regularization, Dropout
-
 * 超參數的設定: Validation data, 尋找最佳超參數的方法 
 
-### 深度學習的類型與主流方法
+### 深度學習框架介紹
+
+* Keras: [Keras for Python](data/Keras_Quickstart.html)
+* Tensorflow: [Tensorflow for Python](data/Tensorflow_Quickstart_Python.html)
+    * [Tensorflow architecture](data/Basic_Tensorflow.html): API, Variable Scope vs. Name Scope, Session, CPU/GPU
+    * batch normalization, dropout, regularization
+    * neural network function
+        - [activation function](data/BasicLearning_Tensorflow.html)
+        - optimization function
+    * model portability: `ckpt with meta`, `frozen pb`
+    * queue and threading
+    * TF-Slim
+
+### 深度學習問題與主流方法
 
 * 基礎神經網路
   * 監督式學習網路 (Supervised Learning Network)
       * MLP (Multi-Layer Preceptron)
-      * CNN (Convolutional Neural Network): 
-        * Convolutional Layer, Filter / Mask / Kernel 
-        * Padding, Stride
-        * Pooling Layer
+      * CNN (Convolutional Neural Network)
+        * Convolutional Layer, Filter / Mask / Kernel, Padding, Stride, Pooling Layer: [Basic CNN](data/BasicCNN_Tensorflow.html), [CNN Tensorboard](data/CNN_Tensorboard.html)
         * im2col / col2im
       * RNN (Recurrent Neural Network)
   * 非監督式學習網路 (Unsupervised Learning Network)
     * GAN (Generative Adversarial Network)
-    * 編碼器與解碼器 (Encoder and Decoder)
+    * 編碼器與解碼器 (Encoder and Decoder): [Dimensionality Reduction in Tensorflow](data/EncoderDecoder_Tensorflow.html)
 * 空間與圖影像
   * [資料擴增方法](data/ImageDataAugmentation.html)
-  * 圖像分類 (Image Classification)
+  * 圖像分類 (Image Classification): 
     * AlexNet
-    * VGG16, VGG19
+    * VGGNet: [VGGNet in Keras](data/Keras_VGGNet_Tensorboard.html)
     * Inception V1, V2, V3
     * MobileNet
     * ResNet
@@ -81,15 +80,17 @@
     * Faster R-CNN
     * Single Shot MultiBox Detector (SSD)
     * Mask R-CNN
-    * You Only Look Once (YOLO)
+    * You Only Look Once (YOLO): [darkflow](https://github.com/thtrieu/darkflow)
   * 圖像分割 (Image Segmentation)
     * Fully Convolutional Network (FCN)
     * U-Net
   * 物件追蹤
+      * [Tracking with darkflow](https://github.com/bendidi/Tracking-with-darkflow)
   * 影像風格 (Artistic Style)
   * 光學字元識別 (Optical Character Recognition, OCR)
   * 立體影像 (3D)
   * 動作辨識 (Action Recognition)
+  * Vedio Description
   * 圖像資料集
     * MS-COCO: [http://cocodataset.org/#home](http://cocodataset.org/#home)
     * ImageNet: [http://www.image-net.org/](http://www.image-net.org/)
@@ -103,9 +104,14 @@
     * MPII Human Pose Dataset: http://human-pose.mpi-inf.mpg.de/#dataset
     * BDD100k: https://bair.berkeley.edu/blog/2018/05/30/bdd/
 * 時間, 語言與音訊
-  * 機器翻譯
+  * 組成單元
     * 長短期記憶模型 (Long Short Term Memory Network, LSTM)
     * Gated Recurrent Unit (GRU)
+    * Neural Tuning Machine (NTM)
+    * Differentiable Neural Computer (DNC)
+  * Word to Vector: [Word Embedding in Tensorflow](data/WordEmbedding_Tensorflow.html)
+  * Independent Sequence: [Part of Speech in Tensorflow](data/seq2seq_PartOfSpeech.html)
+  * Dependent Sequence: [RNN LSTM in Tensorflow](data/RNN_LSTM_Tensorflow.html)
   * 語言資料集
     * IMDB Reviews: [http://ai.stanford.edu/~amaas/data/sentiment/](http://ai.stanford.edu/~amaas/data/sentiment/), [IMDB Dataset]()
     * Twenty Newsgroups: [https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups](https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups)
@@ -126,14 +132,19 @@
     * VoxCeleb: [http://www.robots.ox.ac.uk/~vgg/data/voxceleb/](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
   * 對話資料集
       * Persona-Chat
+* Reinforcement Learning
 * 示意推論
   * 圖像標注 (Image Caption)
   * Visual Question Answering
+  * Mimicking Content Generating
   * 文字推論資料集
       * bAbI: https://research.fb.com/downloads/babi/
 * 自駕車 (Auto-Driving)
   * 辨識道路 
-  	* SegNet 
+    * SegNet 
+* 深度學習視覺化
+    * Tensorflow PlayGround: [http://playground.tensorflow.org](http://playground.tensorflow.org)
+    * [TensorBoard](data/Tensorboard.html)
 
 ### 深度學習遭遇的問題
 
@@ -143,6 +154,26 @@
 * 自動調整超參數 
 * Gradient Vanishing
 
+### 深度學習推論與應用
 
+- Inference from Tensorflow Model
+    - Classification Model
+    - Object Detection Model
+- Tensorflow Lite
+    - [API](data/TensorflowLite_API.html)
+    - [Command Line](data/TensorflowLite_CommandLine.html)
+    - [In Respberry Pi ](data/TensorflowLite_RaspberryPi.html)
+- Tensorflow XLA
+- Tensorflow Debugger
+- Distributed Tensorflow System
+- Tensorflow with Kubernetes and Docker
+- Tensorflow on Spark
+- Tensorflow on android
+- Tensorflow on iOS
+- Tensorflow on Raspberry
 
+### Others Resource
 
+* ~~CNTK (no more update)~~
+  * Quick Start: [Python](data/CNTK_Quickstart_Python.html)
+  * Vott-CNTK Flow: [Doc](data/vott_cntk_flow.html)

@@ -117,7 +117,6 @@
                 <div class="list-group">
                     <a data-toggle="tab" href="#ml" class="list-group-item list-item" onclick="getEachTopic('ml');">Machine Learning</a>
                     <a data-toggle="tab" href="#dl" class="list-group-item list-item active" onclick="getEachTopic('dl');">Deep Learning</a>
-                    <a data-toggle="tab" href="#framework" class="list-group-item list-item" onclick="getEachTopic('framework');">Framework</a>
                     <a data-toggle="tab" href="#uitools" class="list-group-item list-item" onclick="getEachTopic('uitools');">UI Tool</a>
                     <a data-toggle="tab" href="#maker" class="list-group-item list-item" onclick="getEachTopic('maker');">Maker</a>
                     <a data-toggle="tab" href="#statistics" class="list-group-item list-item" onclick="getEachTopic('statistics');">Statistics</a>
@@ -132,9 +131,6 @@
                     </div>
                     <div id="dl" class="tab-pane fade show active">
                         <i class="fas fa-spinner fa-spin fa-2x"></i> 
-                    </div>
-                    <div id="framework" class="tab-pane fade">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
                     </div>
                     <div id="uitools" class="tab-pane fade">
                         <i class="fas fa-spinner fa-spin fa-2x"></i>
@@ -194,13 +190,12 @@
         })
     }
 	function getEachTopic(topic) {
-		console.log(topic);
 		switch(topic) {
 			case "ml": fetchData('data/ml.md', 'ml', function() {}); break;
+			case "dl": fetchData('data/dl.md', 'ml', function() {}); break;
 			case "statistics": fetchData('data/statistics.md', 'statistics', function() {}); break;
 			case "uitools": fetchData('data/uitools.md', 'uitools', function() {}); break;
 			case "maker": fetchData('data/maker.md', 'maker', function() {}); break;
-			case "framework": fetchData('data/framework.md', 'framework', function() {}); break;
 		}
 	}
     $(function() {
