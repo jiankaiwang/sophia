@@ -1,14 +1,11 @@
 ### 機器學習的流程
 
-* Deciding the Data Type: 決定訓練資料的型態，如透過圖像，語音等方式
-* Collecting the Training Dataset: 蒐集訓練資料，需含有真實世界的特徵
-* **Data Reading**: 讀入資料
-* **Data Preprocessing**: 進行資料前處理
-* Extracting the Learning Feature: 決定學習函數的輸入特徵及其表示法
-* **Create a Model**: 決定學習函數及其對應的學習演算法使用的資料結構
-* **Learning the Model Parameters**: 完成設計
-* **Evaluating the Model**: 測試與預測
-* Evoluting the Model: 持續性演化
+* Data Reading: 讀入資料
+* Data Preprocessing: 進行資料前處理
+* **Extracting the Learning Feature**: 決定學習函數的輸入特徵及其表示法
+* Create a Model: 決定學習函數及其對應的學習演算法使用的資料結構
+* Learning the Model Parameters: 完成設計
+* Evaluating the Model: 測試與預測
 
 ### 連續資料離散化 (Discretization)
 
@@ -55,12 +52,6 @@
     * hybrid Powell
     * Levenberg-Marquardt
     * large-scale methods such as Newton-Krylov
-* Stochastic Gradient Descent (SGD)
-* Momentum
-* AdaGrad
-* Adam
-* nesterov
-* RMSprop
 
 ### 迴歸/預測
 

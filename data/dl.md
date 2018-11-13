@@ -36,7 +36,7 @@
 
 ### 神經網路進階學習
 
-* 最佳優化方法: Stochastic Gradient Descent (SGD), Momentum, AdaGrad, Adam, nesterov, RMSprop
+* 最佳優化方法: Stochastic Gradient Descent, Momentum, AdaGrad, Adam, nesterov, RMSprop
 * 權重參數的預設值: Xavier method, Kaiming He method
 * Batch Normalization
 * Overfitting 與 Normalization: Weight Decay / Regularization, Dropout
@@ -60,8 +60,8 @@
 * 基礎神經網路
   * 監督式學習網路 (Supervised Learning Network)
       * MLP (Multi-Layer Preceptron)
-      * CNN (Convolutional Neural Network)
-        * Convolutional Layer, Filter / Mask / Kernel, Padding, Stride, Pooling Layer: [Basic CNN](data/BasicCNN_Tensorflow.html), [CNN Tensorboard](data/CNN_Tensorboard.html)
+      * CNN (Convolutional Neural Network): [Basic CNN](data/BasicCNN_Tensorflow.html), [CNN Tensorboard](data/CNN_Tensorboard.html)
+        * Convolutional Layer, Filter / Mask / Kernel, Padding, Stride, Pooling Layer
         * im2col / col2im
       * RNN (Recurrent Neural Network)
   * 非監督式學習網路 (Unsupervised Learning Network)
@@ -92,17 +92,17 @@
   * 動作辨識 (Action Recognition)
   * Vedio Description
   * 圖像資料集
-    * MS-COCO: [http://cocodataset.org/#home](http://cocodataset.org/#home)
-    * ImageNet: [http://www.image-net.org/](http://www.image-net.org/)
-    * Open Images Dataset: [https://storage.googleapis.com/openimages/web/index.html](https://storage.googleapis.com/openimages/web/index.html)
-    * VisualQA: [http://www.visualqa.org/](http://www.visualqa.org/)
-    * The Street View House Numbers: [http://ufldl.stanford.edu/housenumbers/](http://ufldl.stanford.edu/housenumbers/)
-    * CIFAR-10: [http://www.cs.toronto.edu/~kriz/cifar.html](http://www.cs.toronto.edu/~kriz/cifar.html)
+    * [MS-COCO](http://cocodataset.org/#home)
+    * [ImageNet](http://www.image-net.org/)
+    * [Open Images Dataset](https://storage.googleapis.com/openimages/web/index.html)
+    * [VisualQA](http://www.visualqa.org/)
+    * [The Street View House Numbers](http://ufldl.stanford.edu/housenumbers/)
+    * [CIFAR-10](http://www.cs.toronto.edu/~kriz/cifar.html)
   * 影像資料集
-    * YT8M: [https://research.google.com/youtube8m/](https://research.google.com/youtube8m/) 
-    * UF101: [http://crcv.ucf.edu/data/UCF101.php](http://crcv.ucf.edu/data/UCF101.php)
-    * MPII Human Pose Dataset: http://human-pose.mpi-inf.mpg.de/#dataset
-    * BDD100k: https://bair.berkeley.edu/blog/2018/05/30/bdd/
+    * [YT8M](https://research.google.com/youtube8m/) 
+    * [UCF101](http://crcv.ucf.edu/data/UCF101.php)
+    * [MPII Human Pose Dataset](http://human-pose.mpi-inf.mpg.de/#dataset)
+    * [BDD100k](https://bair.berkeley.edu/blog/2018/05/30/bdd/)
 * 時間, 語言與音訊
   * 組成單元
     * 長短期記憶模型 (Long Short Term Memory Network, LSTM)
@@ -113,37 +113,36 @@
   * Independent Sequence: [Part of Speech in Tensorflow](data/seq2seq_PartOfSpeech.html)
   * Dependent Sequence: [RNN LSTM in Tensorflow](data/RNN_LSTM_Tensorflow.html)
   * 語言資料集
-    * IMDB Reviews: [http://ai.stanford.edu/~amaas/data/sentiment/](http://ai.stanford.edu/~amaas/data/sentiment/), [IMDB Dataset]()
-    * Twenty Newsgroups: [https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups](https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups)
-    * Sentiment140: [http://help.sentiment140.com/for-students/](http://help.sentiment140.com/for-students/)
-    * WordNet: [https://wordnet.princeton.edu/](https://wordnet.princeton.edu/)
-    * Yelp Reviews: [https://www.yelp.com/dataset](https://www.yelp.com/dataset)
-    * The Wikipedia Corpus: [http://nlp.cs.nyu.edu/wikipedia-data/](http://nlp.cs.nyu.edu/wikipedia-data/)
-    * The Blog Authorship Corpus: [http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm)
-    * Machine Translation of Various Languages: [http://statmt.org/wmt18/index.html](http://statmt.org/wmt18/index.html)
-    * Google News Dataset: [https://code.google.com/archive/p/word2vec/](https://code.google.com/archive/p/word2vec/)
-    * WMT'15: http://www.statmt.org/wmt15/translation-task.html
+    * [IMDB Reviews](http://ai.stanford.edu/~amaas/data/sentiment/): [Introduce IMDB Dataset](data/IMDB_Dataset.html)
+    * [Twenty Newsgroups](https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups)
+    * [Sentiment140](http://help.sentiment140.com/for-students/)
+    * [WordNet](https://wordnet.princeton.edu/)
+    * [Yelp Reviews](https://www.yelp.com/dataset)
+    * [The Wikipedia Corpus](http://nlp.cs.nyu.edu/wikipedia-data/)
+    * [The Blog Authorship Corpus](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm)
+    * [Machine Translation of Various Languages](http://statmt.org/wmt18/index.html)
+    * [Google News Dataset](https://code.google.com/archive/p/word2vec/)
+    * [WMT'15](http://www.statmt.org/wmt15/translation-task.html)
   * 音訊資料集
-    * Free Spoken Digit Dataset: [https://github.com/Jakobovski/free-spoken-digit-dataset](https://github.com/Jakobovski/free-spoken-digit-dataset)
-    * Free Music Archive: [https://github.com/mdeff/fma](https://github.com/mdeff/fma)
-    * Ballroom: [http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html](http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html)
-    * Million Song Dataset: [https://labrosa.ee.columbia.edu/millionsong/](https://labrosa.ee.columbia.edu/millionsong/)
-    * LibriSpeech: [http://www.openslr.org/12/](http://www.openslr.org/12/)
-    * VoxCeleb: [http://www.robots.ox.ac.uk/~vgg/data/voxceleb/](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
+    * [Free Spoken Digit Dataset](https://github.com/Jakobovski/free-spoken-digit-dataset)
+    * [Free Music Archive](https://github.com/mdeff/fma)
+    * [Ballroom](http://mtg.upf.edu/ismir2004/contest/tempoContest/node5.html)
+    * [Million Song Dataset](https://labrosa.ee.columbia.edu/millionsong/)
+    * [LibriSpeech](http://www.openslr.org/12/)
+    * [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/)
   * 對話資料集
       * Persona-Chat
 * Reinforcement Learning
 * 示意推論
   * 圖像標注 (Image Caption)
   * Visual Question Answering
-  * Mimicking Content Generating
   * 文字推論資料集
-      * bAbI: https://research.fb.com/downloads/babi/
+      * [bAbI](https://research.fb.com/downloads/babi/)
 * 自駕車 (Auto-Driving)
   * 辨識道路 
     * SegNet 
 * 深度學習視覺化
-    * Tensorflow PlayGround: [http://playground.tensorflow.org](http://playground.tensorflow.org)
+    * [Tensorflow PlayGround](http://playground.tensorflow.org)
     * [TensorBoard](data/Tensorboard.html)
 
 ### 深度學習遭遇的問題
