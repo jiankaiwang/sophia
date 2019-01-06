@@ -14,20 +14,6 @@ Please enjoy it.
 
 ## Content
 
-
-
-| Mark / Icon | Format / Description               |
-| ----------- | ---------------------------------- |
-| MD          | markdown                           |
-| Rscript     | Rscript in markdown (.rmd)         |
-| RPubs       | html webpage published on RPubs    |
-| Notebooks   | jupyter notebook (.ipynb)          |
-| pyscript    | python script (.py)                |
-| webpage     | convert to webpages                |
-| Github      | refer to another github repository |
-
-
-
 *   [Machine Learning](machine_learning/)
 
     *   [Dimensionality reduction](machine_learning/dimensionality_reduction/)

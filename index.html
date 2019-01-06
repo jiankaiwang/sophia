@@ -95,9 +95,6 @@
                     <a href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-2x"></i></a>&nbsp;                    
                     <a href="https://www.facebook.com/jkw0620"><i class="fab fa-facebook-square fa-2x"></i></a>&nbsp;                       
                 </div>
-                <div class="row col-lg-12 col-sm-12 mb-12">
-                    <img src="https://cicd.ddns.net/buildStatus/icon?job=sophia"></img>
-                </div>
             </div>
             <div class="col-lg-2 col-sm-1 mb-1"></div>
         </div>
@@ -112,36 +109,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 col-lg-3 margin-section">
-                <!--<h3 class="my-4"><i class="fas fa-bars fa-1x"></i> Menu</h3>-->
-                <div class="list-group">
-                    <a data-toggle="tab" href="#ml" class="list-group-item list-item" onclick="getEachTopic('ml');">Machine Learning</a>
-                    <a data-toggle="tab" href="#dl" class="list-group-item list-item active" onclick="getEachTopic('dl');">Deep Learning</a>
-                    <a data-toggle="tab" href="#uitools" class="list-group-item list-item" onclick="getEachTopic('uitools');">UI Tool</a>
-                    <a data-toggle="tab" href="#maker" class="list-group-item list-item" onclick="getEachTopic('maker');">Maker</a>
-                    <a data-toggle="tab" href="#statistics" class="list-group-item list-item" onclick="getEachTopic('statistics');">Statistics</a>
-                </div>
-            </div>
-
-            <div class="col-md-9 col-lg-9 margin-section">
+            <div class="col-md-12 col-lg-12 margin-section">
                 <!--<h3 class="my-4"><i class="fas fa-file fa-1x"></i> Content</h3>-->
-                <div class="tab-content">
-                    <div id="ml" class="tab-pane fade">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i> 
-                    </div>
-                    <div id="dl" class="tab-pane fade show active">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i> 
-                    </div>
-                    <div id="uitools" class="tab-pane fade">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    </div>
-                    <div id="maker" class="tab-pane fade">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    </div>
-                    <div id="statistics" class="tab-pane fade">
-                        <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    </div>
-                </div>
+				<div id="readme">
+					<i class="fas fa-spinner fa-spin fa-2x"></i> 
+				</div>
             </div>
         </div>
     </div>
@@ -159,7 +131,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="//code.simplesvg.com/1/1.0.0-beta5/simple-svg.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/async/2.6.0/async.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.5/showdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-78133465-2"></script>
@@ -172,6 +144,7 @@
 
 
     <script>
+	var testData = "";
     function fetchData(dataLink, updateItem, callback) {
         $.ajax({
             url: dataLink
@@ -184,23 +157,15 @@
             , success: function (response) {
                 var converter = new showdown.Converter(),
                     html      = converter.makeHtml(response);
+				testData = html;
                 $('#' + updateItem).html(html);
                 callback(null, "");
             }
         })
     }
-	function getEachTopic(topic) {
-		switch(topic) {
-			case "ml": fetchData('data/ml.md', 'ml', function() {}); break;
-			case "dl": fetchData('data/dl.md', 'ml', function() {}); break;
-			case "statistics": fetchData('data/statistics.md', 'statistics', function() {}); break;
-			case "uitools": fetchData('data/uitools.md', 'uitools', function() {}); break;
-			case "maker": fetchData('data/maker.md', 'maker', function() {}); break;
-		}
-	}
     $(function() {
         async.parallel([
-            function(callback) { fetchData('data/dl.md', 'dl', callback) }
+            function(callback) { fetchData('README.md', 'readme', callback) }
         ], function (err, message) {
 			if(err) { console.log(err); }
 		});
