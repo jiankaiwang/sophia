@@ -91,6 +91,7 @@
   * 立體影像 (3D)
   * 動作辨識 (Action Recognition)
   * Vedio Description
+  * 圖像自動編輯與上色
   * 圖像資料集
     * [MS-COCO](http://cocodataset.org/#home)
     * [ImageNet](http://www.image-net.org/)
@@ -98,6 +99,7 @@
     * [VisualQA](http://www.visualqa.org/)
     * [The Street View House Numbers](http://ufldl.stanford.edu/housenumbers/)
     * [CIFAR-10](http://www.cs.toronto.edu/~kriz/cifar.html)
+    * [Multiple Object Tracking Benchmark](https://motchallenge.net/)
   * 影像資料集
     * [YT8M](https://research.google.com/youtube8m/) 
     * [UCF101](http://crcv.ucf.edu/data/UCF101.php)
@@ -123,6 +125,7 @@
     * [Machine Translation of Various Languages](http://statmt.org/wmt18/index.html)
     * [Google News Dataset](https://code.google.com/archive/p/word2vec/)
     * [WMT'15](http://www.statmt.org/wmt15/translation-task.html)
+    * Corpus: LSICC
   * 音訊資料集
     * [Free Spoken Digit Dataset](https://github.com/Jakobovski/free-spoken-digit-dataset)
     * [Free Music Archive](https://github.com/mdeff/fma)
@@ -170,6 +173,16 @@
 - Tensorflow on android
 - Tensorflow on iOS
 - Tensorflow on Raspberry
+
+### 學習流程管理
+
+* [MLFlow](https://mlflow.org/)
+* [FGLab](https://kaixhin.github.io/FGLab/)
+* [Sacred](https://github.com/IDSIA/sacred)
+
+### 其他框架的操作
+
+* Onnx with Tensorflow: [Transform](data/Onnx_Tensorflow.html)
 
 ### Others Resource
 
