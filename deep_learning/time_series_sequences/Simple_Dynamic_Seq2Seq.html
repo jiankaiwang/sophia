@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>TensorflowLite_RaspberryPi</title>
+
+<title>Simple_Dynamic_Seq2Seq</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
 
 <style type="text/css">
     /*!
@@ -13,8 +16,8 @@
 *
 */
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -201,7 +204,6 @@ th {
   *:before,
   *:after {
     background: transparent !important;
-    color: #000 !important;
     box-shadow: none !important;
     text-shadow: none !important;
   }
@@ -1109,7 +1111,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2538,7 +2539,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3029,7 +3029,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -6749,15 +6748,15 @@ button.close {
 *
 */
 /*!
- *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?v=4.2.0');
-  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../components/font-awesome/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../components/font-awesome/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('../components/font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../components/font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../components/font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../components/font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -6814,6 +6813,19 @@ button.close {
   border: solid 0.08em #eee;
   border-radius: .1em;
 }
+.fa-pull-left {
+  float: left;
+}
+.fa-pull-right {
+  float: right;
+}
+.fa.fa-pull-left {
+  margin-right: .3em;
+}
+.fa.fa-pull-right {
+  margin-left: .3em;
+}
+/* Deprecated as of 4.4.0 */
 .pull-right {
   float: right;
 }
@@ -6829,6 +6841,10 @@ button.close {
 .fa-spin {
   -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear;
+}
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
 }
 @-webkit-keyframes fa-spin {
   0% {
@@ -6851,31 +6867,31 @@ button.close {
   }
 }
 .fa-rotate-90 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 .fa-rotate-180 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .fa-rotate-270 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .fa-flip-horizontal {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .fa-flip-vertical {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -7360,6 +7376,7 @@ button.close {
 .fa-twitter:before {
   content: "\f099";
 }
+.fa-facebook-f:before,
 .fa-facebook:before {
   content: "\f09a";
 }
@@ -7372,6 +7389,7 @@ button.close {
 .fa-credit-card:before {
   content: "\f09d";
 }
+.fa-feed:before,
 .fa-rss:before {
   content: "\f09e";
 }
@@ -8009,7 +8027,8 @@ button.close {
 .fa-male:before {
   content: "\f183";
 }
-.fa-gittip:before {
+.fa-gittip:before,
+.fa-gratipay:before {
   content: "\f184";
 }
 .fa-sun-o:before {
@@ -8113,7 +8132,7 @@ button.close {
 .fa-digg:before {
   content: "\f1a6";
 }
-.fa-pied-piper:before {
+.fa-pied-piper-pp:before {
   content: "\f1a7";
 }
 .fa-pied-piper-alt:before {
@@ -8239,6 +8258,7 @@ button.close {
   content: "\f1ce";
 }
 .fa-ra:before,
+.fa-resistance:before,
 .fa-rebel:before {
   content: "\f1d0";
 }
@@ -8252,6 +8272,8 @@ button.close {
 .fa-git:before {
   content: "\f1d3";
 }
+.fa-y-combinator-square:before,
+.fa-yc-square:before,
 .fa-hacker-news:before {
   content: "\f1d4";
 }
@@ -8419,6 +8441,657 @@ button.close {
 }
 .fa-meanpath:before {
   content: "\f20c";
+}
+.fa-buysellads:before {
+  content: "\f20d";
+}
+.fa-connectdevelop:before {
+  content: "\f20e";
+}
+.fa-dashcube:before {
+  content: "\f210";
+}
+.fa-forumbee:before {
+  content: "\f211";
+}
+.fa-leanpub:before {
+  content: "\f212";
+}
+.fa-sellsy:before {
+  content: "\f213";
+}
+.fa-shirtsinbulk:before {
+  content: "\f214";
+}
+.fa-simplybuilt:before {
+  content: "\f215";
+}
+.fa-skyatlas:before {
+  content: "\f216";
+}
+.fa-cart-plus:before {
+  content: "\f217";
+}
+.fa-cart-arrow-down:before {
+  content: "\f218";
+}
+.fa-diamond:before {
+  content: "\f219";
+}
+.fa-ship:before {
+  content: "\f21a";
+}
+.fa-user-secret:before {
+  content: "\f21b";
+}
+.fa-motorcycle:before {
+  content: "\f21c";
+}
+.fa-street-view:before {
+  content: "\f21d";
+}
+.fa-heartbeat:before {
+  content: "\f21e";
+}
+.fa-venus:before {
+  content: "\f221";
+}
+.fa-mars:before {
+  content: "\f222";
+}
+.fa-mercury:before {
+  content: "\f223";
+}
+.fa-intersex:before,
+.fa-transgender:before {
+  content: "\f224";
+}
+.fa-transgender-alt:before {
+  content: "\f225";
+}
+.fa-venus-double:before {
+  content: "\f226";
+}
+.fa-mars-double:before {
+  content: "\f227";
+}
+.fa-venus-mars:before {
+  content: "\f228";
+}
+.fa-mars-stroke:before {
+  content: "\f229";
+}
+.fa-mars-stroke-v:before {
+  content: "\f22a";
+}
+.fa-mars-stroke-h:before {
+  content: "\f22b";
+}
+.fa-neuter:before {
+  content: "\f22c";
+}
+.fa-genderless:before {
+  content: "\f22d";
+}
+.fa-facebook-official:before {
+  content: "\f230";
+}
+.fa-pinterest-p:before {
+  content: "\f231";
+}
+.fa-whatsapp:before {
+  content: "\f232";
+}
+.fa-server:before {
+  content: "\f233";
+}
+.fa-user-plus:before {
+  content: "\f234";
+}
+.fa-user-times:before {
+  content: "\f235";
+}
+.fa-hotel:before,
+.fa-bed:before {
+  content: "\f236";
+}
+.fa-viacoin:before {
+  content: "\f237";
+}
+.fa-train:before {
+  content: "\f238";
+}
+.fa-subway:before {
+  content: "\f239";
+}
+.fa-medium:before {
+  content: "\f23a";
+}
+.fa-yc:before,
+.fa-y-combinator:before {
+  content: "\f23b";
+}
+.fa-optin-monster:before {
+  content: "\f23c";
+}
+.fa-opencart:before {
+  content: "\f23d";
+}
+.fa-expeditedssl:before {
+  content: "\f23e";
+}
+.fa-battery-4:before,
+.fa-battery:before,
+.fa-battery-full:before {
+  content: "\f240";
+}
+.fa-battery-3:before,
+.fa-battery-three-quarters:before {
+  content: "\f241";
+}
+.fa-battery-2:before,
+.fa-battery-half:before {
+  content: "\f242";
+}
+.fa-battery-1:before,
+.fa-battery-quarter:before {
+  content: "\f243";
+}
+.fa-battery-0:before,
+.fa-battery-empty:before {
+  content: "\f244";
+}
+.fa-mouse-pointer:before {
+  content: "\f245";
+}
+.fa-i-cursor:before {
+  content: "\f246";
+}
+.fa-object-group:before {
+  content: "\f247";
+}
+.fa-object-ungroup:before {
+  content: "\f248";
+}
+.fa-sticky-note:before {
+  content: "\f249";
+}
+.fa-sticky-note-o:before {
+  content: "\f24a";
+}
+.fa-cc-jcb:before {
+  content: "\f24b";
+}
+.fa-cc-diners-club:before {
+  content: "\f24c";
+}
+.fa-clone:before {
+  content: "\f24d";
+}
+.fa-balance-scale:before {
+  content: "\f24e";
+}
+.fa-hourglass-o:before {
+  content: "\f250";
+}
+.fa-hourglass-1:before,
+.fa-hourglass-start:before {
+  content: "\f251";
+}
+.fa-hourglass-2:before,
+.fa-hourglass-half:before {
+  content: "\f252";
+}
+.fa-hourglass-3:before,
+.fa-hourglass-end:before {
+  content: "\f253";
+}
+.fa-hourglass:before {
+  content: "\f254";
+}
+.fa-hand-grab-o:before,
+.fa-hand-rock-o:before {
+  content: "\f255";
+}
+.fa-hand-stop-o:before,
+.fa-hand-paper-o:before {
+  content: "\f256";
+}
+.fa-hand-scissors-o:before {
+  content: "\f257";
+}
+.fa-hand-lizard-o:before {
+  content: "\f258";
+}
+.fa-hand-spock-o:before {
+  content: "\f259";
+}
+.fa-hand-pointer-o:before {
+  content: "\f25a";
+}
+.fa-hand-peace-o:before {
+  content: "\f25b";
+}
+.fa-trademark:before {
+  content: "\f25c";
+}
+.fa-registered:before {
+  content: "\f25d";
+}
+.fa-creative-commons:before {
+  content: "\f25e";
+}
+.fa-gg:before {
+  content: "\f260";
+}
+.fa-gg-circle:before {
+  content: "\f261";
+}
+.fa-tripadvisor:before {
+  content: "\f262";
+}
+.fa-odnoklassniki:before {
+  content: "\f263";
+}
+.fa-odnoklassniki-square:before {
+  content: "\f264";
+}
+.fa-get-pocket:before {
+  content: "\f265";
+}
+.fa-wikipedia-w:before {
+  content: "\f266";
+}
+.fa-safari:before {
+  content: "\f267";
+}
+.fa-chrome:before {
+  content: "\f268";
+}
+.fa-firefox:before {
+  content: "\f269";
+}
+.fa-opera:before {
+  content: "\f26a";
+}
+.fa-internet-explorer:before {
+  content: "\f26b";
+}
+.fa-tv:before,
+.fa-television:before {
+  content: "\f26c";
+}
+.fa-contao:before {
+  content: "\f26d";
+}
+.fa-500px:before {
+  content: "\f26e";
+}
+.fa-amazon:before {
+  content: "\f270";
+}
+.fa-calendar-plus-o:before {
+  content: "\f271";
+}
+.fa-calendar-minus-o:before {
+  content: "\f272";
+}
+.fa-calendar-times-o:before {
+  content: "\f273";
+}
+.fa-calendar-check-o:before {
+  content: "\f274";
+}
+.fa-industry:before {
+  content: "\f275";
+}
+.fa-map-pin:before {
+  content: "\f276";
+}
+.fa-map-signs:before {
+  content: "\f277";
+}
+.fa-map-o:before {
+  content: "\f278";
+}
+.fa-map:before {
+  content: "\f279";
+}
+.fa-commenting:before {
+  content: "\f27a";
+}
+.fa-commenting-o:before {
+  content: "\f27b";
+}
+.fa-houzz:before {
+  content: "\f27c";
+}
+.fa-vimeo:before {
+  content: "\f27d";
+}
+.fa-black-tie:before {
+  content: "\f27e";
+}
+.fa-fonticons:before {
+  content: "\f280";
+}
+.fa-reddit-alien:before {
+  content: "\f281";
+}
+.fa-edge:before {
+  content: "\f282";
+}
+.fa-credit-card-alt:before {
+  content: "\f283";
+}
+.fa-codiepie:before {
+  content: "\f284";
+}
+.fa-modx:before {
+  content: "\f285";
+}
+.fa-fort-awesome:before {
+  content: "\f286";
+}
+.fa-usb:before {
+  content: "\f287";
+}
+.fa-product-hunt:before {
+  content: "\f288";
+}
+.fa-mixcloud:before {
+  content: "\f289";
+}
+.fa-scribd:before {
+  content: "\f28a";
+}
+.fa-pause-circle:before {
+  content: "\f28b";
+}
+.fa-pause-circle-o:before {
+  content: "\f28c";
+}
+.fa-stop-circle:before {
+  content: "\f28d";
+}
+.fa-stop-circle-o:before {
+  content: "\f28e";
+}
+.fa-shopping-bag:before {
+  content: "\f290";
+}
+.fa-shopping-basket:before {
+  content: "\f291";
+}
+.fa-hashtag:before {
+  content: "\f292";
+}
+.fa-bluetooth:before {
+  content: "\f293";
+}
+.fa-bluetooth-b:before {
+  content: "\f294";
+}
+.fa-percent:before {
+  content: "\f295";
+}
+.fa-gitlab:before {
+  content: "\f296";
+}
+.fa-wpbeginner:before {
+  content: "\f297";
+}
+.fa-wpforms:before {
+  content: "\f298";
+}
+.fa-envira:before {
+  content: "\f299";
+}
+.fa-universal-access:before {
+  content: "\f29a";
+}
+.fa-wheelchair-alt:before {
+  content: "\f29b";
+}
+.fa-question-circle-o:before {
+  content: "\f29c";
+}
+.fa-blind:before {
+  content: "\f29d";
+}
+.fa-audio-description:before {
+  content: "\f29e";
+}
+.fa-volume-control-phone:before {
+  content: "\f2a0";
+}
+.fa-braille:before {
+  content: "\f2a1";
+}
+.fa-assistive-listening-systems:before {
+  content: "\f2a2";
+}
+.fa-asl-interpreting:before,
+.fa-american-sign-language-interpreting:before {
+  content: "\f2a3";
+}
+.fa-deafness:before,
+.fa-hard-of-hearing:before,
+.fa-deaf:before {
+  content: "\f2a4";
+}
+.fa-glide:before {
+  content: "\f2a5";
+}
+.fa-glide-g:before {
+  content: "\f2a6";
+}
+.fa-signing:before,
+.fa-sign-language:before {
+  content: "\f2a7";
+}
+.fa-low-vision:before {
+  content: "\f2a8";
+}
+.fa-viadeo:before {
+  content: "\f2a9";
+}
+.fa-viadeo-square:before {
+  content: "\f2aa";
+}
+.fa-snapchat:before {
+  content: "\f2ab";
+}
+.fa-snapchat-ghost:before {
+  content: "\f2ac";
+}
+.fa-snapchat-square:before {
+  content: "\f2ad";
+}
+.fa-pied-piper:before {
+  content: "\f2ae";
+}
+.fa-first-order:before {
+  content: "\f2b0";
+}
+.fa-yoast:before {
+  content: "\f2b1";
+}
+.fa-themeisle:before {
+  content: "\f2b2";
+}
+.fa-google-plus-circle:before,
+.fa-google-plus-official:before {
+  content: "\f2b3";
+}
+.fa-fa:before,
+.fa-font-awesome:before {
+  content: "\f2b4";
+}
+.fa-handshake-o:before {
+  content: "\f2b5";
+}
+.fa-envelope-open:before {
+  content: "\f2b6";
+}
+.fa-envelope-open-o:before {
+  content: "\f2b7";
+}
+.fa-linode:before {
+  content: "\f2b8";
+}
+.fa-address-book:before {
+  content: "\f2b9";
+}
+.fa-address-book-o:before {
+  content: "\f2ba";
+}
+.fa-vcard:before,
+.fa-address-card:before {
+  content: "\f2bb";
+}
+.fa-vcard-o:before,
+.fa-address-card-o:before {
+  content: "\f2bc";
+}
+.fa-user-circle:before {
+  content: "\f2bd";
+}
+.fa-user-circle-o:before {
+  content: "\f2be";
+}
+.fa-user-o:before {
+  content: "\f2c0";
+}
+.fa-id-badge:before {
+  content: "\f2c1";
+}
+.fa-drivers-license:before,
+.fa-id-card:before {
+  content: "\f2c2";
+}
+.fa-drivers-license-o:before,
+.fa-id-card-o:before {
+  content: "\f2c3";
+}
+.fa-quora:before {
+  content: "\f2c4";
+}
+.fa-free-code-camp:before {
+  content: "\f2c5";
+}
+.fa-telegram:before {
+  content: "\f2c6";
+}
+.fa-thermometer-4:before,
+.fa-thermometer:before,
+.fa-thermometer-full:before {
+  content: "\f2c7";
+}
+.fa-thermometer-3:before,
+.fa-thermometer-three-quarters:before {
+  content: "\f2c8";
+}
+.fa-thermometer-2:before,
+.fa-thermometer-half:before {
+  content: "\f2c9";
+}
+.fa-thermometer-1:before,
+.fa-thermometer-quarter:before {
+  content: "\f2ca";
+}
+.fa-thermometer-0:before,
+.fa-thermometer-empty:before {
+  content: "\f2cb";
+}
+.fa-shower:before {
+  content: "\f2cc";
+}
+.fa-bathtub:before,
+.fa-s15:before,
+.fa-bath:before {
+  content: "\f2cd";
+}
+.fa-podcast:before {
+  content: "\f2ce";
+}
+.fa-window-maximize:before {
+  content: "\f2d0";
+}
+.fa-window-minimize:before {
+  content: "\f2d1";
+}
+.fa-window-restore:before {
+  content: "\f2d2";
+}
+.fa-times-rectangle:before,
+.fa-window-close:before {
+  content: "\f2d3";
+}
+.fa-times-rectangle-o:before,
+.fa-window-close-o:before {
+  content: "\f2d4";
+}
+.fa-bandcamp:before {
+  content: "\f2d5";
+}
+.fa-grav:before {
+  content: "\f2d6";
+}
+.fa-etsy:before {
+  content: "\f2d7";
+}
+.fa-imdb:before {
+  content: "\f2d8";
+}
+.fa-ravelry:before {
+  content: "\f2d9";
+}
+.fa-eercast:before {
+  content: "\f2da";
+}
+.fa-microchip:before {
+  content: "\f2db";
+}
+.fa-snowflake-o:before {
+  content: "\f2dc";
+}
+.fa-superpowers:before {
+  content: "\f2dd";
+}
+.fa-wpexplorer:before {
+  content: "\f2de";
+}
+.fa-meetup:before {
+  content: "\f2e0";
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
 }
 /*!
 *
@@ -8699,6 +9372,10 @@ div.traceback-wrapper {
   max-width: 800px;
   margin: auto;
 }
+div.traceback-wrapper pre.traceback {
+  max-height: 600px;
+  overflow: auto;
+}
 /**
  * Primary styles
  *
@@ -8724,6 +9401,10 @@ body > #header {
   z-index: 100;
 }
 body > #header #header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
   padding-bottom: 5px;
   padding-top: 5px;
   box-sizing: border-box;
@@ -8755,10 +9436,16 @@ body > #header .header-bar {
   padding-top: 1px;
   padding-bottom: 1px;
 }
-@media (max-width: 991px) {
-  #ipython_notebook {
-    margin-left: 10px;
-  }
+[dir="rtl"] #ipython_notebook {
+  margin-right: 10px;
+  margin-left: 0;
+}
+[dir="rtl"] #ipython_notebook.pull-left {
+  float: right !important;
+  float: right;
+}
+.flex-spacer {
+  flex: 1;
 }
 #noscript {
   width: auto;
@@ -8793,8 +9480,14 @@ body > #header .header-bar {
 input.ui-button {
   padding: 0.3em 0.9em;
 }
+span#kernel_logo_widget {
+  margin: 0 10px;
+}
 span#login_widget {
   float: right;
+}
+[dir="rtl"] span#login_widget {
+  float: left;
 }
 span#login_widget > .button,
 #logout {
@@ -8910,6 +9603,9 @@ span#login_widget > .button .badge,
   overflow: auto;
   flex: 1;
 }
+.modal-header {
+  cursor: move;
+}
 @media (min-width: 768px) {
   .modal .modal-dialog {
     width: 700px;
@@ -8930,6 +9626,19 @@ span#login_widget > .button .badge,
   display: inline-block;
   margin-bottom: -4px;
 }
+[dir="rtl"] .center-nav form.pull-left {
+  float: right !important;
+  float: right;
+}
+[dir="rtl"] .center-nav .navbar-text {
+  float: right;
+}
+[dir="rtl"] .navbar-inner {
+  text-align: right;
+}
+[dir="rtl"] div.text-left {
+  text-align: right;
+}
 /*!
 *
 * IPython tree view
@@ -8946,16 +9655,24 @@ span#login_widget > .button .badge,
   margin: 0;
 }
 .alternate_upload input.fileinput {
-  text-align: center;
-  vertical-align: middle;
-  display: inline;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
   opacity: 0;
   z-index: 2;
-  width: 12ex;
-  margin-right: -12ex;
+}
+.alternate_upload .btn-xs > input.fileinput {
+  margin: -1px -5px;
 }
 .alternate_upload .btn-upload {
+  position: relative;
   height: 22px;
+}
+::-webkit-file-upload-button {
+  cursor: pointer;
 }
 /**
  * Primary styles
@@ -8968,6 +9685,12 @@ ul#tabs {
 ul#tabs a {
   padding-top: 6px;
   padding-bottom: 4px;
+}
+[dir="rtl"] ul#tabs.nav-tabs > li {
+  float: right;
+}
+[dir="rtl"] ul#tabs.nav.nav-tabs {
+  padding-right: 0;
 }
 ul.breadcrumb a:focus,
 ul.breadcrumb a:hover {
@@ -8986,6 +9709,14 @@ ul.breadcrumb span {
 }
 .list_toolbar .tree-buttons {
   padding-top: 1px;
+}
+[dir="rtl"] .list_toolbar .tree-buttons .pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .list_toolbar .col-sm-4,
+[dir="rtl"] .list_toolbar .col-sm-8 {
+  float: right;
 }
 .dynamic-buttons {
   padding-top: 3px;
@@ -9041,7 +9772,7 @@ ul.breadcrumb span {
 .list_item > div input {
   margin-right: 7px;
   margin-left: 14px;
-  vertical-align: baseline;
+  vertical-align: text-bottom;
   line-height: 22px;
   position: relative;
   top: -1px;
@@ -9051,6 +9782,9 @@ ul.breadcrumb span {
   margin-left: -1px;
   vertical-align: baseline;
   line-height: 22px;
+}
+[dir="rtl"] .list_item > div input {
+  margin-right: 0;
 }
 .new-file input[type=checkbox] {
   visibility: hidden;
@@ -9066,6 +9800,14 @@ ul.breadcrumb span {
   margin-left: 7px;
   line-height: 22px;
   vertical-align: baseline;
+}
+.item_modified {
+  margin-right: 7px;
+  margin-left: 7px;
+}
+[dir="rtl"] .item_modified.pull-right {
+  float: left !important;
+  float: left;
 }
 .item_buttons {
   line-height: 1em;
@@ -9094,6 +9836,14 @@ ul.breadcrumb span {
   margin-right: 7px;
   float: left;
 }
+[dir="rtl"] .item_buttons.pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .item_buttons .kernel-name {
+  margin-left: 7px;
+  float: right;
+}
 .toolbar_info {
   height: 24px;
   line-height: 24px;
@@ -9119,15 +9869,32 @@ ul.breadcrumb span {
   background-color: transparent;
   font-weight: bold;
 }
+.sort_button {
+  display: inline-block;
+  padding-left: 7px;
+}
+[dir="rtl"] .sort_button.pull-right {
+  float: left !important;
+  float: left;
+}
 #tree-selector {
   padding-right: 0px;
 }
 #button-select-all {
   min-width: 50px;
 }
+[dir="rtl"] #button-select-all.btn {
+  float: right ;
+}
 #select-all {
   margin-left: 7px;
   margin-right: 2px;
+  margin-top: 2px;
+  height: 16px;
+}
+[dir="rtl"] #select-all.pull-left {
+  float: right !important;
+  float: right;
 }
 .menu_icon {
   margin-right: 2px;
@@ -9145,6 +9912,12 @@ ul.breadcrumb span {
   -moz-osx-font-smoothing: grayscale;
   content: "\f114";
 }
+.folder_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.folder_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .folder_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -9161,6 +9934,12 @@ ul.breadcrumb span {
   content: "\f02d";
   position: relative;
   top: -1px;
+}
+.notebook_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.notebook_icon:before.fa-pull-right {
+  margin-left: .3em;
 }
 .notebook_icon:before.pull-left {
   margin-right: .3em;
@@ -9180,6 +9959,12 @@ ul.breadcrumb span {
   top: -1px;
   color: #5cb85c;
 }
+.running_notebook_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.running_notebook_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .running_notebook_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -9197,6 +9982,12 @@ ul.breadcrumb span {
   position: relative;
   top: -2px;
 }
+.file_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.file_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .file_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -9210,6 +10001,12 @@ ul.breadcrumb span {
 ul#new-menu {
   left: auto;
   right: 0;
+}
+#new-menu .dropdown-header {
+  font-size: 10px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0 0 3px;
+  margin: -3px 20px 0;
 }
 .kernel-menu-icon {
   padding-right: 12px;
@@ -9265,6 +10062,12 @@ ul#new-menu {
 .rename-button {
   display: none;
 }
+.move-button {
+  display: none;
+}
+.download-button {
+  display: none;
+}
 .shutdown-button {
   display: none;
 }
@@ -9305,6 +10108,12 @@ ul#new-menu {
   -moz-osx-font-smoothing: grayscale;
   width: 20px;
 }
+.dirty-indicator.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator.fa-pull-right {
+  margin-left: .3em;
+}
 .dirty-indicator.pull-left {
   margin-right: .3em;
 }
@@ -9319,6 +10128,12 @@ ul#new-menu {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 20px;
+}
+.dirty-indicator-dirty.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator-dirty.fa-pull-right {
+  margin-left: .3em;
 }
 .dirty-indicator-dirty.pull-left {
   margin-right: .3em;
@@ -9335,6 +10150,12 @@ ul#new-menu {
   -moz-osx-font-smoothing: grayscale;
   width: 20px;
 }
+.dirty-indicator-clean.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator-clean.fa-pull-right {
+  margin-left: .3em;
+}
 .dirty-indicator-clean.pull-left {
   margin-right: .3em;
 }
@@ -9349,6 +10170,12 @@ ul#new-menu {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f00c";
+}
+.dirty-indicator-clean:before.fa-pull-left {
+  margin-right: .3em;
+}
+.dirty-indicator-clean:before.fa-pull-right {
+  margin-left: .3em;
 }
 .dirty-indicator-clean:before.pull-left {
   margin-right: .3em;
@@ -9394,14 +10221,132 @@ ul#new-menu {
     box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
   }
 }
+.CodeMirror-dialog {
+  background-color: #fff;
+}
 /*!
 *
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI colors. */
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
 .ansibold {
   font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -9480,12 +10425,20 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  border-left-width: 1px;
-  padding-left: 5px;
-  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
 }
 div.cell.jupyter-soft-selected {
-  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -9498,27 +10451,39 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected {
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
   border-color: #ababab;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
 }
 @media print {
-  div.cell.selected {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected.jupyter-soft-selected {
-  border-left-width: 0;
-  padding-left: 6px;
-  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
-}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-  border-left-width: 0px;
-  padding-left: 6px;
-  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -9551,6 +10516,7 @@ div.cell.selected.jupyter-soft-selected {
   }
 }
 div.inner_cell {
+  min-width: 0;
   /* Old browsers */
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -9571,11 +10537,6 @@ div.inner_cell {
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-}
-@-moz-document url-prefix() {
-  div.inner_cell {
-    overflow-x: hidden;
-  }
 }
 /* input_area and input_prompt must match in top border and margin for alignment */
 div.input_area {
@@ -9718,7 +10679,9 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  padding: 0.4em;
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -9728,11 +10691,24 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
-  /* .CodeMirror-lines */
-  padding: 0;
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
   border: 0;
   border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
 }
 /*
 
@@ -9986,6 +10962,9 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
+div.output_area .mglyph > img {
+  max-width: none;
+}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -10024,7 +11003,7 @@ div.output_area svg.unconfined {
 }
 div.output_area pre {
   margin: 0;
-  padding: 0;
+  padding: 1px 0 1px 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -10184,39 +11163,35 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
 .rendered_html ul {
   list-style: disc;
-  margin: 0em 2em;
-  padding-left: 0px;
 }
 .rendered_html ul ul {
   list-style: square;
-  margin: 0em 2em;
+  margin-top: 0;
 }
 .rendered_html ul ul ul {
   list-style: circle;
-  margin: 0em 2em;
 }
 .rendered_html ol {
   list-style: decimal;
-  margin: 0em 2em;
-  padding-left: 0px;
 }
 .rendered_html ol ol {
   list-style: upper-alpha;
-  margin: 0em 2em;
+  margin-top: 0;
 }
 .rendered_html ol ol ol {
   list-style: lower-alpha;
-  margin: 0em 2em;
 }
 .rendered_html ol ol ol ol {
   list-style: lower-roman;
-  margin: 0em 2em;
 }
 .rendered_html ol ol ol ol ol {
   list-style: decimal;
-  margin: 0em 2em;
 }
 .rendered_html * + ul {
   margin-top: 1em;
@@ -10230,14 +11205,23 @@ div.output_unrecognized a:hover {
 }
 .rendered_html pre {
   margin: 1em 2em;
+  padding: 0px;
+  background-color: #fff;
+}
+.rendered_html code {
+  background-color: #eff0f1;
+}
+.rendered_html p code {
+  padding: 1px 5px;
+}
+.rendered_html pre code {
+  background-color: #fff;
 }
 .rendered_html pre,
 .rendered_html code {
   border: 0;
-  background-color: #fff;
   color: #000;
   font-size: 100%;
-  padding: 0px;
 }
 .rendered_html blockquote {
   margin: 1em 2em;
@@ -10245,24 +11229,36 @@ div.output_unrecognized a:hover {
 .rendered_html table {
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid black;
+  border: none;
   border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
 }
 .rendered_html tr,
 .rendered_html th,
 .rendered_html td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin: 1em 2em;
-}
-.rendered_html td,
-.rendered_html th {
-  text-align: left;
+  text-align: right;
   vertical-align: middle;
-  padding: 4px;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
 }
 .rendered_html th {
   font-weight: bold;
+}
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
 }
 .rendered_html * + table {
   margin-top: 1em;
@@ -10289,6 +11285,15 @@ div.output_unrecognized a:hover {
 .rendered_html img.unconfined,
 .rendered_html svg.unconfined {
   max-width: none;
+}
+.rendered_html .alert {
+  margin-bottom: initial;
+}
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] .rendered_html p {
+  text-align: right;
 }
 div.text_cell {
   /* Old browsers */
@@ -10343,8 +11348,17 @@ h6:hover .anchor-link {
   overflow-x: auto;
   overflow-y: hidden;
 }
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered .rendered_html td {
+  max-width: none;
+}
 .text_cell.unrendered .text_cell_render {
   display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -10481,6 +11495,28 @@ kbd {
   padding-top: 1px;
   padding-bottom: 1px;
 }
+.jupyter-keybindings {
+  padding: 1px;
+  line-height: 24px;
+  border-bottom: 1px solid gray;
+}
+.jupyter-keybindings input {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.jupyter-keybindings i {
+  padding: 6px;
+}
+.well code {
+  background-color: #ffffff;
+  border-color: #ababab;
+  border-width: 1px;
+  border-style: solid;
+  padding: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
 /* CSS for the cell toolbar */
 .celltoolbar {
   border: thin solid #CFCFCF;
@@ -10613,6 +11649,152 @@ select[multiple].celltoolbar select {
   margin-left: 5px;
   margin-right: 5px;
 }
+.tags_button_container {
+  width: 100%;
+  display: flex;
+}
+.tag-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+}
+.tag-container > * {
+  margin: 0 4px;
+}
+.remove-tag-btn {
+  margin-left: 4px;
+}
+.tags-input {
+  display: flex;
+}
+.cell-tag:last-child:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  /* Fade to background color of cell toolbar */
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), #EEE);
+}
+.tags-input > * {
+  margin-left: 4px;
+}
+.cell-tag,
+.tags-input input,
+.tags-input button {
+  display: block;
+  width: 100%;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 1px;
+  box-shadow: none;
+  width: inherit;
+  font-size: inherit;
+  height: 22px;
+  line-height: 22px;
+  padding: 0px 4px;
+  display: inline-block;
+}
+.cell-tag:focus,
+.tags-input input:focus,
+.tags-input button:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.cell-tag::-moz-placeholder,
+.tags-input input::-moz-placeholder,
+.tags-input button::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.cell-tag:-ms-input-placeholder,
+.tags-input input:-ms-input-placeholder,
+.tags-input button:-ms-input-placeholder {
+  color: #999;
+}
+.cell-tag::-webkit-input-placeholder,
+.tags-input input::-webkit-input-placeholder,
+.tags-input button::-webkit-input-placeholder {
+  color: #999;
+}
+.cell-tag::-ms-expand,
+.tags-input input::-ms-expand,
+.tags-input button::-ms-expand {
+  border: 0;
+  background-color: transparent;
+}
+.cell-tag[disabled],
+.tags-input input[disabled],
+.tags-input button[disabled],
+.cell-tag[readonly],
+.tags-input input[readonly],
+.tags-input button[readonly],
+fieldset[disabled] .cell-tag,
+fieldset[disabled] .tags-input input,
+fieldset[disabled] .tags-input button {
+  background-color: #eeeeee;
+  opacity: 1;
+}
+.cell-tag[disabled],
+.tags-input input[disabled],
+.tags-input button[disabled],
+fieldset[disabled] .cell-tag,
+fieldset[disabled] .tags-input input,
+fieldset[disabled] .tags-input button {
+  cursor: not-allowed;
+}
+textarea.cell-tag,
+textarea.tags-input input,
+textarea.tags-input button {
+  height: auto;
+}
+select.cell-tag,
+select.tags-input input,
+select.tags-input button {
+  height: 30px;
+  line-height: 30px;
+}
+textarea.cell-tag,
+textarea.tags-input input,
+textarea.tags-input button,
+select[multiple].cell-tag,
+select[multiple].tags-input input,
+select[multiple].tags-input button {
+  height: auto;
+}
+.cell-tag,
+.tags-input button {
+  padding: 0px 4px;
+}
+.cell-tag {
+  background-color: #fff;
+  white-space: nowrap;
+}
+.tags-input input[type=text]:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
 .completions {
   position: absolute;
   z-index: 110;
@@ -10638,16 +11820,28 @@ select[multiple].celltoolbar select {
 .completions select option.context {
   color: #286090;
 }
-#kernel_logo_widget {
-  float: right !important;
-  float: right;
-}
 #kernel_logo_widget .current_kernel_logo {
   display: none;
   margin-top: -1px;
   margin-bottom: -1px;
   width: 32px;
   height: 32px;
+}
+[dir="rtl"] #kernel_logo_widget {
+  float: left !important;
+  float: left;
+}
+.modal .modal-body .move-path {
+  display: flex;
+  flex-direction: row;
+  justify-content: space;
+  align-items: center;
+}
+.modal .modal-body .move-path .server-root {
+  padding-right: 20px;
+}
+.modal .modal-body .move-path .path-input {
+  flex: 1;
 }
 #menubar {
   box-sizing: border-box;
@@ -10669,11 +11863,41 @@ select[multiple].celltoolbar select {
 #menubar .navbar-collapse {
   clear: left;
 }
+[dir="rtl"] #menubar .navbar-toggle {
+  float: right;
+}
+[dir="rtl"] #menubar .navbar-collapse {
+  clear: right;
+}
+[dir="rtl"] #menubar .navbar-nav {
+  float: right;
+}
+[dir="rtl"] #menubar .nav {
+  padding-right: 0px;
+}
+[dir="rtl"] #menubar .navbar-nav > li {
+  float: right;
+}
+[dir="rtl"] #menubar .navbar-right {
+  float: left !important;
+}
+[dir="rtl"] ul.dropdown-menu {
+  text-align: right;
+  left: auto;
+}
+[dir="rtl"] ul#new-menu.dropdown-menu {
+  right: auto;
+  left: 0;
+}
 .nav-wrapper {
   border-bottom: 1px solid #e7e7e7;
 }
 i.menu-icon {
   padding-top: 4px;
+}
+[dir="rtl"] i.menu-icon.pull-right {
+  float: left !important;
+  float: left;
 }
 ul#help_menu li a {
   overflow: hidden;
@@ -10681,6 +11905,17 @@ ul#help_menu li a {
 }
 ul#help_menu li a i {
   margin-right: -1.2em;
+}
+[dir="rtl"] ul#help_menu li a {
+  padding-left: 2.2em;
+}
+[dir="rtl"] ul#help_menu li a i {
+  margin-right: 0;
+  margin-left: -1.2em;
+}
+[dir="rtl"] ul#help_menu li a i.pull-right {
+  float: left !important;
+  float: left;
 }
 .dropdown-submenu {
   position: relative;
@@ -10690,6 +11925,10 @@ ul#help_menu li a i {
   left: 100%;
   margin-top: -6px;
   margin-left: -1px;
+}
+[dir="rtl"] .dropdown-submenu > .dropdown-menu {
+  right: 100%;
+  margin-right: -1px;
 }
 .dropdown-submenu:hover > .dropdown-menu {
   display: block;
@@ -10708,11 +11947,23 @@ ul#help_menu li a i {
   margin-top: 2px;
   margin-right: -10px;
 }
+.dropdown-submenu > a:after.fa-pull-left {
+  margin-right: .3em;
+}
+.dropdown-submenu > a:after.fa-pull-right {
+  margin-left: .3em;
+}
 .dropdown-submenu > a:after.pull-left {
   margin-right: .3em;
 }
 .dropdown-submenu > a:after.pull-right {
   margin-left: .3em;
+}
+[dir="rtl"] .dropdown-submenu > a:after {
+  float: left;
+  content: "\f0d9";
+  margin-right: 0;
+  margin-left: -10px;
 }
 .dropdown-submenu:hover > a:after {
   color: #262626;
@@ -10729,6 +11980,10 @@ ul#help_menu li a i {
   float: right;
   z-index: 10;
 }
+[dir="rtl"] #notification_area {
+  float: left !important;
+  float: left;
+}
 .indicator_area {
   float: right !important;
   float: right;
@@ -10739,6 +11994,10 @@ ul#help_menu li a i {
   z-index: 10;
   text-align: center;
   width: auto;
+}
+[dir="rtl"] .indicator_area {
+  float: left !important;
+  float: left;
 }
 #kernel_indicator {
   float: right !important;
@@ -10756,6 +12015,12 @@ ul#help_menu li a i {
   padding-left: 5px;
   padding-right: 5px;
 }
+[dir="rtl"] #kernel_indicator {
+  float: left !important;
+  float: left;
+  border-left: 0;
+  border-right: 1px solid;
+}
 #modal_indicator {
   float: right !important;
   float: right;
@@ -10766,6 +12031,10 @@ ul#help_menu li a i {
   z-index: 10;
   text-align: center;
   width: auto;
+}
+[dir="rtl"] #modal_indicator {
+  float: left !important;
+  float: left;
 }
 #readonly-indicator {
   float: right !important;
@@ -10796,6 +12065,12 @@ ul#help_menu li a i {
   -moz-osx-font-smoothing: grayscale;
   content: "\f040";
 }
+.edit_mode .modal_indicator:before.fa-pull-left {
+  margin-right: .3em;
+}
+.edit_mode .modal_indicator:before.fa-pull-right {
+  margin-left: .3em;
+}
 .edit_mode .modal_indicator:before.pull-left {
   margin-right: .3em;
 }
@@ -10810,6 +12085,12 @@ ul#help_menu li a i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: ' ';
+}
+.command_mode .modal_indicator:before.fa-pull-left {
+  margin-right: .3em;
+}
+.command_mode .modal_indicator:before.fa-pull-right {
+  margin-left: .3em;
 }
 .command_mode .modal_indicator:before.pull-left {
   margin-right: .3em;
@@ -10826,6 +12107,12 @@ ul#help_menu li a i {
   -moz-osx-font-smoothing: grayscale;
   content: "\f10c";
 }
+.kernel_idle_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_idle_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .kernel_idle_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -10840,6 +12127,12 @@ ul#help_menu li a i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f111";
+}
+.kernel_busy_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_busy_icon:before.fa-pull-right {
+  margin-left: .3em;
 }
 .kernel_busy_icon:before.pull-left {
   margin-right: .3em;
@@ -10856,6 +12149,12 @@ ul#help_menu li a i {
   -moz-osx-font-smoothing: grayscale;
   content: "\f1e2";
 }
+.kernel_dead_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_dead_icon:before.fa-pull-right {
+  margin-left: .3em;
+}
 .kernel_dead_icon:before.pull-left {
   margin-right: .3em;
 }
@@ -10870,6 +12169,12 @@ ul#help_menu li a i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   content: "\f127";
+}
+.kernel_disconnected_icon:before.fa-pull-left {
+  margin-right: .3em;
+}
+.kernel_disconnected_icon:before.fa-pull-right {
+  margin-left: .3em;
 }
 .kernel_disconnected_icon:before.pull-left {
   margin-right: .3em;
@@ -11246,7 +12551,7 @@ div#pager .ui-resizable-handle::after {
 }
 .shortcut_key {
   display: inline-block;
-  width: 20ex;
+  width: 21ex;
   text-align: right;
   font-family: monospace;
 }
@@ -11260,27 +12565,46 @@ div#pager .ui-resizable-handle::after {
   flex: 1;
 }
 span.save_widget {
-  margin-top: 6px;
+  height: 30px;
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: 50%;
+  flex: 1;
 }
 span.save_widget span.filename {
-  height: 1em;
+  height: 100%;
   line-height: 1em;
-  padding: 3px;
   margin-left: 16px;
   border: none;
   font-size: 146.5%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   border-radius: 2px;
 }
 span.save_widget span.filename:hover {
   background-color: #e6e6e6;
 }
+[dir="rtl"] span.save_widget.pull-left {
+  float: right !important;
+  float: right;
+}
+[dir="rtl"] span.save_widget span.filename {
+  margin-left: 0;
+  margin-right: 16px;
+}
 span.checkpoint_status,
 span.autosave_status {
   font-size: small;
+  white-space: nowrap;
+  padding: 0 5px;
 }
 @media (max-width: 767px) {
   span.save_widget {
     font-size: small;
+    padding: 0 0 0 5px;
   }
   span.checkpoint_status,
   span.autosave_status {
@@ -11324,6 +12648,9 @@ span.autosave_status {
   margin-top: 0px;
   margin-left: 5px;
 }
+.toolbar-btn-label {
+  margin-left: 6px;
+}
 #maintoolbar {
   margin-bottom: -3px;
   margin-top: -8px;
@@ -11343,6 +12670,10 @@ span.autosave_status {
 }
 .select-xs {
   height: 24px;
+}
+[dir="rtl"] .btn-group > .btn,
+.btn-group-vertical > .btn {
+  float: right;
 }
 .pulse,
 .dropdown-menu > li > a.pulse,
@@ -11493,6 +12824,10 @@ ul.typeahead-list i {
   margin-left: -10px;
   width: 18px;
 }
+[dir="rtl"] ul.typeahead-list i {
+  margin-left: 0;
+  margin-right: -10px;
+}
 ul.typeahead-list {
   max-height: 80vh;
   overflow: auto;
@@ -11501,6 +12836,13 @@ ul.typeahead-list > li > a {
   /** Firefox bug **/
   /* see https://github.com/jupyter/notebook/issues/559 */
   white-space: normal;
+}
+ul.typeahead-list  > li > a.pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .typeahead-list {
+  text-align: right;
 }
 .cmd-palette .modal-body {
   padding: 7px;
@@ -11512,10 +12854,19 @@ ul.typeahead-list > li > a {
   outline: none;
 }
 .no-shortcut {
-  display: none;
+  min-width: 20px;
+  color: transparent;
+}
+[dir="rtl"] .no-shortcut.pull-right {
+  float: left !important;
+  float: left;
+}
+[dir="rtl"] .command-shortcut.pull-right {
+  float: left !important;
+  float: left;
 }
 .command-shortcut:before {
-  content: "(command)";
+  content: "(command mode)";
   padding-right: 3px;
   color: #777777;
 }
@@ -11524,6 +12875,10 @@ ul.typeahead-list > li > a {
   padding-right: 3px;
   color: #777777;
 }
+[dir="rtl"] .edit-shortcut.pull-right {
+  float: left !important;
+  float: left;
+}
 #find-and-replace #replace-preview .match,
 #find-and-replace #replace-preview .insert {
   background-color: #BBDEFB;
@@ -11531,6 +12886,12 @@ ul.typeahead-list > li > a {
   border-style: solid;
   border-width: 1px;
   border-radius: 0px;
+}
+[dir="ltr"] #find-and-replace .input-group-btn + .form-control {
+  border-left: none;
+}
+[dir="rtl"] #find-and-replace .input-group-btn + .form-control {
+  border-right: none;
 }
 #find-and-replace #replace-preview .replace .match {
   background-color: #FFCDD2;
@@ -11558,6 +12919,7 @@ ul.typeahead-list > li > a {
   box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
 }
 .terminal-app .terminal {
+  width: 100%;
   float: left;
   font-family: monospace;
   color: white;
@@ -11571,6 +12933,9 @@ ul.typeahead-list > li > a {
 .terminal-app .terminal dummy-screen {
   line-height: 1em;
   font-size: 14px;
+}
+.terminal-app .terminal .xterm-rows {
+  padding: 10px;
 }
 .terminal-app .terminal-cursor {
   color: black;
@@ -11631,8 +12996,10 @@ ul.typeahead-list > li > a {
 .highlight .mh { color: #666666 } /* Literal.Number.Hex */
 .highlight .mi { color: #666666 } /* Literal.Number.Integer */
 .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
 .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
 .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
 .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
@@ -11643,9 +13010,11 @@ ul.typeahead-list > li > a {
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
 .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
     </style>
 <style type="text/css">
@@ -11699,9 +13068,7 @@ body {
 div#notebook {
   overflow: visible;
   border-top: none;
-}
-
-@media print {
+}@media print {
   div.cell {
     display: block;
     page-break-inside: avoid;
@@ -11722,7 +13089,7 @@ div#notebook {
 
 <!-- Loading mathjax macro -->
 <!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
     <!-- MathJax configuration -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -11746,24 +13113,21 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Environment">Environment<a class="anchor-link" href="#Environment">&#182;</a></h1>
+<h1 id="Basic-RNN">Basic RNN<a class="anchor-link" href="#Basic-RNN">&#182;</a></h1><p><img src="./tensorflow-seq2seq-tutorials/pictures/1-seq2seq.png" alt=""></p>
+
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>Raspberry Pi model 3B<ul>
-<li>Raspbian GNU/Linux 9.1 (stretch)</li>
-<li>gcc version 6.3.0</li>
+<h1 id="Implementation">Implementation<a class="anchor-link" href="#Implementation">&#182;</a></h1><ul>
+<li>Length issues:<ul>
+<li>Static Unrolling: multiple graphs with different time lengths and separate the dataset into different buckets.</li>
+<li>Dynamic Unrolling: use control flow opts to process sequence step by step. relative to static one, dynamic type allows different lengths, require less space and therefore more efficient (more fast.)</li>
 </ul>
 </li>
 </ul>
@@ -11771,75 +13135,1227 @@ div#notebook {
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Cross-Compiling">Cross Compiling<a class="anchor-link" href="#Cross-Compiling">&#182;</a></h1>
+<h1 id="Vocabulary">Vocabulary<a class="anchor-link" href="#Vocabulary">&#182;</a></h1><p>First, we will reconstruct the sequence into another integer-based sequence.</p>
+<p>Input data consists of sequences of integers.</p>
+
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="c1"># install toolchain</span>
-sudo apt-get update
-sudo apt-get install crossbuild-essential-armhf
-
-<span class="c1"># clone the repository</span>
-<span class="nb">cd</span> ~
-git clone https://github.com/tensorflow/tensorflow.git
-<span class="nb">cd</span> tensorflow
-
-<span class="c1"># only need to execute the command once</span>
-<span class="c1"># docker image: tensorflow/tensorflow:nightly-devel</span>
-sudo bash ./tensorflow/contrib/lite/tools/make/download_dependencies.sh
-
-<span class="c1"># compile</span>
-./tensorflow/contrib/lite/tools/make/build_rpi_lib.sh
-
-<span class="c1"># static library</span>
-tensorflow/contrib/lite/tools/make/gen/lib/rpi_armv7/libtensorflow-lite.a
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
 </pre></div>
 
+    </div>
 </div>
 </div>
+
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Naive-Compiling">Naive Compiling<a class="anchor-link" href="#Naive-Compiling">&#182;</a></h1>
+<p>The sequence above is convenient to the human, but rnn prefers another type as below.</p>
+
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span><span class="c1"># install toolchain</span>
-sudo apt-get install build-essential
-<span class="nb">cd</span> ~
-git clone https://github.com/tensorflow/tensorflow.git
-<span class="nb">cd</span> tensorflow
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;tensorflow-seq2seq-tutorials&quot;</span><span class="p">)</span>
 
-<span class="c1"># only need to execute the command once</span>
-sudo bash ./tensorflow/contrib/lite/tools/make/download_dependencies.sh
-
-<span class="c1"># compile</span>
-./tensorflow/contrib/lite/tools/make/build_rpi_lib.sh
-
-<span class="c1"># static library</span>
-tensorflow/contrib/lite/tools/make/gen/lib/rpi_armv7/libtensorflow-lite.a
+<span class="kn">import</span> <span class="nn">helpers</span>
 </pre></div>
 
+    </div>
 </div>
 </div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xt</span><span class="p">,</span> <span class="n">xlen</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[10, 20, 21], [6, 4], [10, 20], [3]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[10,  6, 10,  3],
+       [20,  4, 20,  0],
+       [21,  0,  0,  0]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xt</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[6]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(3, 4)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Shape of the matrix stands for <code>[max_time, batch_size]</code>. Sequences shorter than the longest one are padded with '0' toward to the end. Such layer is called <code>time-major</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xlen</span>   <span class="c1"># represents for the time series</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[3, 2, 2, 1]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Building-the-Model">Building the Model<a class="anchor-link" href="#Building-the-Model">&#182;</a></h1><h2 id="Encoder">Encoder<a class="anchor-link" href="#Encoder">&#182;</a></h2><ul>
+<li>Starts with empty state.</li>
+<li>Run through the input sequence.</li>
+<li>Not interested in encoder's output, but its <code>final_state</code>.</li>
+</ul>
+<h2 id="Decoder">Decoder<a class="anchor-link" href="#Decoder">&#182;</a></h2><ul>
+<li>Use encoder's <code>final_state</code> as its <code>initial_state</code>.</li>
+<li>The <code>input</code> are a batch-sized matrix with <code>&lt;EOS&gt;</code> token at the first time step.</li>
+<li>The <code>output</code> are mapped onto the output space in <code>[hidden_units, output_vocab_size]</code> projection layer. <code>hidden_units</code> is like the intelligence. <code>output_vocab_size</code> represents the target space growing with the size of the dictionary.</li>
+</ul>
+<p>Such type of encoder-decoder is forced to learn fixed-length representation (specificially to the size of  <code>hidden_units</code>) of the variable-length input sequence and restore output sequence only from this representation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">helpers</span>
+
+<span class="n">tf</span><span class="o">.</span><span class="n">reset_default_graph</span><span class="p">()</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">InteractiveSession</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tensorflow version: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">__version__</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tensorflow version: 1.11.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Vocabulary-size">Vocabulary size<a class="anchor-link" href="#Vocabulary-size">&#182;</a></h2><p>Dynamic RNN models can be adapted to (1) different batch size, (2) sequence length without retraining. For example, load serializing paramters and graph definitions via <code>tf.train.Saver</code>. But, changing vocabulary size (here, the size is the space for the whole target words.) requires a retraining.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PAD</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">EOS</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">input_embeddning_size</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">encoder_hidden_units</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">decoder_hidden_units</span> <span class="o">=</span> <span class="n">encoder_hidden_units</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Inputs">Inputs<a class="anchor-link" href="#Inputs">&#182;</a></h2><ul>
+<li><code>encoder_inputs</code>: a <strong>int32</strong> tensor shaped [encoder_max_time, batch_size]</li>
+<li><code>decoder_targets</code>: a <strong>int32</strong> tensor shaped [decoder_max_time, batch_size]</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">encoder_inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;encoder_inputs&quot;</span><span class="p">)</span>
+<span class="n">decoder_targets</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;decoder_targets&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>(Add an additional placeholder tensor) <code>decoder_inputs</code>: a <strong>int32</strong> tensor shaped [decoder_max_time, batch_size]</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">decoder_inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;decoder_inputs&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We don't need to feed <code>decoder_inputs</code> manually. They are a function of either <code>decoder_targets</code> or previous decoder outputs during rollout.</p>
+<p>During training, <code>decoder_inputs</code> will consist of <code>&lt;EOS&gt;</code> token concatenated with <code>decoder_targets</code> along time axis.</p>
+<p>Notice that all shapes are specificied with <code>None</code>s (means <code>dynamically</code>). We can use batches of any size with any numbers of timesteps. But there are serveral constraints:</p>
+<ul>
+<li>Feed values for the whole tensor should have the same <code>batch_size</code>.</li>
+<li>Decoder <code>inputs</code> (decoder_inputs) and <code>outputs</code> (decoder_targets) should have the same <code>decoder_max_time</code>.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Embeddings">Embeddings<a class="anchor-link" href="#Embeddings">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Encoder and decoder RNNs expect dense vector representation of words, e.g. <code>[max_time, batch_size, input_embedding_size]</code>. We can convert one to another by using <code>embeddings</code>.</p>
+<p>We rely on end-to-end training to learn vector representation for words jointly with encoder and decoder.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s2">&quot;embeddings&quot;</span><span class="p">,</span> \
+        <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> \
+        <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">input_embeddning_size</span><span class="p">],</span> \
+        <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">random_uniform_initializer</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We use <code>tf.nn.embedding_lookup</code> to index embedding matrix; if we given word 4, it means 4th column of the embedding matrix. Wy only need to compute gradients at 4th column.</p>
+<p>In the case, the encoder and decoder share the same embedding. (In real NLP applications, embedding matrix can be very large.)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">encoder_input_embedded</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">encoder_inputs</span><span class="p">)</span>
+<span class="n">decoder_input_embedded</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">decoder_inputs</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Encoder">Encoder<a class="anchor-link" href="#Encoder">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">encoder_cell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">rnn</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="n">encoder_hidden_units</span><span class="p">)</span>
+
+<span class="c1"># _ is the encoder output, but here we don&#39;t need</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">encoder_final_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dynamic_rnn</span><span class="p">(</span><span class="n">encoder_cell</span><span class="p">,</span> <span class="n">encoder_input_embedded</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>encoder_final_state</code> is the state of LSTM's hidden cells at the last moment of the Encoder rollout. <code>encoder_final_state</code> is also called <code>thought vector</code>. We use it as the input of the decoder. It is the only input to the decoder in the model without attention mechanism.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">encoder_final_state</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>LSTMStateTuple(c=&lt;tf.Tensor &#39;rnn/while/Exit_3:0&#39; shape=(?, 20) dtype=float32&gt;, h=&lt;tf.Tensor &#39;rnn/while/Exit_4:0&#39; shape=(?, 20) dtype=float32&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Tensorflow LSTM implementation stores state as the a tuple of tensors.</p>
+<ul>
+<li><code>encoder_final_state.h</code>: activation of hidden layer of LSTM cell</li>
+<li><code>encoder_final_state.c</code>: final output</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Decoder">Decoder<a class="anchor-link" href="#Decoder">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">decoder_cell</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">rnn</span><span class="o">.</span><span class="n">LSTMCell</span><span class="p">(</span><span class="n">decoder_hidden_units</span><span class="p">)</span>
+
+<span class="n">decoder_outputs</span><span class="p">,</span> <span class="n">decoder_final_state</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dynamic_rnn</span><span class="p">(</span><span class="n">decoder_cell</span><span class="p">,</span> <span class="n">decoder_input_embedded</span><span class="p">,</span> \
+                                                         <span class="n">initial_state</span><span class="o">=</span><span class="n">encoder_final_state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> \
+                                                        <span class="n">time_major</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="s2">&quot;plain_decoder&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>initial_state=encoder_final_state</code> requires:</p>
+<ul>
+<li>the same cell type (here is LSTMCell)</li>
+<li>the same amount of <code>hidden_units</code></li>
+<li>the same amount of layers (single layer)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">decoder_outputs</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[18]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;tf.Tensor &#39;plain_decoder/TensorArrayStack/TensorArrayGatherV3:0&#39; shape=(?, ?, 20) dtype=float32&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>decoder_outpute</code> is a <code>hidden_units</code> sized vector at every timestep. For training or prediction we need logits of size <code>vocab_size</code>. Here we have to put linear layer (fc layer without activation function) on top of LSTM output to get non-normalized logits. This layer is called projection layer by convention.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">decoder_logits</span>  <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">decoder_outputs</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">)</span>
+<span class="n">decoder_prediction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">decoder_logits</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Optimizer">Optimizer<a class="anchor-link" href="#Optimizer">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">decoder_logits</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;tf.Tensor &#39;fully_connected/BiasAdd:0&#39; shape=(?, ?, 10) dtype=float32&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>RNN outputs tensor of shape <code>[max_time, batch_size, hidden_units]</code> which projection layer maps onto <code>[max_time, batch_size, vocab_size]</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stepwise_cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits</span><span class="p">(</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">decoder_targets</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">logits</span><span class="o">=</span><span class="n">decoder_logits</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">stepwise_cross_entropy</span><span class="p">)</span>
+<span class="n">train_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">()</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>WARNING:tensorflow:From &lt;ipython-input-21-05f6ec0fbbf9&gt;:3: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Test-forward-pass">Test forward pass<a class="anchor-link" href="#Test-forward-pass">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">batch_</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">batch_</span><span class="p">,</span> <span class="n">batch_length</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch_encoded:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">batch_</span><span class="p">))</span>
+
+<span class="n">din_</span><span class="p">,</span> <span class="n">dlen</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="n">max_sequence_length</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;decoder inputs:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">din_</span><span class="p">))</span>
+
+<span class="n">pred_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">decoder_prediction</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">encoder_inputs</span><span class="p">:</span> <span class="n">batch_</span><span class="p">,</span> <span class="n">decoder_inputs</span><span class="p">:</span> <span class="n">din_</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;decoder prediction:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pred_</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>batch_encoded:
+[[6 3 7]
+ [0 7 4]
+ [0 0 1]]
+decoder inputs:
+[[1 1 1]
+ [0 0 0]
+ [0 0 0]
+ [0 0 0]]
+decoder prediction:
+[[9 9 0]
+ [9 9 0]
+ [9 9 0]
+ [3 3 3]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Training-on-the-toy-task">Training on the toy task<a class="anchor-link" href="#Training-on-the-toy-task">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here we teach our model to memorize and reproduce input sequence. Sequences will be random, with varying length. The model will simply encode sequence in a thought vector, and then decode from it.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">batches</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">random_sequences</span><span class="p">(</span><span class="n">length_from</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">length_to</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">vocab_lower</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">vocab_upper</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;head of the batch: &#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">next</span><span class="p">(</span><span class="n">batches</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>head of the batch: 
+[5, 3, 5, 9, 3, 7, 6, 3]
+[4, 5, 9, 4, 2]
+[8, 9, 7, 8, 7, 3, 6]
+[7, 8, 6, 3, 2, 9, 7, 9]
+[7, 6, 7, 7, 4]
+[4, 9, 2, 6]
+[3, 8, 3, 9]
+[4, 9, 4]
+[3, 3, 5, 2, 5, 8, 4]
+[5, 4, 6, 9]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">next_feed</span><span class="p">():</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
+    <span class="n">encoder_inputs_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="n">decoder_targets_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">batch</span><span class="p">([(</span><span class="n">sequence</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">EOS</span><span class="p">]</span> <span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">])</span>
+    <span class="n">decoder_inputs_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">helpers</span><span class="o">.</span><span class="n">batch</span><span class="p">([[</span><span class="n">EOS</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">sequence</span><span class="p">)</span> <span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="n">encoder_inputs</span><span class="p">:</span> <span class="n">encoder_inputs_</span><span class="p">,</span> <span class="n">decoder_inputs</span><span class="p">:</span> <span class="n">decoder_inputs_</span><span class="p">,</span> <span class="n">decoder_targets</span><span class="p">:</span> <span class="n">decoder_targets_</span> <span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Given encoder_inputs <code>[5,6,7]</code>, decoder_targets would be <code>[5,6,7,1]</code>, and the decoder_input would be <code>[1,5,6,7]</code>.</p>
+<p>decoder_inputs are lagged by 1 step, passing previous token as input at current step.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss_track</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">max_batches</span> <span class="o">=</span> <span class="mi">3001</span>
+<span class="n">batches_in_epoch</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_batches</span><span class="p">):</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">next_feed</span><span class="p">()</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">loss</span><span class="p">],</span> <span class="n">fd</span><span class="p">)</span>
+        <span class="n">loss_track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">batch</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">batch</span> <span class="o">%</span> <span class="n">batches_in_epoch</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;batch </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">batch</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  minibatch loss: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">fd</span><span class="p">)))</span>
+            <span class="n">predict_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">decoder_prediction</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="n">encoder_inputs</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">predict_</span><span class="o">.</span><span class="n">T</span><span class="p">)):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;  sample </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    input     &gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inp</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    predicted &gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="nb">print</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;training interrupted&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>batch 0
+  minibatch loss: 2.2997896671295166
+  sample 1:
+    input     &gt; [9 5 6 4 8 5 5 0]
+    predicted &gt; [9 1 9 9 1 1 5 3 3]
+  sample 2:
+    input     &gt; [3 3 2 0 0 0 0 0]
+    predicted &gt; [9 9 9 9 9 9 3 3 3]
+  sample 3:
+    input     &gt; [2 3 4 0 0 0 0 0]
+    predicted &gt; [9 9 9 7 9 9 3 3 3]
+
+batch 1000
+  minibatch loss: 0.29770025610923767
+  sample 1:
+    input     &gt; [4 8 5 3 7 8 0 0]
+    predicted &gt; [4 8 5 7 7 8 1 0 0]
+  sample 2:
+    input     &gt; [2 7 9 2 4 0 0 0]
+    predicted &gt; [2 9 9 2 4 1 0 0 0]
+  sample 3:
+    input     &gt; [2 5 9 4 4 3 0 0]
+    predicted &gt; [2 5 4 4 4 3 1 0 0]
+
+batch 2000
+  minibatch loss: 0.16550947725772858
+  sample 1:
+    input     &gt; [9 6 4 4 7 4 6 0]
+    predicted &gt; [9 6 4 4 7 6 6 1 0]
+  sample 2:
+    input     &gt; [4 2 8 2 3 3 6 0]
+    predicted &gt; [2 2 2 2 3 3 6 1 0]
+  sample 3:
+    input     &gt; [9 7 9 4 9 3 0 0]
+    predicted &gt; [9 7 9 4 9 3 1 0 0]
+
+batch 3000
+  minibatch loss: 0.08369956910610199
+  sample 1:
+    input     &gt; [8 2 7 0 0 0 0 0]
+    predicted &gt; [8 2 7 1 0 0 0 0 0]
+  sample 2:
+    input     &gt; [6 4 5 3 0 0 0 0]
+    predicted &gt; [6 4 5 3 1 0 0 0 0]
+  sample 3:
+    input     &gt; [4 9 3 3 0 0 0 0]
+    predicted &gt; [4 9 3 3 1 0 0 0 0]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_track</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;loss: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">loss_track</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>loss: 0.0794
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -11849,7 +14365,7 @@ tensorflow/contrib/lite/tools/make/gen/lib/rpi_armv7/libtensorflow-lite.a
 <div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
-</div>
+    </div>
 </div>
 </div>
 
@@ -11857,4 +14373,8 @@ tensorflow/contrib/lite/tools/make/gen/lib/rpi_armv7/libtensorflow-lite.a
     </div>
   </div>
 </body>
+
+ 
+
+
 </html>
