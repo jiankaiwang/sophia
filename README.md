@@ -125,7 +125,9 @@ Please enjoy it.
             -   https://github.com/xhujoy/CycleGAN-tensorflow
         * SSGAN (Semi-supervised Learning GAN)
             -   https://github.com/gitlimlab/SSGAN-Tensorflow
-    *   Reinforcement Learning
+    *   [Reinforcement Learning](deep_learning/reinforcement_learning)
+        *   Basis Concept : [ipynb](deep_learning/reinforcement_learning/ReinforcementLearning_BasisConcept.ipynb), [webpage](https://sophia.ddns.net/deep_learning/reinforcement_learning/ReinforcementLearning_BasisConcept.html)
+        *   Introduction to OpenAI Gym: [pyscript](deep_learning/reinforcement_learning/OpenAIGym_Introduction.py)
     *   [Keras](deep_learning/keras) : A high level and python-based deep learning library which supports using Tensorflow, CNTK, etc. as its backend engine.
         *   Basis workflow using CNN : [ipynb](deep_learning/keras/Keras_Quickstart.ipynb), [webapge](https://sophia.ddns.net/deep_learning/keras/Keras_Quickstart.html)
         *   Editing Network and Convert to TFLite : [ipynb](deep_learning/keras/NetworkEditing_TFLite_Keras.ipynb), [webpage](https://sophia.ddns.net/deep_learning/keras/NetworkEditing_TFLite_Keras.html)
@@ -167,6 +169,10 @@ Please enjoy it.
         * Tensorflow Serving
         * Convertion with other frameworks
             * Convertion with Onnx : [ipynb](deep_learning/tensorflow/Onnx_Tensorflow.ipynb), [webapge](https://sophia.ddns.net/deep_learning/tensorflow/Onnx_Tensorflow.html)
+        * Hyperparameter tuning
+        * Distributed
+            * MNIST_Replica : [pyscript](deep_learning/tensorflow/mnist_replica.py)
+            * MNIST_CNN_Replica : [pyscript](deep_learning/tensorflow/mnist_cnn_replica.py)
 *   [UI Tools](ui_tools/)
     *   [MLflow](ui_tools/mlflow)
         *   MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
