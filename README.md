@@ -128,6 +128,8 @@ Please enjoy it.
     *   [Reinforcement Learning](deep_learning/reinforcement_learning)
         *   Basis Concept : [ipynb](deep_learning/reinforcement_learning/ReinforcementLearning_BasisConcept.ipynb), [webpage](https://sophia.ddns.net/deep_learning/reinforcement_learning/ReinforcementLearning_BasisConcept.html)
         *   Introduction to OpenAI Gym: [pyscript](deep_learning/reinforcement_learning/OpenAIGym_Introduction.py)
+        *   Policy Learning (PoleCart) : [Concept.ipynb](deep_learning/reinforcement_learning/PoleCart_PolicyLearning.ipynb), [pyscript](deep_learning/reinforcement_learning/PoleCart_PolicyLearning.py)
+        *   DQN (Value Learning, Breakout) : [Concept.ipynb](deep_learning/reinforcement_learning/Q_Learning_Concept.ipynb), [pyscript](deep_learning/reinforcement_learning/dqn.py)
     *   [Keras](deep_learning/keras) : A high level and python-based deep learning library which supports using Tensorflow, CNTK, etc. as its backend engine.
         *   Basis workflow using CNN : [ipynb](deep_learning/keras/Keras_Quickstart.ipynb), [webapge](https://sophia.ddns.net/deep_learning/keras/Keras_Quickstart.html)
         *   Editing Network and Convert to TFLite : [ipynb](deep_learning/keras/NetworkEditing_TFLite_Keras.ipynb), [webpage](https://sophia.ddns.net/deep_learning/keras/NetworkEditing_TFLite_Keras.html)
