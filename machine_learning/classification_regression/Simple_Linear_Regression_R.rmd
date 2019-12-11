@@ -1,0 +1,118 @@
+---
+title: "簡單線性迴歸 (Simple Linear Regression)"
+author: "JianKai Wang (https://sophia.ddns.net/)"
+date: "2018年3月14日"
+output: html_document
+---
+
+## 準備資料
+
+底下模擬鱷魚的長度與重量資料。
+
+```{r}
+alligator = data.frame(
+  lnLength = c(3.87, 3.61, 4.33, 3.43, 3.81, 3.83, 3.46, 3.76, 3.50, 3.58, 4.19, 3.78, 3.71, 3.73, 3.78),
+  lnWeight = c(4.87, 3.93, 6.46, 3.33, 4.38, 4.70, 3.50, 4.50, 3.58, 3.64, 5.90, 4.43, 4.38, 4.42, 4.25)
+)
+
+plot(
+  alligator$lnLength, 
+  alligator$lnWeight,
+  xlab = "Snout vent length (inches) on log scale",
+  ylab = "Weight (pounds) on log scale",
+  main = "Alligators in Central Florida"
+)
+```
+
+## 建立簡單線性迴歸模型
+
+```r
+# the prototype of lm
+# subset: 選擇特徵的向量
+# weights: 特徵的加權值
+# lm(formula, data, subset, weights, na.action, ...)
+```
+
+```{r}
+set.seed(123)
+training_idx <- sample(1:nrow(alligator), 10)
+training_data <- alligator[training_idx,]
+testing_data <- alligator[-training_idx,]
+model = lm(lnWeight ~ lnLength, data = training_data)
+summary(model)
+```
+
+透過函式 **summary** 可以列出線性迴歸的相關資訊，包含 F-test, $R^2$ 值, 與殘差分析等。
+
+## 繪圖檢視迴歸結果
+
+```{r}
+plot(
+  training_data$lnLength, 
+  training_data$lnWeight,
+  xlab = "Snout vent length (inches) on log scale",
+  ylab = "Weight (pounds) on log scale",
+  main = "Alligators in Central Florida"
+)
+abline(model)
+```
+
+## 自建立方程式並用於迴歸預測
+
+```{r}
+# 取得迴歸係數
+beta = coef(model)
+beta
+```
+
+由上可得迴歸方程式為
+
+$$y=3.431098*x-8.476067$$
+
+```{r}
+# 建立迴歸方程式
+y1 <- function(x1) {
+  return(x1 * beta[2] + beta[1])
+}
+
+# 建立測試資料
+new_length_data <- matrix(c(4.0, 4.1), nrow=1)
+new_weight_data <- apply(new_length_data, 1, y1)
+
+# 將新產生資料進行繪圖
+plot(
+  training_data$lnLength, 
+  training_data$lnWeight,
+  xlab = "Snout vent length (inches) on log scale",
+  ylab = "Weight (pounds) on log scale",
+  main = "Alligators in Central Florida"
+)
+abline(model)
+abline(v = 4.0, col="red", lty=2)
+abline(v = 4.1, col="red", lty=2)
+points(new_length_data, new_weight_data, col="red")
+```
+
+### 透過內建函式預測結果
+
+```{r}
+lm.pred <- predict(model, testing_data)
+data.frame(true=testing_data$lnWeight, pred=lm.pred)
+```
+
+### 計算殘差
+
+```{r}
+# type 為殘差計算方式，有 working, response, deviance, pearson, partial 等
+residuals(model, type="working")
+```
+
+
+
+
+
+
+
+
+
+
