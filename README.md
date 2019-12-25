@@ -22,6 +22,7 @@ Please enjoy it.
         * Multidimensional Scaling (MDS)
         * Linear Discriminate Analysis (LDA): [Rscript](machine_learning/dimensionality_reduction/Linear_Discriminate_Analysis_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/lda)
         * Quadratic Discriminate Analysis (QDA): [Rscript](machine_learning/dimensionality_reduction/Quadratic_Discriminant_Analysis_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/qda)
+        * Singular Value Decomposition (SVD): [ipynb](machine_learning/dimensionality_reduction/Singular_Value_Decomposition.ipynb)
         * t-SNE
 
     * [Regression / Classification](machine_learning/classification_regression/)
@@ -46,10 +47,10 @@ Please enjoy it.
         * Fuzzy C-Means: [Rscript](machine_learning/unsupervised_learning/Fuzzy_C-Means_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/fcm)
         * Self-Organizing Map (SOM): [Rscript](machine_learning/unsupervised_learning/Self-Organizing_Map_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/som)
 * [Deep Learning](deep_learning/)
-    * Theories and Mechanism: This section is the tutorial of basic theories about deep learning. We discuss how to design a model and how to train it. Furthermore, we discuss lots of details about the mechanism of well-designed training and try to implement those from scratch. Please refer to the repository, [jiankaiwang/deep_learning_from_scratch](https://github.com/jiankaiwang/deep_learning_from_scratch) for more details.
+    * Theories and Mechanism: This section is the tutorial of basic theories about deep learning. We discuss how to design a model and how to train it. Furthermore, we discuss lots of details about the mechanism of well-designed training and try to implement those from scratch. Please refer to the repository, [jiankaiwang/deep_learning_from_scratch](https://github.com/jiankaiwang/deep_learning_from_scratch), for more details.
 
     * Image / Space
-        * Datadet Processing
+        * Dataset Processing
             * Cifar10 Dataset: [ipynb](deep_learning/space_image/Cifar-10_Dataset.ipynb)
             * Data Augmentation: [ipynb](deep_learning/space_image/ImageDataAugmentation.ipynb)
         * Convolution Neural Network
@@ -157,7 +158,7 @@ Please enjoy it.
             * New Features to Datasets: [ipynb](frameworks/tensorflow2/TF2_AddDatasets_Splits.ipynb)
             * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
             * New Features to TF.Data, KerasHub, and Model Building: [ipynb](frameworks/tensorflow2/TF2_tfdata_kerashub.ipynb)
-            * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_Save_Load_Models.ipynb)
+            * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
 * [Other Tools](other_tools/)
     * [MLflow](other_tools/mlflow)
         * MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
