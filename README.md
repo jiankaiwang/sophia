@@ -159,6 +159,7 @@ Please enjoy it.
             * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
             * New Features to TF.Data, KerasHub, and Model Building: [ipynb](frameworks/tensorflow2/TF2_tfdata_kerashub.ipynb)
             * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
+            * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
 * [Other Tools](other_tools/)
     * [MLflow](other_tools/mlflow)
         * MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
