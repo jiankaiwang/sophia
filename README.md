@@ -30,6 +30,7 @@ Please enjoy it.
         * Logistic Regression: [Rscript](machine_learning/classification_regression/Logistic_Regression_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/lr)
         * Multinomial Logistic Regression Model: [Rscript](machine_learning/classification_regression/Multinomial_Log-linear_Models_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/mllm)
         * Cox Regression: [Rscript](machine_learning/classification_regression/Cox_Regression_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/cr)
+        * Regression via TF2Keras: [ipynb](machine_learning/classification_regression/TF2_Regression.ipynb)
 
     * [Supervised Learning](machine_learning/supervised_learning/)
 
@@ -47,7 +48,8 @@ Please enjoy it.
         * Fuzzy C-Means: [Rscript](machine_learning/unsupervised_learning/Fuzzy_C-Means_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/fcm)
         * Self-Organizing Map (SOM): [Rscript](machine_learning/unsupervised_learning/Self-Organizing_Map_R.rmd), [RPubs](https://rpubs.com/jiankaiwang/som)
 * [Deep Learning](deep_learning/)
-    * Theories and Mechanism: This section is the tutorial of basic theories about deep learning. We discuss how to design a model and how to train it. Furthermore, we discuss lots of details about the mechanism of well-designed training and try to implement those from scratch. Please refer to the repository, [jiankaiwang/deep_learning_from_scratch](https://github.com/jiankaiwang/deep_learning_from_scratch), for more details.
+    * Theories and Mechanism
+        > This section is the tutorial of basic theories about deep learning. We discuss how to design a model and how to train it. Furthermore, we discuss lots of details about the mechanism of well-designed training and try to implement those from scratch. Please refer to the repository, [jiankaiwang/deep_learning_from_scratch](https://github.com/jiankaiwang/deep_learning_from_scratch), for more details. :link:
 
     * Image / Space
         * Dataset Processing
@@ -57,10 +59,12 @@ Please enjoy it.
             * CNN Basis and Batch Normalization: [ipynb](deep_learning/space_image/BasicCNN_Tensorflow.ipynb)
         * Image Classification
             * A CNN Example with Keras: [ipynb](deep_learning/space_image/Keras_VGGNet_Tensorboard.ipynb)
-            * Inference from a frozen model (using tfhub' pretrained model): [ipynb](deep_learning/space_image/Classification_Inference_from_PB_Tensorflow.ipynb)
+            * Inference from a frozen model (using tfhub pretrained model): [ipynb](deep_learning/space_image/Classification_Inference_from_PB_Tensorflow.ipynb)
+            * A quick view of implementing a CNN model via `Tensorflow 2` with `TF2.Keras` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
         * Object Detection
-            * The introduction of object detection algorithms and the implementations from scratch were moved to the new repository, [jiankaiwang/object_detection_tutorial](https://github.com/jiankaiwang/object_detection_tutorial).
-            * We also introduce the Tensorflow Object Detection APIs for a shortcut of state-of-art model implementations. The content was moved to [jiankaiwang/TF_ObjectDetection_Flow](https://github.com/jiankaiwang/TF_ObjectDetection_Flow).
+            > The introduction of object detection algorithms and the implementations from scratch were moved to the new repository, [jiankaiwang/object_detection_tutorial](https://github.com/jiankaiwang/object_detection_tutorial). :link:
+
+            > We also introduce the Tensorflow Object Detection APIs for a shortcut of state-of-art model implementations. The content was moved to [jiankaiwang/TF_ObjectDetection_Flow](https://github.com/jiankaiwang/TF_ObjectDetection_Flow). :link:
         * Image Segmentation
             * Mask R-CNN
         * Depth Estimator
@@ -74,20 +78,24 @@ Please enjoy it.
             * Word2Vec
                 * CBOW
                 * Skip-Gram: [ipynb](deep_learning/time_series_sequences/WordEmbedding_Tensorflow.ipynb)
+        * Text Classification
+            * A quick view of implementing text classification via `Tensorflow 2` with `TF2.Keras` as well: [ipynb](deep_learning/time_series_sequences/TF2Keras_IMDB_Classification.ipynb)
         * Recurrent Neural Network
             * Seq2Seq for Part of Speech (Vanilla RNN): [ipynb](deep_learning/time_series_sequences/seq2seq_PartOfSpeech.ipynb)
             * Static RNN vs. Dynamic RN: [ipynb](deep_learning/time_series_sequences/Simple_Dynamic_Seq2Seq.ipynb)
         * Bidirectional Dynamic RNN + LSTM / GRU cell + Attention Mechanism 
             * Tensorflow 1.0.0 API: [ipynb](deep_learning/time_series_sequences/Seq2Seq_Bidirectional_Attention_tf-1.0.0.ipynb)
             * Tensorflow 1.11.0 API: [ipynb](deep_learning/time_series_sequences/Bidirectional_Dynamic_Seq2Seq.ipynb)
-        * Differentiable Neural Computer (DNC): Differentiable Neural Computer (DNC) is a kind of enhanced neural cell-like LSTM and GRU. It enhances the memory mechanism to memorize more long-term information. The more details please refer to the repository, [jiankaiwang/dnc-py3](https://github.com/jiankaiwang/dnc-py3).
+        * Differentiable Neural Computer (DNC)
+            > Differentiable Neural Computer (DNC) is a kind of enhanced neural cell-like LSTM and GRU. It enhances the memory mechanism to memorize more long-term information. The more details please refer to the repository, [jiankaiwang/dnc-py3](https://github.com/jiankaiwang/dnc-py3). :link:
         * Emotion Analyzing (IMDB Dataset): [ipynb](deep_learning/time_series_sequences/RNN_LSTM_Tensorflow.ipynb)
     * Audio / Signal
         * Dataset Processing:
             * Datasets: [markdown](deep_learning/audio_singal/datasets.md)
             * Data Formats: [markdown](deep_learning/audio_singal/data_formats.md)
             * Audio Signal Processing Example: [ipynb](deep_learning/audio_singal/Audio_Processing.ipynb)
-        * Word-based: Word-level audio recognition is one of the most popular requirements in technical fields. Simple words like `Up`, `Down`, `Hey, Siri!` or `OK, Google!`, etc. are commonplace. The details about how to implement a word-level audio recognition were moved to a new repository `jiankaiwang/word_level_audio_recognition` (https://github.com/jiankaiwang/word_level_audio_recognition).
+        * Word-based
+            > Word-level audio recognition is one of the most popular requirements in technical fields. Simple words like `Up`, `Down`, `Hey, Siri!` or `OK, Google!`, etc. are commonplace. The details about how to implement a word-level audio recognition were moved to a new repository `jiankaiwang/word_level_audio_recognition` (https://github.com/jiankaiwang/word_level_audio_recognition). :link:
         * Phrase-based
         * Sentence-based
     * Encoder / Decoder
@@ -99,15 +107,16 @@ Please enjoy it.
     * Reinforcement Learning
         * Basis Concept: [ipynb](deep_learning/reinforcement_learning/ReinforcementLearning_BasisConcept.ipynb)
         * Introduction to OpenAI Gym: [pyscript](deep_learning/reinforcement_learning/OpenAIGym_Introduction.py)
-        * Policy Learning (PoleCart): [ipynb](deep_learning/reinforcement_learning/PoleCart_PolicyLearning.ipynb), [pyscript](deep_learning/reinforcement_learning/PoleCart_PolicyLearning.py)
+    * Policy Learning (PoleCart): [ipynb](deep_learning/reinforcement_learning/PoleCart_PolicyLearning.ipynb), [pyscript](deep_learning/reinforcement_learning/PoleCart_PolicyLearning.py)
         * DQN (Value Learning, Breakout): [ipynb](deep_learning/reinforcement_learning/Q_Learning_Concept.ipynb), [pyscript](deep_learning/reinforcement_learning/dqn.py)
-
+    
 * Frameworks
     * [Keras](frameworks/keras): Here Keras in Sophia is the official Python library supporting multiple backends and also only supporting Tensorflow 1.x, not `tf.keras`.
         * Basis workflow using CNN: [ipynb](frameworks/keras/Keras_Quickstart.ipynb), [webapge](https://sophia.ddns.net/frameworks/keras/Keras_Quickstart.html)
         * Editing Network and Convert to TFLite: [ipynb](frameworks/keras/NetworkEditing_TFLite_Keras.ipynb), [webpage](https://sophia.ddns.net/frameworks/keras/NetworkEditing_TFLite_Keras.html)
 
-    * [ml5.js](frameworks/ml5): `ML5.js` is the higher level API built on the top of `Tensorflow.js`. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs).
+    * [ml5.js](frameworks/ml5): `ML5.js` is the higher level API built on the top of `Tensorflow.js`. 
+        > This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs).
 
     * [Tensorflow 1.x](frameworks/tensorflow)
         * Basis Flow
@@ -118,21 +127,23 @@ Please enjoy it.
             * Write out a frozen model: [pyscript](frameworks/tensorflow/Generate_FrozenModel.py)
             * Manipulation of SavedModel in TF1: [ipynb](frameworks/tensorflow/TF1_Save_Load_Models.ipynb)
         * Data Manipulation
-            * Write data as a tfrecord format
-            * Read data from a tfrecord format
-            * tf.Data API
-        * Higher-Order API
-            * Tensorflow Estimators (`tf.estimator`)
-                * a quickstart to `Estimators API`: [ipynb](frameworks/tensorflow/tf_estimator_example.ipynb)
-            * Tensorflow Keras (`tf.keras`)            
+            * manipulating the `tfrecord` format: [ipynb](frameworks/tensorflow/tf1_manipulating_tfrecords.ipynb)
+            * `tf.Data` API
+        * Tensorflow Estimators (`tf.estimator`)
+            * a numeric example of `Estimators` APIs: [ipynb](frameworks/tensorflow/tf_estimator_example.ipynb)
+            * an image example of `Estimator` APIs with serving example: [ipynb](frameworks/tensorflow/TensorflowServing_ImageExample.ipynb)
+        * Tensorflow Keras (`tf.keras`)
+            > The `TF1.Keras` APIs are similar to the official Keras APIs. However, there are some improvements in `TF1.keras`, e.g. for distributed training, etc. This section provides no more document or you can refer to `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training) :link: and an updated version `TF2.keras` ([Tensorflow 2.x](frameworks/tensorflow2)).             
         * Tensorboard: a visualization tool designed to monitor progesses
             * Basis: [ipynb](frameworks/tensorflow/Tensorboard.ipynb)
             * CNN Example: [ipynb](frameworks/tensorflow/CNN_Tensorboard.ipynb)
         * Transferring Learning / Retraining / TFHub.dev
             * a simple example to do a word embedding task: [ipynb](frameworks/tensorflow/tfhub_quickstart.ipynb)
             * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)
-        * `Tensorflow.js`: We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs).            
-        * Distributed architecture: Distributed architecture helps engineers or scientists to scale up the serving capability or to speed up the training process. Now it is easy to deploy a scalable serving architecture via `Tensorflow Serving`. Here we put an emphasis on how to speed up the training process. We have transferred the whole content to a new repository, `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training).
+        * `Tensorflow.js`: 
+            > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:         
+        * Distributed architecture: 
+            > Distributed architecture helps engineers or scientists to scale up the serving capability or to speed up the training process. Now it is easy to deploy a scalable serving architecture via `Tensorflow Serving`. Here we put an emphasis on how to speed up the training process. We have transferred the whole content to a new repository, `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training). :link:
         * Tensorflow Lite
             * API introduction and convertion: [ipynb](frameworks/tensorflow/TensorflowLite_API.ipynb)
             * Advanced convertion and network editing via shell commands: [ipynb](frameworks/tensorflow/TensorflowLite_CommandLine.ipynb)
@@ -147,7 +158,7 @@ Please enjoy it.
             * Introduction to `Tensorflow Serving`: 
                 * Article: Run via Docker: [markdown](frameworks/tensorflow/tfserving_docker.md)
                 * Request a Restful API for the Numeric Prediction: [ipynb](frameworks/tensorflow/TensorflowServing_NumericPrediction.ipynb)
-                * equest a Restful API for an Image Recognition: [ipynb](frameworks/tensorflow/TensorflowServing_ImageExample.ipynb)
+                * request a Restful API for an Image Recognition: [ipynb](frameworks/tensorflow/TensorflowServing_ImageExample.ipynb)
         * AdaNet
             * An Example of the workflow: [ipynb](frameworks/tensorflow/adanet_objective.ipynb)
             * Customized Model: [ipynb](frameworks/tensorflow/customizing_adanet.ipynb)
@@ -158,12 +169,15 @@ Please enjoy it.
             * New Features to Datasets: [ipynb](frameworks/tensorflow2/TF2_AddDatasets_Splits.ipynb)
             * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
             * New Features to TF.Data, KerasHub, and Model Building: [ipynb](frameworks/tensorflow2/TF2_tfdata_kerashub.ipynb)
+        * Save and Load Models
             * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
-            * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
+            * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
+        * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
 * [Other Tools](other_tools/)
     * [MLflow](other_tools/mlflow)
         * MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
-    * Simple Cloud-AI (SCAI): Simple Cloud-AI (SCAI) is a simple Restful API server for AI image recognition. It provides a UI interface and two API services on the backend. Now it supports both image recognition and object detection tasks. You can also update your customized retained models no matter what it is coming from transfer learning or Tensorflow Object Detection API. In addition, you can integrate the APIs with your own service. You can refer to the repository, [jiankaiwang/scai](https://github.com/jiankaiwang/scai), for more details.
+    * Simple Cloud-AI (SCAI)
+        > Simple Cloud-AI (SCAI) is a simple Restful API server for AI image recognition. It provides a UI interface and two API services on the backend. Now it supports both image recognition and object detection tasks. You can also update your customized retained models no matter what it is coming from transfer learning or Tensorflow Object Detection API. In addition, you can integrate the APIs with your own service. You can refer to the repository, [jiankaiwang/scai](https://github.com/jiankaiwang/scai), for more details. :link:
 * [Mathematics / Statistics](mathematics_statistics/)
     * [Statistics](mathematics_statistics/statistics/)
         * Basis: [Markdown](mathematics_statistics/statistics/README.md)
