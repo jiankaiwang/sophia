@@ -139,9 +139,7 @@ Please enjoy it.
             * CNN Example: [ipynb](frameworks/tensorflow/CNN_Tensorboard.ipynb)
         * Transferring Learning / Retraining / TFHub.dev
             * a simple example to do a word embedding task: [ipynb](frameworks/tensorflow/tfhub_quickstart.ipynb)
-            * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)
-        * `Tensorflow.js`: 
-            > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:         
+            * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)       
         * Distributed architecture: 
             > Distributed architecture helps engineers or scientists to scale up the serving capability or to speed up the training process. Now it is easy to deploy a scalable serving architecture via `Tensorflow Serving`. Here we put an emphasis on how to speed up the training process. We have transferred the whole content to a new repository, `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training). :link:
         * Tensorflow Lite
@@ -173,6 +171,11 @@ Please enjoy it.
             * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
             * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
         * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
+        * The Manipulation of Datasets:
+            * Processed CSV Files with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_CSV.ipynb)
+            * Processed Numpy and Pandas Objects with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Pandas_Numpy.ipynb)
+    * `Tensorflow.js`: 
+        > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:              
 * [Other Tools](other_tools/)
     * [MLflow](other_tools/mlflow)
         * MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
