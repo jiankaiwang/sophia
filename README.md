@@ -139,9 +139,7 @@ Please enjoy it.
             * CNN Example: [ipynb](frameworks/tensorflow/CNN_Tensorboard.ipynb)
         * Transferring Learning / Retraining / TFHub.dev
             * a simple example to do a word embedding task: [ipynb](frameworks/tensorflow/tfhub_quickstart.ipynb)
-            * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)
-        * `Tensorflow.js`: 
-            > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:         
+            * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)       
         * Distributed architecture: 
             > Distributed architecture helps engineers or scientists to scale up the serving capability or to speed up the training process. Now it is easy to deploy a scalable serving architecture via `Tensorflow Serving`. Here we put an emphasis on how to speed up the training process. We have transferred the whole content to a new repository, `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training). :link:
         * Tensorflow Lite
@@ -173,11 +171,21 @@ Please enjoy it.
             * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
             * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
         * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
+        * The Manipulation of Datasets:
+            * Processed CSV Files with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_CSV.ipynb)
+            * Processed Numpy and Pandas Objects with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Pandas_Numpy.ipynb)
+            * Processed Image Datasets with `tf2.keras` and `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Image.ipynb)
+            * Processed Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Text.ipynb)
+            * Processed Unicode Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Unicode.ipynb)
+    * `Tensorflow.js`: 
+        > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:              
 * [Other Tools](other_tools/)
     * [MLflow](other_tools/mlflow)
         * MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
     * Simple Cloud-AI (SCAI)
         > Simple Cloud-AI (SCAI) is a simple Restful API server for AI image recognition. It provides a UI interface and two API services on the backend. Now it supports both image recognition and object detection tasks. You can also update your customized retained models no matter what it is coming from transfer learning or Tensorflow Object Detection API. In addition, you can integrate the APIs with your own service. You can refer to the repository, [jiankaiwang/scai](https://github.com/jiankaiwang/scai), for more details. :link:
+    * AI x Iot (aiot):
+        > We integrate Raspberry Pi, Intel Movidius, and Jetson Tx2, etc. to an AIoT prototype architecture. We demonstrate how to use these integrated devices to do AI projects. Please refer to the repository [jiankaiwang/aiot](https://github.com/jiankaiwang/aiot) for more details. :link:
 * [Mathematics / Statistics](mathematics_statistics/)
     * [Statistics](mathematics_statistics/statistics/)
         * Basis: [Markdown](mathematics_statistics/statistics/README.md)
