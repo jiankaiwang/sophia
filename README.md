@@ -118,7 +118,7 @@ Please enjoy it.
     * [ml5.js](frameworks/ml5): `ML5.js` is the higher level API built on the top of `Tensorflow.js`. 
         > This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs).
 
-    * [Tensorflow 1.x](frameworks/tensorflow)
+    * [Tensorflow 1.x](frameworks/tensorflow): 2015 ~ Now
         * Basis Flow
             * Quick Start and Environment: [ipynb](frameworks/tensorflow/Tensorflow_Quickstart_Python.ipynb)
             * Tensorflow Basis using MLP network: [ipynb](frameworks/tensorflow/Basic_Tensorflow.ipynb)
@@ -162,7 +162,7 @@ Please enjoy it.
             * Customized Model: [ipynb](frameworks/tensorflow/customizing_adanet.ipynb)
         * Convertion with other frameworks
             * Convertion with Onnx: [ipynb](frameworks/tensorflow/Onnx_Tensorflow.ipynb)
-    * [Tensorflow 2.x](frameworks/tensorflow2)
+    * [Tensorflow 2.x](frameworks/tensorflow2): 2019 ~ Now
         * differences between version 1.x and 2.x
             * New Features to Datasets: [ipynb](frameworks/tensorflow2/TF2_AddDatasets_Splits.ipynb)
             * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
@@ -171,12 +171,16 @@ Please enjoy it.
             * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
             * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
         * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
-        * The Manipulation of Datasets:
+        * The Manipulation of Datasets on Tensorflow 2:
             * Processed CSV Files with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_CSV.ipynb)
             * Processed Numpy and Pandas Objects with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Pandas_Numpy.ipynb)
             * Processed Image Datasets with `tf2.keras` and `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Image.ipynb)
             * Processed Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Text.ipynb)
             * Processed Unicode Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Unicode.ipynb)
+            * Processed TF.Text with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_TFText.ipynb)
+            * Processing `TFRecord` Files with `tf.train.Example`: [ipynb](frameworks/tensorflow2/TF2Example_TFRecord.ipynb)
+        * Tensorflow Estimator(`tf.estimator`) on Tensorflow 2:
+            * Premade Estimators: [ipynb](frameworks/tensorflow2/TF2Estimator_Premade_Estimators.ipynb)
     * `Tensorflow.js`: 
         > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:              
 * [Other Tools](other_tools/)
