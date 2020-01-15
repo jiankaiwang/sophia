@@ -181,6 +181,10 @@ Please enjoy it.
             * Processing `TFRecord` Files with `tf.train.Example`: [ipynb](frameworks/tensorflow2/TF2Example_TFRecord.ipynb)
         * Tensorflow Estimator(`tf.estimator`) on Tensorflow 2:
             * Premade Estimators: [ipynb](frameworks/tensorflow2/TF2Estimator_Premade_Estimators.ipynb)
+            * A Linear Model with TF.Estimator: [ipynb](frameworks/tensorflow2/TF2Estimator_LinearModel.ipynb)
+            * A Simple Boosted Trees Model with TF.Estimator: [ipynb](frameworks/tensorflow2/TF2Estimator_SimpleBoostedTrees.ipynb)
+            * Understanding Boosted Trees Model: [ipynb](frameworks/tensorflow2/TF2Estimator_AdvancedBoostedTrees.ipynb)
+            * Creating a TF.estimator Model From a TF.keras Model: [ipynb](frameworks/tensorflow2/TF2Estimator_EstimatorFromKeras.ipynb)
     * `Tensorflow.js`: 
         > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:              
 * [Other Tools](other_tools/)
