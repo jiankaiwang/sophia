@@ -167,10 +167,14 @@ Please enjoy it.
             * New Features to Datasets: [ipynb](frameworks/tensorflow2/TF2_AddDatasets_Splits.ipynb)
             * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
             * New Features to TF.Data, KerasHub, and Model Building: [ipynb](frameworks/tensorflow2/TF2_tfdata_kerashub.ipynb)
+            * Using `tf.function` and `py_function` in Advanced: [ipynb](frameworks/tensorflow2/TF2_TFFunction_PYFunction.ipynb)
         * Save and Load Models
             * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
             * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
-        * The whole flow using TF2.Keras: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
+        * The whole flow
+            * Using `TF2.Keras` on the Structured Dataset: [ipynb](frameworks/tensorflow2/TF2_StructuredFlow.ipynb)
+            * Using `TF2.Keras` on Image Datasets: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
+            * Using `TF2.Keras` and `TF Core` in advanced: [ipynb](frameworks/tensorflow2/TF2_Customization.ipynb)
         * The Manipulation of Datasets on Tensorflow 2:
             * Processed CSV Files with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_CSV.ipynb)
             * Processed Numpy and Pandas Objects with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Pandas_Numpy.ipynb)
