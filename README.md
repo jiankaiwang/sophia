@@ -60,7 +60,7 @@ Please enjoy it.
         * Image Classification
             * A CNN Example with Keras: [ipynb](deep_learning/space_image/Keras_VGGNet_Tensorboard.ipynb)
             * Inference from a frozen model (using tfhub pretrained model): [ipynb](deep_learning/space_image/Classification_Inference_from_PB_Tensorflow.ipynb)
-            * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)
+            * image retraining example based on pretrained models: [ipynb](deep_learning/space_image/tfhub_image_classification.ipynb)
             * A quick view of implementing a `TF2.Keras` CNN model: [ipynb](deep_learning/space_image/TF2Keras_Cifar10.ipynb)
             * A quick view of implementing a CNN model with a Customized Layer via `TF2.Keras` and `TF2.Core` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
             * an image classification model training with data augmentation and overfitting prevention: [ipynb](deep_learning/space_image/TF2Keras_Flow.ipynb)
@@ -81,7 +81,7 @@ Please enjoy it.
             * Word2Vec
                 * CBOW
                 * Skip-Gram: [ipynb](deep_learning/time_series_sequences/WordEmbedding_Tensorflow.ipynb)
-            * a simple example to do a word embedding task: [ipynb](frameworks/tensorflow/tfhub_quickstart.ipynb)                  
+            * a simple example to do a word embedding task: [ipynb](deep_learning/time_series_sequences/tfhub_word_embedding.ipynb)                  
         * Text Classification
             * A quick view of implementing text classification via `Tensorflow 2` with `TF2.Keras` as well: [ipynb](deep_learning/time_series_sequences/TF2Keras_IMDB_Classification.ipynb)
         * Recurrent Neural Network
