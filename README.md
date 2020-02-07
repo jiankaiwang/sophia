@@ -60,7 +60,12 @@ Please enjoy it.
         * Image Classification
             * A CNN Example with Keras: [ipynb](deep_learning/space_image/Keras_VGGNet_Tensorboard.ipynb)
             * Inference from a frozen model (using tfhub pretrained model): [ipynb](deep_learning/space_image/Classification_Inference_from_PB_Tensorflow.ipynb)
-            * A quick view of implementing a CNN model via `Tensorflow 2` with `TF2.Keras` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
+            * image retraining example based on pretrained models: [ipynb](deep_learning/space_image/tfhub_image_classification.ipynb)
+            * A quick view of implementing a `TF2.Keras` CNN model: [ipynb](deep_learning/space_image/TF2Keras_Cifar10.ipynb)
+            * A quick view of implementing a CNN model with a Customized Layer via `TF2.Keras` and `TF2.Core` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
+            * an image classification model training with data augmentation and overfitting prevention using `TF2.keras`: [ipynb](deep_learning/space_image/TF2Keras_Flow.ipynb)
+            * Training with Transfer Learning using `TF2.Hub`: [ipynb](deep_learning/space_image/TF2Hub_Transfer_Learning_Image_Classification.ipynb)
+            * Transfer Learning with `Feature Extraction` and `Fine-Tuning` using `TF2.Keras`: [ipynb](deep_learning/space_image/TF2Keras_Transfer_Learning_PreTrained_Model.ipynb)
         * Object Detection
             > The introduction of object detection algorithms and the implementations from scratch were moved to the new repository, [jiankaiwang/object_detection_tutorial](https://github.com/jiankaiwang/object_detection_tutorial). :link:
 
@@ -78,6 +83,7 @@ Please enjoy it.
             * Word2Vec
                 * CBOW
                 * Skip-Gram: [ipynb](deep_learning/time_series_sequences/WordEmbedding_Tensorflow.ipynb)
+            * a simple example to do a word embedding task: [ipynb](deep_learning/time_series_sequences/tfhub_word_embedding.ipynb)                  
         * Text Classification
             * A quick view of implementing text classification via `Tensorflow 2` with `TF2.Keras` as well: [ipynb](deep_learning/time_series_sequences/TF2Keras_IMDB_Classification.ipynb)
         * Recurrent Neural Network
@@ -136,10 +142,7 @@ Please enjoy it.
             > The `TF1.Keras` APIs are similar to the official Keras APIs. However, there are some improvements in `TF1.keras`, e.g. for distributed training, etc. This section provides no more document or you can refer to `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training) :link: and an updated version `TF2.keras` ([Tensorflow 2.x](frameworks/tensorflow2)).             
         * Tensorboard: a visualization tool designed to monitor progesses
             * Basis: [ipynb](frameworks/tensorflow/Tensorboard.ipynb)
-            * CNN Example: [ipynb](frameworks/tensorflow/CNN_Tensorboard.ipynb)
-        * Transferring Learning / Retraining / TFHub.dev
-            * a simple example to do a word embedding task: [ipynb](frameworks/tensorflow/tfhub_quickstart.ipynb)
-            * image retraining example based on pretrained models: [ipynb](frameworks/tensorflow/tfhub_image_classification.ipynb)       
+            * CNN Example: [ipynb](frameworks/tensorflow/CNN_Tensorboard.ipynb)  
         * Distributed architecture: 
             > Distributed architecture helps engineers or scientists to scale up the serving capability or to speed up the training process. Now it is easy to deploy a scalable serving architecture via `Tensorflow Serving`. Here we put an emphasis on how to speed up the training process. We have transferred the whole content to a new repository, `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training). :link:
         * Tensorflow Lite
