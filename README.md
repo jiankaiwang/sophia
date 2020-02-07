@@ -63,7 +63,9 @@ Please enjoy it.
             * image retraining example based on pretrained models: [ipynb](deep_learning/space_image/tfhub_image_classification.ipynb)
             * A quick view of implementing a `TF2.Keras` CNN model: [ipynb](deep_learning/space_image/TF2Keras_Cifar10.ipynb)
             * A quick view of implementing a CNN model with a Customized Layer via `TF2.Keras` and `TF2.Core` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
-            * an image classification model training with data augmentation and overfitting prevention: [ipynb](deep_learning/space_image/TF2Keras_Flow.ipynb)
+            * an image classification model training with data augmentation and overfitting prevention using `TF2.keras`: [ipynb](deep_learning/space_image/TF2Keras_Flow.ipynb)
+            * Training with Transfer Learning using `TF2.Hub`: [ipynb](deep_learning/space_image/TF2Hub_Transfer_Learning_Image_Classification.ipynb)
+            * Transfer Learning with `Feature Extraction` and `Fine-Tuning` using `TF2.Keras`: [ipynb](deep_learning/space_image/TF2Keras_Transfer_Learning_PreTrained_Model.ipynb)
         * Object Detection
             > The introduction of object detection algorithms and the implementations from scratch were moved to the new repository, [jiankaiwang/object_detection_tutorial](https://github.com/jiankaiwang/object_detection_tutorial). :link:
 
