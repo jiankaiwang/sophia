@@ -71,6 +71,7 @@ Please enjoy it.
 
             > We also introduce the Tensorflow Object Detection APIs for a shortcut of state-of-art model implementations. The content was moved to [jiankaiwang/TF_ObjectDetection_Flow](https://github.com/jiankaiwang/TF_ObjectDetection_Flow). :link:
         * Image Segmentation
+            * a Modified U-Net(a Semantic Network): [ipynb](deep_learning/space_image/TF2Keras_Image_Semantic_Segmentation.ipynb)
             * Mask R-CNN
         * Depth Estimator
             * Monocular Depth Estimation
