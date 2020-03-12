@@ -61,9 +61,9 @@ Please enjoy it.
             * A CNN Example with Keras: [ipynb](deep_learning/space_image/Keras_VGGNet_Tensorboard.ipynb)
             * Inference from a frozen model (using tfhub pretrained model): [ipynb](deep_learning/space_image/Classification_Inference_from_PB_Tensorflow.ipynb)
             * image retraining example based on pretrained models: [ipynb](deep_learning/space_image/tfhub_image_classification.ipynb)
-            * A quick view of implementing a `TF2.Keras` CNN model: [ipynb](deep_learning/space_image/TF2Keras_Cifar10.ipynb)
-            * A quick view of implementing a CNN model with a Customized Layer via `TF2.Keras` and `TF2.Core` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
-            * an image classification model training with data augmentation and overfitting prevention using `TF2.keras`: [ipynb](deep_learning/space_image/TF2Keras_Flow.ipynb)
+            * A quick view of a `TF2.Keras` CNN model: [ipynb](deep_learning/space_image/TF2Keras_Cifar10.ipynb)
+            * A quick view of a CNN model with a Customized Layer via `TF2.Keras` and `TF2.Core` as well: [ipynb](deep_learning/space_image/TF2Keras_MNIST_Classification.ipynb)
+            * Image classification model with data augmentation and overfitting prevention using `TF2.keras`: [ipynb](deep_learning/space_image/TF2Keras_Flow.ipynb)
             * Training with Transfer Learning using `TF2.Hub`: [ipynb](deep_learning/space_image/TF2Hub_Transfer_Learning_Image_Classification.ipynb)
             * Transfer Learning with `Feature Extraction` and `Fine-Tuning` using `TF2.Keras`: [ipynb](deep_learning/space_image/TF2Keras_Transfer_Learning_PreTrained_Model.ipynb)
         * Object Detection
@@ -108,7 +108,7 @@ Please enjoy it.
     * Encoder / Decoder
         * AutoEncoder vs. PCA: [ipynb](deep_learning/encoder_decoder/EncoderDecoder_Tensorflow.ipynb)
     * [Generative Adversarial Network, GAN](deep_learning/gan)
-        * Vanilla GAN: [ipynb](deep_learning/gan/SimpleGAN_Keras.ipynb)
+        * Vanilla GAN using Keras: [ipynb](deep_learning/gan/Keras_SimpleGAN.ipynb), using TF2.Keras [ipynb](deep_learning/gan/TF2Keras_VanillaGAN_DeepConv.ipynb)
         * Multiple Generator GAN: [ipynb](deep_learning/gan/MultiGenerator_GAN_Keras.ipynb)
         * BigGAN From TF.Hub: [ipynb](deep_learning/gan/BigGAN_TF_Hub_Demo.ipynb)
     * Reinforcement Learning
@@ -118,12 +118,39 @@ Please enjoy it.
         * DQN (Value Learning, Breakout): [ipynb](deep_learning/reinforcement_learning/Q_Learning_Concept.ipynb), [pyscript](deep_learning/reinforcement_learning/dqn.py)
     
 * Frameworks
-    * [Keras](frameworks/keras): Here Keras in Sophia is the official Python library supporting multiple backends and also only supporting Tensorflow 1.x, not `tf.keras`.
-        * Basis workflow using CNN: [ipynb](frameworks/keras/Keras_Quickstart.ipynb), [webapge](https://sophia.ddns.net/frameworks/keras/Keras_Quickstart.html)
-        * Editing Network and Convert to TFLite: [ipynb](frameworks/keras/NetworkEditing_TFLite_Keras.ipynb), [webpage](https://sophia.ddns.net/frameworks/keras/NetworkEditing_TFLite_Keras.html)
-
     * [ml5.js](frameworks/ml5): `ML5.js` is the higher level API built on the top of `Tensorflow.js`. 
         > This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs).
+
+    * `Tensorflow.js`: 
+        > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:                
+
+    * [Tensorflow 2.x](frameworks/tensorflow2): 2019 ~ Now
+        * differences between version 1.x and 2.x
+            * New Features to Datasets: [ipynb](frameworks/tensorflow2/TF2_AddDatasets_Splits.ipynb)
+            * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
+            * New Features to TF.Data, KerasHub, and Model Building: [ipynb](frameworks/tensorflow2/TF2_tfdata_kerashub.ipynb)
+            * Using `tf.function` and `py_function` in Advanced: [ipynb](frameworks/tensorflow2/TF2_TFFunction_PYFunction.ipynb)
+        * Save and Load Models
+            * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
+            * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
+        * The whole flow
+            * Using `TF2.Keras` on the Structured Dataset: [ipynb](frameworks/tensorflow2/TF2_StructuredFlow.ipynb)
+            * Using `TF2.Keras` on Image Datasets: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
+            * Using `TF2.Keras` and `TF Core` in advanced: [ipynb](frameworks/tensorflow2/TF2_Customization.ipynb)
+        * The Manipulation of Datasets on Tensorflow 2:
+            * Processed CSV Files with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_CSV.ipynb)
+            * Processed Numpy and Pandas Objects with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Pandas_Numpy.ipynb)
+            * Processed Image Datasets with `tf2.keras` and `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Image.ipynb)
+            * Processed Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Text.ipynb)
+            * Processed Unicode Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Unicode.ipynb)
+            * Processed TF.Text with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_TFText.ipynb)
+            * Processing `TFRecord` Files with `tf.train.Example`: [ipynb](frameworks/tensorflow2/TF2Example_TFRecord.ipynb)
+        * Tensorflow Estimator(`tf.estimator`) on Tensorflow 2:
+            * Premade Estimators: [ipynb](frameworks/tensorflow2/TF2Estimator_Premade_Estimators.ipynb)
+            * A Linear Model with TF.Estimator: [ipynb](frameworks/tensorflow2/TF2Estimator_LinearModel.ipynb)
+            * A Simple Boosted Trees Model with TF.Estimator: [ipynb](frameworks/tensorflow2/TF2Estimator_SimpleBoostedTrees.ipynb)
+            * Understanding Boosted Trees Model: [ipynb](frameworks/tensorflow2/TF2Estimator_AdvancedBoostedTrees.ipynb)
+            * Creating a TF.estimator Model From a TF.keras Model: [ipynb](frameworks/tensorflow2/TF2Estimator_EstimatorFromKeras.ipynb)  
 
     * [Tensorflow 1.x](frameworks/tensorflow): 2015 ~ Now
         * Basis Flow
@@ -165,36 +192,10 @@ Please enjoy it.
             * An Example of the workflow: [ipynb](frameworks/tensorflow/adanet_objective.ipynb)
             * Customized Model: [ipynb](frameworks/tensorflow/customizing_adanet.ipynb)
         * Convertion with other frameworks
-            * Convertion with Onnx: [ipynb](frameworks/tensorflow/Onnx_Tensorflow.ipynb)
-    * [Tensorflow 2.x](frameworks/tensorflow2): 2019 ~ Now
-        * differences between version 1.x and 2.x
-            * New Features to Datasets: [ipynb](frameworks/tensorflow2/TF2_AddDatasets_Splits.ipynb)
-            * New Features to the Eager Mode, TF functions, and Flow Controllers: [ipynb](frameworks/tensorflow2/TF2_Eager_tfFunc.ipynb)
-            * New Features to TF.Data, KerasHub, and Model Building: [ipynb](frameworks/tensorflow2/TF2_tfdata_kerashub.ipynb)
-            * Using `tf.function` and `py_function` in Advanced: [ipynb](frameworks/tensorflow2/TF2_TFFunction_PYFunction.ipynb)
-        * Save and Load Models
-            * Manipulation of SavedModel in TF2: [ipynb](frameworks/tensorflow2/TF2_SavedModels.ipynb)
-            * Save and Load Models in TF2Keras: [ipynb](frameworks/tensorflow2/TF2Keras_Save_Load_Models.ipynb)
-        * The whole flow
-            * Using `TF2.Keras` on the Structured Dataset: [ipynb](frameworks/tensorflow2/TF2_StructuredFlow.ipynb)
-            * Using `TF2.Keras` on Image Datasets: [ipynb](frameworks/tensorflow2/TF2_Keras_Flow.ipynb)
-            * Using `TF2.Keras` and `TF Core` in advanced: [ipynb](frameworks/tensorflow2/TF2_Customization.ipynb)
-        * The Manipulation of Datasets on Tensorflow 2:
-            * Processed CSV Files with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_CSV.ipynb)
-            * Processed Numpy and Pandas Objects with `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Pandas_Numpy.ipynb)
-            * Processed Image Datasets with `tf2.keras` and `tf2.data` APIs: [ipynb](frameworks/tensorflow2/TF2Data_Image.ipynb)
-            * Processed Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Text.ipynb)
-            * Processed Unicode Text Datasets with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_Unicode.ipynb)
-            * Processed TF.Text with `tf.data`: [ipynb](frameworks/tensorflow2/TF2Data_TFText.ipynb)
-            * Processing `TFRecord` Files with `tf.train.Example`: [ipynb](frameworks/tensorflow2/TF2Example_TFRecord.ipynb)
-        * Tensorflow Estimator(`tf.estimator`) on Tensorflow 2:
-            * Premade Estimators: [ipynb](frameworks/tensorflow2/TF2Estimator_Premade_Estimators.ipynb)
-            * A Linear Model with TF.Estimator: [ipynb](frameworks/tensorflow2/TF2Estimator_LinearModel.ipynb)
-            * A Simple Boosted Trees Model with TF.Estimator: [ipynb](frameworks/tensorflow2/TF2Estimator_SimpleBoostedTrees.ipynb)
-            * Understanding Boosted Trees Model: [ipynb](frameworks/tensorflow2/TF2Estimator_AdvancedBoostedTrees.ipynb)
-            * Creating a TF.estimator Model From a TF.keras Model: [ipynb](frameworks/tensorflow2/TF2Estimator_EstimatorFromKeras.ipynb)
-    * `Tensorflow.js`: 
-        > We provide you with more details about lower level API to machine learning or deep learning tasks. This tutorial had been moved to a new repository [jiankaiwang/mljs](https://github.com/jiankaiwang/mljs). :link:              
+            * Convertion with Onnx: [ipynb](frameworks/tensorflow/Onnx_Tensorflow.ipynb)      
+    * [Keras](frameworks/keras): Here Keras in Sophia is the official Python library supporting multiple backends and also only supporting Tensorflow 1.x, not `tf.keras`.
+        * Basis workflow using CNN: [ipynb](frameworks/keras/Keras_Quickstart.ipynb), [webapge](https://sophia.ddns.net/frameworks/keras/Keras_Quickstart.html)
+        * Editing Network and Convert to TFLite: [ipynb](frameworks/keras/NetworkEditing_TFLite_Keras.ipynb), [webpage](https://sophia.ddns.net/frameworks/keras/NetworkEditing_TFLite_Keras.html)            
 * [Other Tools](other_tools/)
     * [MLflow](other_tools/mlflow)
         * MLFlow quick tutorial: [ipynb](ui_tools/mlflow/mlflow_basis.ipynb), [webpage](https://sophia.ddns.net/ui_tools/mlflow/mlflow_basis.html)
