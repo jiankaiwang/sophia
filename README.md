@@ -56,6 +56,11 @@ Please enjoy it.
 
 > This section is the tutorial of basic theories about deep learning. We discuss how to design a model and how to train it. Furthermore, we discuss lots of details about the mechanism of well-designed training and try to implement those from scratch. Please refer to the repository, [jiankaiwang/deep_learning_from_scratch](https://github.com/jiankaiwang/deep_learning_from_scratch), for more details. :link:
 
+#### Structured Data
+
+* Classify Structured Data using Feature Columns on `TF2.Keras`: [notebook](deep_learning/structured/Classify_with_FeatureColumns.ipynb)
+* Classify Imbalanced Structured Data using `TF2Data` and `TF2.Keras`: [notebook](deep_learning/structured/Classification_on_Imbalanced_Data.ipynb)
+
 #### Image / Space
 
 * Dataset Processing
