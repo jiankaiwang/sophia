@@ -60,6 +60,7 @@ Please enjoy it.
 
 * Classify Structured Data using Feature Columns on `TF2.Keras`: [notebook](deep_learning/structured/Classify_with_FeatureColumns.ipynb)
 * Classify Imbalanced Structured Data using `TF2Data` and `TF2.Keras`: [notebook](deep_learning/structured/Classification_on_Imbalanced_Data.ipynb)
+* Time Series Forecasting on Structured Data using `TF2.Keras`: [notebook](deep_learning/structured/TF2Keras_Time_Series_Forecasting.ipynb)
 
 #### Image / Space
 
