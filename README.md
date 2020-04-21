@@ -129,10 +129,11 @@ Please enjoy it.
 
 #### [Generative](deep_learning/generative)
 
-* Vanilla GAN using Keras: [notebook](deep_learning/generative/Keras_SimpleGAN.ipynb), using TF2.Keras [notebook](deep_learning/generative/TF2Keras_VanillaGAN_DeepConv.ipynb)
+* Vanilla GAN using Keras: [notebook](deep_learning/generative/Keras_SimpleGAN.ipynb)
 * Multiple Generator GAN: [notebook](deep_learning/generative/MultiGenerator_GAN_Keras.ipynb)
 * Introduction to Neural Style Transfer: [notebook on TF2Keras](deep_learning/generative/TF2Keras_NeuralStyleTransfer.ipynb)
 * Introduction to DeepDream: [notebook on TF2Keras](deep_learning/generative/TF2Keras_DeepDream.ipynb)
+* Introduction to DCGANs Using TF2Keras: [notebook](deep_learning/generative/TF2Keras_VanillaGAN_DCGAN.ipynb)
 * BigGAN From TF.Hub: [notebook](deep_learning/generative/BigGAN_TF_Hub_Demo.ipynb)
 
 #### Reinforcement Learning
