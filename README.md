@@ -134,6 +134,7 @@ Please enjoy it.
 * Introduction to Neural Style Transfer: [notebook on TF2Keras](deep_learning/generative/TF2Keras_NeuralStyleTransfer.ipynb)
 * Introduction to DeepDream: [notebook on TF2Keras](deep_learning/generative/TF2Keras_DeepDream.ipynb)
 * Introduction to DCGANs Using TF2Keras: [notebook](deep_learning/generative/TF2Keras_VanillaGAN_DCGAN.ipynb)
+* Pix2Pix with Conditional GANs and PatchGANs: [notebook](deep_learning/generative/TF2Keras_Pix2Pix.ipynb)
 * BigGAN From TF.Hub: [notebook](deep_learning/generative/BigGAN_TF_Hub_Demo.ipynb)
 
 #### Reinforcement Learning
