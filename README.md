@@ -207,6 +207,7 @@ Please enjoy it.
 * Distributed architecture: 
     > Distributed architecture helps engineers or scientists to scale up the serving capability or to speed up the training process. Now it is easy to deploy a scalable serving architecture via `Tensorflow Serving`. Here we put an emphasis on how to speed up the training process. We have transferred the whole content to a new repository, `jiankaiwang/distributed_training` (https://github.com/jiankaiwang/distributed_training). :link:
 * Tensorflow Lite
+    > We moved this topic to a new repository, please refer to the repository [jiankaiwang/aiot](https://github.com/jiankaiwang/aiot) for more details. :link:
     * API introduction and convertion: [notebook](frameworks/tensorflow/TensorflowLite_API.ipynb)
     * Advanced convertion and network editing via shell commands: [notebook](frameworks/tensorflow/TensorflowLite_CommandLine.ipynb)
     * A flow from convertion to doing an inference: [notebook](frameworks/tensorflow/TFLite_FromFrozenModel_Inference.ipynb)
