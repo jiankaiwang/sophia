@@ -137,6 +137,7 @@ Please enjoy it.
 * Pix2Pix with Conditional GANs and PatchGANs: [notebook](deep_learning/generative/TF2Keras_Pix2Pix.ipynb)
 * BigGAN From TF.Hub: [notebook](deep_learning/generative/BigGAN_TF_Hub_Demo.ipynb)
 * Introduction to CycleGAN: [notebook](deep_learning/generative/TF2_CycleGAN.ipynb)
+* Adversarial examples using FGSM: [notebook](deep_learning/generative/AdversarialExample_FGSM.ipynb)
 
 #### Reinforcement Learning
 
