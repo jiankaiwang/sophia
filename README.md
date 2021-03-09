@@ -138,6 +138,7 @@ Please enjoy it.
 * BigGAN From TF.Hub: [notebook](deep_learning/generative/BigGAN_TF_Hub_Demo.ipynb)
 * Introduction to CycleGAN: [notebook](deep_learning/generative/TF2_CycleGAN.ipynb)
 * Adversarial examples using FGSM: [notebook](deep_learning/generative/AdversarialExample_FGSM.ipynb)
+* Intro to Basic Autoencoders: [notebook](deep_learning/generative/Autoencoder.ipynb)
 
 #### Reinforcement Learning
 
