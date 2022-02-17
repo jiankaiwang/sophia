@@ -87,6 +87,7 @@ Please enjoy it.
     * Mask R-CNN
 * Depth Estimator
     * Monocular Depth Estimation
+* Dynamic Routing Between Capsules (CapsNet): [notebook](deep_learning/space_image/CapsNet.ipynb)
 #### Series / Sequence / Time
 * Data Preprocessing
     * Dataset List: [markdown](deep_learning/time_series_sequences/dataset_list.md)
