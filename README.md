@@ -87,6 +87,7 @@ Please enjoy it.
     * Mask R-CNN
 * Depth Estimator
     * Monocular Depth Estimation
+* Dynamic Routing Between Capsules (CapsNet): [notebook](deep_learning/space_image/CapsNet.ipynb)
 #### Series / Sequence / Time
 * Data Preprocessing
     * Dataset List: [markdown](deep_learning/time_series_sequences/dataset_list.md)
@@ -113,11 +114,13 @@ Please enjoy it.
 * Dataset Processing:
     * Datasets: [markdown](deep_learning/audio_singal/datasets.md)
     * Data Formats: [markdown](deep_learning/audio_singal/data_formats.md)
+    * Signal Processing: [notebook](deep_learning/audio_singal/Signal_Processing.ipynb)
     * Audio Signal Processing Example: [notebook](deep_learning/audio_singal/Audio_Processing.ipynb)
 * Word-based
     > Word-level audio recognition is one of the most popular requirements in technical fields. Simple words like `Up`, `Down`, `Hey, Siri!` or `OK, Google!`, etc. are commonplace. The details about how to implement a word-level audio recognition were moved to a new repository `jiankaiwang/word_level_audio_recognition` (https://github.com/jiankaiwang/word_level_audio_recognition). :link:
 * Phrase-based
 * Sentence-based
+* Environment Sound Classification: [notebook](deep_learning/audio_singal/Environment_Sound_Classification.ipynb)
 
 #### Images with Text or Space with Time
 
@@ -126,6 +129,7 @@ Please enjoy it.
 #### Encoder / Decoder
 
 * AutoEncoder vs. PCA: [notebook](deep_learning/encoder_decoder/EncoderDecoder_Tensorflow.ipynb)
+* Intro to Basic Autoencoders: [notebook](deep_learning/generative/Autoencoder.ipynb)
 
 #### [Generative](deep_learning/generative)
 
@@ -138,7 +142,6 @@ Please enjoy it.
 * BigGAN From TF.Hub: [notebook](deep_learning/generative/BigGAN_TF_Hub_Demo.ipynb)
 * Introduction to CycleGAN: [notebook](deep_learning/generative/TF2_CycleGAN.ipynb)
 * Adversarial examples using FGSM: [notebook](deep_learning/generative/AdversarialExample_FGSM.ipynb)
-* Intro to Basic Autoencoders: [notebook](deep_learning/generative/Autoencoder.ipynb)
 
 #### Reinforcement Learning
 
