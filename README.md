@@ -105,6 +105,7 @@ Please enjoy it.
     * Static RNN vs. Dynamic RN: [notebook](deep_learning/time_series_sequences/Simple_Dynamic_Seq2Seq.ipynb)
 * Seq2Seq Model
     * Character-based Text Generation using `TF2Keras`: [notebook](deep_learning/time_series_sequences/TF2Keras_TextGeneration_RNN.ipynb)
+    * From RNN to LSTM with the bidirectional architecture: [notebook](deep_learning/time_series_sequences/RNN_LSTM_Tensorflow.ipynb)
     * Bidirectional Dynamic RNN + LSTM / GRU cell + Attention Mechanism using Tensorflow 1.0.0 [notebook](deep_learning/time_series_sequences/Seq2Seq_Bidirectional_Attention_tf-1.0.0.ipynb), or using Tensorflow 1.11.0 [notebook](deep_learning/time_series_sequences/Bidirectional_Dynamic_Seq2Seq.ipynb), or using TF2Keras [notebook](deep_learning/time_series_sequences/TF2Keras_NMT_Attention.ipynb)
     * Using the Transformer architecture on TF2Keras: [notebook](deep_learning/time_series_sequences/TF2Keras_Transformer_LanguageUnderstanding.ipynb)
 * Differentiable Neural Computer (DNC)
